@@ -211,12 +211,16 @@ public class SignupThree extends JFrame implements ActionListener {
                     conn.s.executeUpdate(query2);
 
                     JOptionPane.showMessageDialog(null, "Card Number: " + cardnumber + "\n Pin: "+pinnumber);
+
+                    setVisible(false);
+                    new Transactions(pinnumber).setVisible(true);
                 }
             } catch (Exception ae){
                 System.out.println(ae);
             }
         } else if (e.getSource() == cancel) {
-
+            setVisible(false);
+            new Login().setVisible(true);
         }
     }
     public static void main(String[] args){
