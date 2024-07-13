@@ -4,7 +4,6 @@ public class Conn {
     Statement s;
     public Conn() {
         try {
-            //Class.forName(com.mysql.cj.jdbc.Driver);
             c = DriverManager.getConnection("jdbc:mysql:///bank", "root", "1234");
             s = c.createStatement();
         } catch (Exception e) {
