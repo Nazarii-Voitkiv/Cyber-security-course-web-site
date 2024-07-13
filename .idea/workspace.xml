@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/SignupThree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Transactions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/icons/atm.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Conn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Conn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupTwo.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,11 +40,12 @@
     "Application.SignupOne.executor": "Run",
     "Application.SignupThree.executor": "Run",
     "Application.SignupTwo.executor": "Run",
+    "Application.Transactions.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/nazarii/IdeaProjects/Bank/src/libs",
+    "last_opened_file_path": "/Users/nazarii/IdeaProjects/Bank/src/icons",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,8 +57,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/libs" />
       <recent name="$PROJECT_DIR$/src/icons" />
+      <recent name="$PROJECT_DIR$/src/libs" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -71,7 +70,7 @@
       <option name="presentableId" value="Default" />
       <updated>1720695016172</updated>
       <workItem from="1720695017849" duration="9894000" />
-      <workItem from="1720790090606" duration="27401000" />
+      <workItem from="1720790090606" duration="30461000" />
     </task>
     <servers />
   </component>
