@@ -5,172 +5,159 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 
 public class SignupThree extends JFrame implements ActionListener {
-    JRadioButton r1,r2,r3,r4;
-    JCheckBox c1,c2,c3,c4,c5,c6,c7;
-    JButton submit, cancel;
-    String formno;
-    SignupThree(String formno) {
-        this.formno = formno;
+    private static final int FRAME_WIDTH = 850;
+    private static final int FRAME_HEIGHT = 800;
+    JRadioButton savingAccountRadioButton, checkingAccountRadioButton, moneyMarketAccountRadioButton, certificateOfDepositRadioButton;
+    JCheckBox atmCardCheckBox, onlineBanking, mobileBankingCheckBox, emailSmsAlertsCheckBox, checkbookCheckBox, statementsCheckBox, termsAndConditionsCheckBox;
+    JButton submitButton, cancelButton;
+    String formNumber;
+
+    CreateComponents components;
+    SignupThree(String formNumber) {
+        components = new CreateComponents();
+        this.formNumber = formNumber;
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-
-        JLabel l1 = new JLabel("Page 3: Account Details");
-        l1.setFont(new Font("Raleway", Font.BOLD, 22));
-        l1.setBounds(280,40,400,40);
-        add(l1);
-
-        JLabel type = new JLabel("Account Type:");
-        type.setFont(new Font("Raleway", Font.BOLD, 22));
-        type.setBounds(100,140,200,40);
-        add(type);
-
-        r1 = new JRadioButton("Saving Account");
-        r1.setFont(new Font("Raleway", Font.BOLD, 16));
-        r1.setBackground(Color.WHITE);
-        r1.setBounds(100,180,200,40);
-        add(r1);
-
-        r2 = new JRadioButton("Fixed Deposit Account");
-        r2.setFont(new Font("Raleway", Font.BOLD, 16));
-        r2.setBackground(Color.WHITE);
-        r2.setBounds(350,180,300,40);
-        add(r2);
-
-        r3 = new JRadioButton("Current Account");
-        r3.setFont(new Font("Raleway", Font.BOLD, 16));
-        r3.setBackground(Color.WHITE);
-        r3.setBounds(100,220,300,40);
-        add(r3);
-
-        r4 = new JRadioButton("Recurring Deposit Account");
-        r4.setFont(new Font("Raleway", Font.BOLD, 16));
-        r4.setBackground(Color.WHITE);
-        r4.setBounds(350,220,300,40);
-        add(r4);
-
-        ButtonGroup groupaccount = new ButtonGroup();
-        groupaccount.add(r1);
-        groupaccount.add(r2);
-        groupaccount.add(r3);
-        groupaccount.add(r4);
-
-        JLabel card = new JLabel("Card Number");
-        card.setFont(new Font("Raleway", Font.BOLD, 22));
-        card.setBounds(100,300,200,30);
-        add(card);
-
-        JLabel number = new JLabel("XXXX-XXXX-XXXX-4184");
-        number.setFont(new Font("Raleway", Font.BOLD, 22));
-        number.setBounds(330,300,300,30);
-        add(number);
-
-        JLabel carddetail = new JLabel("Your 16 Digit Card Number");
-        carddetail.setFont(new Font("Raleway", Font.BOLD, 12));
-        carddetail.setBounds(100,330,300,20);
-        add(carddetail);
-
-        JLabel pin = new JLabel("PIN:");
-        pin.setFont(new Font("Raleway", Font.BOLD, 22));
-        pin.setBounds(100,370,300,30);
-        add(pin);
-
-        JLabel pnumber = new JLabel("XXXX");
-        pnumber.setFont(new Font("Raleway", Font.BOLD, 22));
-        pnumber.setBounds(330,370,300,30);
-        add(pnumber);
-
-        JLabel pindetail = new JLabel("Your 4 Digit Password");
-        pindetail.setFont(new Font("Raleway", Font.BOLD, 12));
-        pindetail.setBounds(100,400,300,20);
-        add(pindetail);
-
-        JLabel services = new JLabel("Services Required:");
-        services.setFont(new Font("Raleway", Font.BOLD, 22));
-        services.setBounds(100,450,300,30);
-        add(services);
-
-        c1 = new JCheckBox("ATM CARD");
-        c1.setBackground(Color.WHITE);
-        c1.setFont(new Font("Raleway", Font.BOLD, 16));
-        c1.setBounds(100,500,200,30);
-        add(c1);
-
-        c2 = new JCheckBox("Internet Banking");
-        c2.setBackground(Color.WHITE);
-        c2.setFont(new Font("Raleway", Font.BOLD, 16));
-        c2.setBounds(350,500,200,30);
-        add(c2);
-
-        c3 = new JCheckBox("Mobile Banking");
-        c3.setBackground(Color.WHITE);
-        c3.setFont(new Font("Raleway", Font.BOLD, 16));
-        c3.setBounds(100,550,200,30);
-        add(c3);
-
-        c4 = new JCheckBox("EMAIL & SMS Alerts");
-        c4.setBackground(Color.WHITE);
-        c4.setFont(new Font("Raleway", Font.BOLD, 16));
-        c4.setBounds(350,550,200,30);
-        add(c4);
-
-        c5 = new JCheckBox("Cheque Book");
-        c5.setBackground(Color.WHITE);
-        c5.setFont(new Font("Raleway", Font.BOLD, 16));
-        c5.setBounds(100,600,200,30);
-        add(c5);
-
-        c6 = new JCheckBox("E-Statement");
-        c6.setBackground(Color.WHITE);
-        c6.setFont(new Font("Raleway", Font.BOLD, 16));
-        c6.setBounds(350,600,200,30);
-        add(c6);
-
-        c7 = new JCheckBox("I hereby declares that the above entered details are correct to the best of my knowledge.",true);
-        c7.setBackground(Color.WHITE);
-        c7.setFont(new Font("Raleway", Font.BOLD, 12));
-        c7.setBounds(100,680,600,20);
-        add(c7);
-
-        submit = new JButton("Submit");
-        submit.setFont(new Font("Raleway", Font.BOLD, 14));
-        submit.setBackground(Color.BLACK);
-        submit.setForeground(Color.WHITE);
-        submit.setBounds(250,720,100,30);
-        submit.setOpaque(true);
-        submit.setBorderPainted(false);
-        submit.addActionListener(this);
-        add(submit);
-
-        cancel = new JButton("Cancel");
-        cancel.setFont(new Font("Raleway", Font.BOLD, 14));
-        cancel.setBackground(Color.BLACK);
-        cancel.setForeground(Color.WHITE);
-        cancel.setBounds(500,720,100,30);
-        cancel.setOpaque(true);
-        cancel.setBorderPainted(false);
-        cancel.addActionListener(this);
-        add(cancel);
-
-
-        getContentPane().setBackground(Color.WHITE);
-
-        setSize(850,850);
-        setLocation(350,0);
+        setTitle("NEW ACCOUNT APPLICATION FORM - PAGE THREE");
+        getContentPane().setBackground(Color.white);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        addComponents();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
+    private void addComponents() {
+        addAccountDetailsLabel();
+        addAccountTypeLabel();
+        addAccountTypeButtonGroup();
+        addCardNumberLabel();
+        addNumberLabel();
+        addCardDetailLabel();
+        addPinLabel();
+        addPinNumberLabel();
+        addPinDetailLabel();
+        addServicesRequiredLabel();
+        addCheckBoxes();
+        addSubmitButton();
+        addCancelButton();
+    }
+
+    private void addAccountDetailsLabel() {
+        JLabel accountDetailsLabel = components.createLabel("Page 3: Account Details",280,40,400,40,22);
+        add(accountDetailsLabel);
+    }
+
+    private void addAccountTypeLabel() {
+        JLabel accountTypeLabel = components.createLabel("Account Type:",100,140,200,40,22);
+        add(accountTypeLabel);
+    }
+
+    private void addAccountTypeButtonGroup() {
+        savingAccountRadioButton = components.createRadioButton("Saving Account",100,180,250,40,16,Color.white);
+        add(savingAccountRadioButton);
+
+        checkingAccountRadioButton = components.createRadioButton("Checking Account",350,180,250,40,16,Color.white);
+        add(checkingAccountRadioButton);
+
+        moneyMarketAccountRadioButton = components.createRadioButton("Money Market Account",100,220,250,40,16,Color.white);
+        add(moneyMarketAccountRadioButton);
+
+        certificateOfDepositRadioButton = components.createRadioButton("Certificate of Deposit (CD)",350,220,300,40,16,Color.white);
+        add(certificateOfDepositRadioButton);
+
+        ButtonGroup accountTypeButtonGroup = new ButtonGroup();
+        accountTypeButtonGroup.add(savingAccountRadioButton);
+        accountTypeButtonGroup.add(checkingAccountRadioButton);
+        accountTypeButtonGroup.add(moneyMarketAccountRadioButton);
+        accountTypeButtonGroup.add(certificateOfDepositRadioButton);
+    }
+
+    private void addCardNumberLabel() {
+        JLabel cardNumberLabel = components.createLabel("Card Number",100,300,200,30,22);
+        add(cardNumberLabel);
+    }
+
+    private void addNumberLabel() {
+        JLabel numberLabel = components.createLabel("XXXX-XXXX-XXXX-XXXX",330,300,300,30,22);
+        add(numberLabel);
+    }
+
+    private void addCardDetailLabel() {
+        JLabel cardDetailLabel = components.createLabel("Your 16 Digit Card Number",100,330,300,20,12);
+        add(cardDetailLabel);
+    }
+
+    private void addPinLabel() {
+        JLabel pinLabel = components.createLabel("PIN:",100,370,300,30,22);
+        add(pinLabel);
+    }
+
+    private void addPinNumberLabel() {
+        JLabel pinNumberLabel = components.createLabel("XXXX",330,370,300,30,22);
+        add(pinNumberLabel);
+    }
+
+    private void addPinDetailLabel() {
+        JLabel pinDetailLabel = components.createLabel("Your 4 Digit Password",100,400,300,20,12);
+        add(pinDetailLabel);
+    }
+
+    private void addServicesRequiredLabel() {
+        JLabel servicesRequiredLabel = components.createLabel("Services Required:",100,450,300,30,22);
+        add(servicesRequiredLabel);
+    }
+
+    private void addCheckBoxes() {
+        atmCardCheckBox = components.createCheckBox("ATM/Debit Card",100,500,200,30,16,Color.white);
+        add(atmCardCheckBox);
+
+        onlineBanking = components.createCheckBox("Online Banking",350,500,200,30,16,Color.white);
+        add(onlineBanking);
+
+        mobileBankingCheckBox = components.createCheckBox("Mobile Banking",100,550,200,30,16,Color.white);
+        add(mobileBankingCheckBox);
+
+        emailSmsAlertsCheckBox = components.createCheckBox("Email & SMS Alerts",350,550,200,30,16,Color.white);
+        add(emailSmsAlertsCheckBox);
+
+        checkbookCheckBox = components.createCheckBox("Checkbook",100,600,200,30,16,Color.white);
+        add(checkbookCheckBox);
+
+        statementsCheckBox = components.createCheckBox("E-Statements",350,600,200,30,16,Color.white);
+        add(statementsCheckBox);
+
+        termsAndConditionsCheckBox = components.createCheckBox("I hereby declares that the above entered details are correct to the best of my knowledge.",
+                100,680,600,20,12,Color.white);
+        add(termsAndConditionsCheckBox);
+    }
+
+    private void addSubmitButton() {
+        submitButton = components.createButton("Submit",250,720,100,30,14);
+        submitButton.addActionListener(this);
+        add(submitButton);
+    }
+
+    private void addCancelButton() {
+        cancelButton = components.createButton("Cancel",500,720,100,30,14);
+        cancelButton.addActionListener(this);
+        add(cancelButton);
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == submit) {
+        if(e.getSource() == submitButton) {
             String accountType = null;
-            if(r1.isSelected()){
+            if(savingAccountRadioButton.isSelected()){
                 accountType = "Saving Account";
             }
-            else if(r2.isSelected()){
+            else if(checkingAccountRadioButton.isSelected()){
                 accountType = "Fixed Deposit Account";
             }
-            else if(r3.isSelected()){
+            else if(moneyMarketAccountRadioButton.isSelected()){
                 accountType = "Current Account";
-            }else if(r4.isSelected()){
+            }else if(certificateOfDepositRadioButton.isSelected()){
                 accountType = "Recurring Deposit Account";
             }
 
@@ -180,22 +167,22 @@ public class SignupThree extends JFrame implements ActionListener {
             String pinnumber = "" + Math.abs((random.nextLong() % 9000L) + 1000L);
 
             String facility = "";
-            if(c1.isSelected()){
+            if(atmCardCheckBox.isSelected()){
                 facility = facility + " ATM Card";
             }
-            if(c2.isSelected()){
+            if(onlineBanking.isSelected()){
                 facility = facility + " Internet Banking";
             }
-            if(c3.isSelected()){
+            if(mobileBankingCheckBox.isSelected()){
                 facility = facility + " Mobile Banking";
             }
-            if(c4.isSelected()){
+            if(emailSmsAlertsCheckBox.isSelected()){
                 facility = facility + " EMAIL Alerts";
             }
-            if(c5.isSelected()){
+            if(checkbookCheckBox.isSelected()){
                 facility = facility + " Cheque Book";
             }
-            if(c6.isSelected()){
+            if(statementsCheckBox.isSelected()){
                 facility = facility + " E-Statement";
             }
 
@@ -204,8 +191,8 @@ public class SignupThree extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Fill all the required fields");
                 } else {
                     Conn conn = new Conn();
-                    String query1 = "insert into signupthree values('"+formno+"','"+accountType+"','"+cardnumber+"','"+pinnumber+"','"+facility+"')";
-                    String query2 = "insert into login values('"+formno+"','"+cardnumber+"','"+pinnumber+"')";
+                    String query1 = "insert into signupthree values('"+ formNumber +"','"+accountType+"','"+cardnumber+"','"+pinnumber+"','"+facility+"')";
+                    String query2 = "insert into login values('"+ formNumber +"','"+cardnumber+"','"+pinnumber+"')";
 
                     conn.s.executeUpdate(query1);
                     conn.s.executeUpdate(query2);
@@ -218,7 +205,7 @@ public class SignupThree extends JFrame implements ActionListener {
             } catch (Exception ae){
                 System.out.println(ae);
             }
-        } else if (e.getSource() == cancel) {
+        } else if (e.getSource() == cancelButton) {
             setVisible(false);
             new Login().setVisible(true);
         }
