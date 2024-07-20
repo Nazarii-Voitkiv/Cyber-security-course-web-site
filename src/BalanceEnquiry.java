@@ -5,27 +5,48 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 
 public class BalanceEnquiry extends JFrame implements ActionListener {
-    String pinnumber;
-    JButton back;
-    BalanceEnquiry(String pinnumber) {
-        this.pinnumber = pinnumber;
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(900,900,Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(0,0,900,900);
-        add(image);
+    private static final int FRAME_WIDTH = 690;
+    private static final int FRAME_HEIGHT = 900;
 
-        back = new JButton("Back");
-        back.addActionListener(this);
-        back.setBounds(355,520,150,30);
-        image.add(back);
+    String pinNumber;
+    JButton backButton;
+    JLabel imageBackgroundLabel;
 
+    CreateComponents components;
+    BalanceEnquiry(String pinNumber) {
+        components = new CreateComponents();
+        this.pinNumber = pinNumber;
 
+        setLayout(null);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        addComponents();
+        setLocationRelativeTo(null);
+        setUndecorated(true);
+        setVisible(true);
+    }
+
+    private void addComponents() {
+        addImageBackgroundLabel();
+        addBackButton();
+        showBalance();
+    }
+
+    private void addImageBackgroundLabel() {
+        imageBackgroundLabel = components.createImageBackgroundLabel(FRAME_WIDTH,FRAME_HEIGHT);
+        add(imageBackgroundLabel);
+    }
+
+    private void addBackButton() {
+        backButton = components.createButton("Back",370,563,150,30);
+        backButton.addActionListener(this);
+        imageBackgroundLabel.add(backButton);
+    }
+
+    private void showBalance() {
         Conn c = new Conn();
         int balance = 0;
         try {
-            ResultSet rs = c.s.executeQuery("select * from bank where pin = '" + pinnumber + "'");
+            ResultSet rs = c.s.executeQuery("select * from bank where pin = '" + pinNumber + "'");
 
             while (rs.next()) {
                 if (rs.getString("type").equals("Deposit")) {
@@ -38,22 +59,14 @@ public class BalanceEnquiry extends JFrame implements ActionListener {
             System.out.println(ae);
         }
 
-        JLabel text = new JLabel("Your Current Account Balance is $"+balance);
-        text.setForeground(Color.white);
-        text.setBounds(170, 300, 400,30);
-        image.add(text);
-
-
-        setSize(900,900);
-        setLocation(300,0);
-        setUndecorated(true);
-        setVisible(true);
+        JLabel balanceLabel = components.createLabel("Your Current Account Balance is $"+balance, 170, 300, 400,30,16, Color.white);
+        imageBackgroundLabel.add(balanceLabel);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        new Transactions(pinnumber).setVisible(true);
+        new Transactions(pinNumber).setVisible(true);
     }
 
     public static void main(String[] args){

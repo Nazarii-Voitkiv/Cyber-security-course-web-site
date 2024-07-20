@@ -2,75 +2,98 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Withdrawl extends JFrame implements ActionListener {
-    JTextField amount;
-    JButton withdraw, back;
-    String pinnumber;
-    Withdrawl(String pinnumber){
-        this.pinnumber = pinnumber;
+    private static final int FRAME_WIDTH = 690;
+    private static final int FRAME_HEIGHT = 900;
+
+    JTextField amountTextField;
+    JButton withdrawButton, backButton;
+    JLabel imageBackgroundLabel;
+    String pinNumber;
+
+    CreateComponents components;
+    Withdrawl(String pinNumber){
+        components = new CreateComponents();
+        this.pinNumber = pinNumber;
+
         setLayout(null);
-
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(900,900, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(0,0,900,900);
-        add(image);
-
-        JLabel text = new JLabel("Enter the amount you want to withdraw");
-        text.setForeground(Color.WHITE);
-        text.setFont(new Font("System", Font.BOLD, 16));
-        text.setBounds(170,300,400,20);
-        image.add(text);
-
-        amount = new JTextField();
-        amount.setFont(new Font("Raleway", Font.BOLD, 22));
-        amount.setBounds(170,350,320,20);
-        image.add(amount);
-
-        withdraw = new JButton("Withdraw");
-        withdraw.setBounds(335,485,150,30);
-        withdraw.addActionListener(this);
-        image.add(withdraw);
-
-        back = new JButton("Back");
-        back.setBounds(335,520,150,30);
-        back.addActionListener(this);
-        image.add(back);
-
-
-        setSize(900,900);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        addComponents();
+        setLocationRelativeTo(null);
         setUndecorated(true);
-        setLocation(300,0);
         setVisible(true);
+    }
+
+    private void addComponents() {
+        addImageBackgroundLabel();
+        addAmountOfWithdrawLabel();
+        addAmountTextField();
+        addWithdrawButton();
+        addBackButton();
+    }
+
+    private void addImageBackgroundLabel() {
+        imageBackgroundLabel = components.createImageBackgroundLabel(FRAME_WIDTH,FRAME_HEIGHT);
+        add(imageBackgroundLabel);
+    }
+
+    private void addAmountOfWithdrawLabel() {
+        JLabel amountOfWithdrawLabel = components.createLabel("Enter the amount you want to withdraw",180,300,400,20,16,Color.white);
+        imageBackgroundLabel.add(amountOfWithdrawLabel);
+    }
+
+    private void addAmountTextField() {
+        amountTextField = components.createTextField(185,350,320,30,22);
+        imageBackgroundLabel.add(amountTextField);
+    }
+
+    private void addWithdrawButton() {
+        withdrawButton = components.createButton("Withdraw",370,510,150,30);
+        withdrawButton.addActionListener(this);
+        imageBackgroundLabel.add(withdrawButton);
+    }
+
+    private void addBackButton() {
+        backButton = components.createButton("Back",370,563,150,30);
+        backButton.addActionListener(this);
+        imageBackgroundLabel.add(backButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(e.getSource() == withdraw){
-                String number = amount.getText();
-                Date date = new Date();
-                if(number.equals("")){
-                    JOptionPane.showMessageDialog(null, "Please enter the amount you want to withdraw");
-                } else {
-                    Conn conn = new Conn();
-
-                    String query = "insert into bank values('"+pinnumber+"', '"+date+"', 'Withdrawl', '"+number+"')";
-                    conn.s.executeUpdate(query);
-                    JOptionPane.showMessageDialog(null, "$"+number+" Withdraw Successfully");
-                    setVisible(false);
-                    new Transactions(pinnumber).setVisible(true);
-                }
-            } else if (e.getSource() == back) {
-                setVisible(false);
-                new Transactions(pinnumber).setVisible(true);
+            if(e.getSource() == withdrawButton){
+                withdraw();
+            } else if (e.getSource() == backButton) {
+                back();
             }
         } catch (Exception ae) {
             System.out.println(ae);
         }
+    }
+
+    private void withdraw() throws SQLException {
+        String number = amountTextField.getText();
+        Date date = new Date();
+        if(number.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter the amount you want to withdraw");
+        } else {
+            Conn conn = new Conn();
+
+            String query = "insert into bank values('"+ pinNumber +"', '"+date+"', 'Withdrawl', '"+number+"')";
+            conn.s.executeUpdate(query);
+            JOptionPane.showMessageDialog(null, "$"+number+" Withdraw Successfully");
+            setVisible(false);
+            new Transactions(pinNumber).setVisible(true);
+        }
+    }
+
+    private void back() {
+        setVisible(false);
+        new Transactions(pinNumber).setVisible(true);
     }
 
     public static void main(String[] args){

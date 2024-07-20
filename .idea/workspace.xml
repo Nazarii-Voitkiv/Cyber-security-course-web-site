@@ -5,15 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CreateComponents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Conn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Conn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BalanceEnquiry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BalanceEnquiry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CreateComponents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CreateComponents.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Deposit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Deposit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FastCash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FastCash.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MiniStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MiniStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PinChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PinChange.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SignupOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupThree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupTwo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupTwo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Transactions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Withdrawl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Withdrawl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/atm.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/atm.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/logo.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/logo.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,13 +38,16 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2j667xLRmZJtrm9EMWRXsi2e8oA" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Application.BalanceEnquiry.executor": "Run",
     "Application.Deposit.executor": "Run",
     "Application.FastCash.executor": "Run",
@@ -91,7 +98,7 @@
       <updated>1720695016172</updated>
       <workItem from="1720695017849" duration="9894000" />
       <workItem from="1720790090606" duration="35667000" />
-      <workItem from="1720877251573" duration="55729000" />
+      <workItem from="1720877251573" duration="73971000" />
     </task>
     <servers />
   </component>
@@ -108,5 +115,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

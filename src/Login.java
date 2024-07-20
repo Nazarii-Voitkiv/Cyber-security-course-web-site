@@ -76,9 +76,7 @@ public class Login extends JFrame implements ActionListener {
     }
 
     private void addPinField() {
-        pinField = new JPasswordField();
-        pinField.setBounds(300, 220, 230, 30);
-        pinField.setFont(new Font("Arial", Font.BOLD, 14));
+        pinField = components.createPasswordField(300, 220, 230, 30,14);
         add(pinField);
     }
 

@@ -5,68 +5,80 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 
 public class Deposit extends JFrame implements ActionListener {
-    JTextField amount;
-    JButton deposit, back;
-    String pinnumber;
-    Deposit(String pinnumber){
-        this.pinnumber = pinnumber;
+    private static final int FRAME_WIDTH = 690;
+    private static final int FRAME_HEIGHT = 900;
+    JTextField amountTextField;
+    JButton depositButton, backButton;
+    JLabel imageBackgroundLabel;
+    String pinNumber;
+    CreateComponents components;
+    Deposit(String pinNumber){
+        components = new CreateComponents();
+        this.pinNumber = pinNumber;
+
         setLayout(null);
-
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(900,900, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(0,0,900,900);
-        add(image);
-
-        JLabel text = new JLabel("Enter the amount you want to deposit");
-        text.setForeground(Color.WHITE);
-        text.setFont(new Font("System", Font.BOLD, 16));
-        text.setBounds(170,300,400,20);
-        image.add(text);
-
-        amount = new JTextField();
-        amount.setFont(new Font("Raleway", Font.BOLD, 22));
-        amount.setBounds(170,350,320,20);
-        image.add(amount);
-
-        deposit = new JButton("Deposit");
-        deposit.setBounds(335,485,150,30);
-        deposit.addActionListener(this);
-        image.add(deposit);
-
-        back = new JButton("Back");
-        back.setBounds(335,520,150,30);
-        back.addActionListener(this);
-        image.add(back);
-
-
-        setSize(900,900);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        addComponents();
+        setLocationRelativeTo(null);
         setUndecorated(true);
-        setLocation(300,0);
         setVisible(true);
+    }
+
+    private void addComponents() {
+        addImageBackgroundLabel();
+        addAmountOfDepositLabel();
+        addAmountTextField();
+        addDepositButton();
+        addBackButton();
+    }
+
+    private void addImageBackgroundLabel() {
+        imageBackgroundLabel = components.createImageBackgroundLabel(FRAME_WIDTH,FRAME_HEIGHT);
+        add(imageBackgroundLabel);
+    }
+
+    private void addAmountOfDepositLabel() {
+        JLabel amountOfDepositLabel = components.createLabel("Enter the amount you want to deposit",190,300,400,20,16,Color.white);
+        imageBackgroundLabel.add(amountOfDepositLabel);
+    }
+
+    private void addAmountTextField() {
+        amountTextField = components.createTextField(185,350,320,30,22);
+        imageBackgroundLabel.add(amountTextField);
+    }
+
+    private void addDepositButton() {
+        depositButton = components.createButton("Deposit",370,510,150,30);
+        depositButton.addActionListener(this);
+        imageBackgroundLabel.add(depositButton);
+    }
+
+    private void addBackButton() {
+        backButton = components.createButton("Back",370,563,150,30);
+        backButton.addActionListener(this);
+        imageBackgroundLabel.add(backButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            if(e.getSource() == deposit){
-                String number = amount.getText();
+            if(e.getSource() == depositButton){
+                String number = amountTextField.getText();
                 Date date = new Date();
                 if(number.equals("")){
                     JOptionPane.showMessageDialog(null, "Please enter the amount you want to deposit");
                 } else {
                     Conn conn = new Conn();
 
-                    String query = "insert into bank values('"+pinnumber+"', '"+date+"', 'Deposit', '"+number+"')";
+                    String query = "insert into bank values('"+ pinNumber +"', '"+date+"', 'Deposit', '"+number+"')";
                     conn.s.executeUpdate(query);
                     JOptionPane.showMessageDialog(null, "$"+number+" Deposited Successfully");
                     setVisible(false);
-                    new Transactions(pinnumber).setVisible(true);
+                    new Transactions(pinNumber).setVisible(true);
                 }
-            } else if (e.getSource() == back) {
+            } else if (e.getSource() == backButton) {
                 setVisible(false);
-                new Transactions(pinnumber).setVisible(true);
+                new Transactions(pinNumber).setVisible(true);
             }
         } catch (Exception ae) {
             System.out.println(ae);

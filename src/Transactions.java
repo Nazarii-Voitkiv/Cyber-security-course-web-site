@@ -4,87 +4,109 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Transactions extends JFrame implements ActionListener {
-    JButton deposit, withdrawl, fastcash, ministatement, pinchange, balanceenquiry, exit;
+    private static final int FRAME_WIDTH = 690;
+    private static final int FRAME_HEIGHT = 900;
+    JButton depositButton, withdrawlButton, fastCashButton, ministatementButton, pinChangeButton, balanceEnquiryButton, exitButton;
     String pinnumber;
-    Transactions(String pinnumber) {
-        this.pinnumber = pinnumber;
+    JLabel imageBackgroundLabel;
+
+    CreateComponents components;
+    Transactions(String pinNumber) {
+        components = new CreateComponents();
+        this.pinnumber = pinNumber;
+
         setLayout(null);
-
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icons/atm.jpg"));
-        Image i2 = i1.getImage().getScaledInstance(900,900, Image.SCALE_DEFAULT);
-        ImageIcon i3 = new ImageIcon(i2);
-        JLabel image = new JLabel(i3);
-        image.setBounds(0,0,900,900);
-        add(image);
-
-        JLabel text = new JLabel("Please Select Your Transaction");
-        text.setBounds(210,300,700,35);
-        text.setForeground(Color.WHITE);
-        text.setFont(new Font("System", Font.BOLD, 16));
-        image.add(text);
-
-        deposit = new JButton("Deposit");
-        deposit.setBounds(170,415,150,30);
-        deposit.addActionListener(this);
-        image.add(deposit);
-
-        withdrawl = new JButton("Cash withdrawl");
-        withdrawl.setBounds(355,415,150,30);
-        withdrawl.addActionListener(this);
-        image.add(withdrawl);
-
-        fastcash = new JButton("Fast Cash");
-        fastcash.setBounds(170,450,150,30);
-        fastcash.addActionListener(this);
-        image.add(fastcash);
-
-        ministatement = new JButton("Mini Statement");
-        ministatement.setBounds(355,450,150,30);
-        ministatement.addActionListener(this);
-        image.add(ministatement);
-
-        pinchange = new JButton("Pin Change");
-        pinchange.setBounds(170,485,150,30);
-        pinchange.addActionListener(this);
-        image.add(pinchange);
-
-        balanceenquiry = new JButton("Balance Enquiry");
-        balanceenquiry.setBounds(355,485,150,30);
-        balanceenquiry.addActionListener(this);
-        image.add(balanceenquiry);
-
-        exit = new JButton("Exit");
-        exit.setBounds(355,520,150,30);
-        exit.addActionListener(this);
-        image.add(exit);
-
-
-        setSize(900,900);
-        setLocation(300,0);
+        setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        addComponents();
+        setLocationRelativeTo(null);
         setUndecorated(true);
         setVisible(true);
     }
 
+    private void addComponents() {
+        addImageBackgroundLabel();
+        addSelectYourTransactionLabel();
+        addDepositButton();
+        addWithdrawlButton();
+        addFastCashButton();
+        addMinistatementButton();
+        addPinChangeButton();
+        addBalanceEnquiryButton();
+        addExitButton();
+    }
+
+    private void addImageBackgroundLabel() {
+        imageBackgroundLabel = components.createImageBackgroundLabel(FRAME_WIDTH,FRAME_HEIGHT);
+        add(imageBackgroundLabel);
+    }
+
+    private void addSelectYourTransactionLabel() {
+        JLabel selectYourTransactionLabel = components.createLabel("Please Select Your Transaction",210,300,700,35,16,Color.white);
+        imageBackgroundLabel.add(selectYourTransactionLabel);
+    }
+
+    private void addDepositButton() {
+        depositButton = components.createButton("Deposit",170,405,150,30);
+        depositButton.addActionListener(this);
+        imageBackgroundLabel.add(depositButton);
+    }
+
+    private void addWithdrawlButton() {
+        withdrawlButton = components.createButton("Cash withdrawl",370,405,150,30);
+        withdrawlButton.addActionListener(this);
+        imageBackgroundLabel.add(withdrawlButton);
+    }
+
+    private void addFastCashButton() {
+        fastCashButton = components.createButton("Fast Cash",170,457,150,30);
+        fastCashButton.addActionListener(this);
+        imageBackgroundLabel.add(fastCashButton);
+    }
+
+    private void addMinistatementButton() {
+        ministatementButton = components.createButton("Mini Statement",370,457,150,30);
+        ministatementButton.addActionListener(this);
+        imageBackgroundLabel.add(ministatementButton);
+    }
+
+    private void addPinChangeButton() {
+        pinChangeButton = components.createButton("Pin Change",170,510,150,30);
+        pinChangeButton.addActionListener(this);
+        imageBackgroundLabel.add(pinChangeButton);
+    }
+
+    private void addBalanceEnquiryButton() {
+        balanceEnquiryButton = components.createButton("Balance Enquiry",370,510,150,30);
+        balanceEnquiryButton.addActionListener(this);
+        imageBackgroundLabel.add(balanceEnquiryButton);
+    }
+
+    private void addExitButton() {
+        exitButton = components.createButton("Exit",370,563,150,30);
+        exitButton.addActionListener(this);
+        imageBackgroundLabel.add(exitButton);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == exit) {
+        if(e.getSource() == exitButton) {
             System.exit(0);
-        } else if (e.getSource() == deposit) {
+        } else if (e.getSource() == depositButton) {
             setVisible(false);
             new Deposit(pinnumber).setVisible(true);
-        } else if (e.getSource() == withdrawl) {
+        } else if (e.getSource() == withdrawlButton) {
             setVisible(false);
             new Withdrawl(pinnumber).setVisible(true);
-        } else if (e.getSource() == fastcash) {
+        } else if (e.getSource() == fastCashButton) {
             setVisible(false);
             new FastCash(pinnumber).setVisible(true);
-        } else if (e.getSource() == pinchange) {
+        } else if (e.getSource() == pinChangeButton) {
             setVisible(false);
             new PinChange(pinnumber).setVisible(true);
-        } else if (e.getSource() == balanceenquiry) {
+        } else if (e.getSource() == balanceEnquiryButton) {
             setVisible(false);
             new BalanceEnquiry(pinnumber).setVisible(true);
-        } else if (e.getSource() == ministatement) {
+        } else if (e.getSource() == ministatementButton) {
             setVisible(false);
             new MiniStatement(pinnumber).setVisible(true);
         }
@@ -93,6 +115,4 @@ public class Transactions extends JFrame implements ActionListener {
     public static void main(String[] args){
         new Transactions("");
     }
-
-
 }

@@ -8,7 +8,6 @@ import com.toedter.calendar.JDateChooser;
 public class SignupOne extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 850;
     private static final int FRAME_HEIGHT = 800;
-    private static final String FONT_NAME = "Raleway";
 
     long randomFormNumber;
     JTextField fullNameTextField, phoneNumberTextField, emailTextField, addressTextField, cityTextField, stateTextField, zipTextField;
