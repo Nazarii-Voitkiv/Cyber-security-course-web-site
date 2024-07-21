@@ -162,9 +162,9 @@ public class SignupThree extends JFrame implements ActionListener {
             }
 
             Random random = new Random();
-            String cardnumber = "" + Math.abs((random.nextLong() % 90000000L) + 5040936000000000L);
+            String cardNumber = "" + Math.abs((random.nextLong() % 90000000L) + 5040936000000000L);
 
-            String pinnumber = "" + Math.abs((random.nextLong() % 9000L) + 1000L);
+            String pinNumber = "" + Math.abs((random.nextLong() % 9000L) + 1000L);
 
             String facility = "";
             if(atmCardCheckBox.isSelected()){
@@ -191,16 +191,16 @@ public class SignupThree extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Fill all the required fields");
                 } else {
                     Conn conn = new Conn();
-                    String query1 = "insert into signupthree values('"+ formNumber +"','"+accountType+"','"+cardnumber+"','"+pinnumber+"','"+facility+"')";
-                    String query2 = "insert into login values('"+ formNumber +"','"+cardnumber+"','"+pinnumber+"')";
+                    String query1 = "insert into signupthree values('"+ formNumber +"','"+accountType+"','"+cardNumber+"','"+pinNumber+"','"+facility+"')";
+                    String query2 = "insert into login values('"+ formNumber +"','"+cardNumber+"','"+pinNumber+"')";
 
                     conn.s.executeUpdate(query1);
                     conn.s.executeUpdate(query2);
 
-                    JOptionPane.showMessageDialog(null, "Card Number: " + cardnumber + "\n Pin: "+pinnumber);
+                    JOptionPane.showMessageDialog(null, "Card Number: " + cardNumber + "\n Pin: "+pinNumber);
 
                     setVisible(false);
-                    new Transactions(pinnumber).setVisible(true);
+                    new Transactions(pinNumber).setVisible(true);
                 }
             } catch (Exception ae){
                 System.out.println(ae);

@@ -232,11 +232,11 @@ public class SignupOne extends JFrame implements ActionListener {
         String zip = zipTextField.getText();
 
         try{
-            if(fullName.equals("")){
-                JOptionPane.showMessageDialog(null, "Name is Required");
+            if(fullName.equals("") || phoneNumber.equals("") || dob.equals("") || gender.equals("") || email.equals("") || maritalStatus.equals("") || address.equals("") || city.equals("") || state.equals("") || zip.equals("")){
+                JOptionPane.showMessageDialog(null, "Not all fields are filled!");
             } else {
                 Conn c = new Conn();
-                String query = "insert into signup values('"+formNumber+"','"+fullName+"','"+phoneNumber+"','"+dob+"','"+gender+"','"+email+"','"+maritalStatus+"','"+address+"','"+city+"','"+zip+"','"+state+"')";
+                String query = "insert into signup values('"+formNumber+"','"+fullName+"','"+dob+"','"+gender+"','"+email+"','"+phoneNumber+"','"+maritalStatus+"','"+address+"','"+city+"','"+state+"','"+zip+"')";
                 c.s.executeUpdate(query);
 
                 setVisible(false);

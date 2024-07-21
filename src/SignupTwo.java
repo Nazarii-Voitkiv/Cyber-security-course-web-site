@@ -6,10 +6,9 @@ import java.awt.event.ActionListener;
 public class SignupTwo extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 950;
     private static final int FRAME_HEIGHT = 800;
-    JTextField beneficiaryContactNumberTextField, beneficiaryNameTextField;
+    JTextField ssnTextField, driversLicenseOrStateIDTextField, employerNameTextField, jobTitleTextField, yearsAtJobTextField, beneficiaryContactNumberTextField, beneficiaryNameTextField;
     JButton nextButton;
     JRadioButton yesUsCitizenRadioButton, noUsCitizenRadioButton, yesExisitingAccountButton, noExisitingAccountButton;
-    JTextField ssnTextField, driversLicenseOrStateIDTextField, jobTitleTextField, yearsAtJobTextField;
     JComboBox incomeComboBox;
     String formNumber;
 
@@ -84,8 +83,8 @@ public class SignupTwo extends JFrame implements ActionListener {
     }
 
     private void addEmployerNameTextField() {
-        beneficiaryContactNumberTextField = components.createTextField(450,240,400,30,14);
-        add(beneficiaryContactNumberTextField);
+        employerNameTextField = components.createTextField(450,240,400,30,14);
+        add(employerNameTextField);
     }
 
     private void addJobTitleLabel() {
@@ -188,32 +187,34 @@ public class SignupTwo extends JFrame implements ActionListener {
     }
 
     private void next() {
-//        String sreligion = (String) religion.getSelectedItem();
-//        String scategory = (String) category.getSelectedItem();
-//        String sincome = (String) income.getSelectedItem();
-//        String seducation = (String) education.getSelectedItem();
-//        String soccupation = (String) occupation.getSelectedItem();
-        String seniorcitizen = null;
+        String ssn = ssnTextField.getText();
+        String driversLicenseOrStateID = driversLicenseOrStateIDTextField.getText();
+        String employerName = employerNameTextField.getText();
+        String jobTitle = jobTitleTextField.getText();
+        String yearsAtJob = yearsAtJobTextField.getText();
+        String income = (String) incomeComboBox.getSelectedItem();
+
+        String usCitizen = null;
         if(yesUsCitizenRadioButton.isSelected()){
-            seniorcitizen = "Yes";
+            usCitizen = "Yes";
         } else if (noUsCitizenRadioButton.isSelected()) {
-            seniorcitizen = "No";
+            usCitizen = "No";
         }
 
-        String existingaccount = null;
+        String exisitingAccount = null;
         if(yesExisitingAccountButton.isSelected()){
-            existingaccount = "Yes";
+            exisitingAccount = "Yes";
         } else if (noExisitingAccountButton.isSelected()) {
-            existingaccount = "No";
+            exisitingAccount = "No";
         }
 
-        String span = beneficiaryContactNumberTextField.getText();
-        String saadhar = beneficiaryNameTextField.getText();
+        String beneficiaryName = beneficiaryNameTextField.getText();
+        String beneficiaryContactNumber = beneficiaryContactNumberTextField.getText();
 
         try{
             Conn c = new Conn();
-//            String query = "insert into signuptwo values('"+ formNumber +"','"+sreligion+"','"+scategory+"','"+sincome+"','"+seducation+"','"+soccupation+"','"+span+"','"+saadhar+"','"+seniorcitizen+"','"+existingaccount+"')";
-//            c.s.executeUpdate(query);
+            String query = "insert into signuptwo values('"+ formNumber +"','"+ssn+"','"+driversLicenseOrStateID+"','"+employerName+"','"+jobTitle+"','"+yearsAtJob+"','"+income+"','"+usCitizen+"','"+exisitingAccount+"','"+beneficiaryName+"','"+beneficiaryContactNumber+"')";
+            c.s.executeUpdate(query);
 
             setVisible(false);
             new SignupThree(formNumber).setVisible(true);

@@ -15,7 +15,7 @@ public class Login extends JFrame implements ActionListener {
 
     JButton signInButton, clearButton, signUpButton;
     JTextField cardNumberField;
-    JPasswordField pinField;
+    JPasswordField pinTextField;
 
     CreateComponents components;
 
@@ -40,7 +40,7 @@ public class Login extends JFrame implements ActionListener {
         addCardNumberLabel();
         addCardNumberField();
         addPinLabel();
-        addPinField();
+        addPinTextField();
         addSignInButton();
         addClearButton();
         addSignUpButton();
@@ -75,9 +75,9 @@ public class Login extends JFrame implements ActionListener {
         add(pinLabel);
     }
 
-    private void addPinField() {
-        pinField = components.createPasswordField(300, 220, 230, 30,14);
-        add(pinField);
+    private void addPinTextField() {
+        pinTextField = components.createPasswordField(300, 220, 230, 30,14);
+        add(pinTextField);
     }
 
     private void addSignInButton() {
@@ -111,13 +111,13 @@ public class Login extends JFrame implements ActionListener {
 
     private void clearFields() {
         cardNumberField.setText("");
-        pinField.setText("");
+        pinTextField.setText("");
     }
 
     private void signIn() {
         Conn databaseConnector = new Conn();
         String cardnumber = cardNumberField.getText();
-        String pinnumber = pinField.getText();
+        String pinnumber = pinTextField.getText();
         String query = "select * from login where cardnumber = '"+cardnumber+"' and pin = '"+pinnumber+"'";
         try{
             ResultSet rs = databaseConnector.s.executeQuery(query);
