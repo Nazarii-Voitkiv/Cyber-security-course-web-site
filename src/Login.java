@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -27,6 +30,7 @@ public class Login extends JFrame implements ActionListener {
 
         addComponents();
 
+
         getContentPane().setBackground(FRAME_BACKGROUND_COLOR);
 
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -40,7 +44,7 @@ public class Login extends JFrame implements ActionListener {
         addCardNumberLabel();
         addCardNumberField();
         addPinLabel();
-        addPinTextField();
+        addPinPasswordField();
         addSignInButton();
         addClearButton();
         addSignUpButton();
@@ -75,8 +79,19 @@ public class Login extends JFrame implements ActionListener {
         add(pinLabel);
     }
 
-    private void addPinTextField() {
+    private void addPinPasswordField() {
         pinTextField = components.createPasswordField(300, 220, 230, 30,14);
+        pinTextField.setDocument(new PlainDocument() {
+            String chars = "0123456789";
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (chars.indexOf(str) != -1) {
+                    if (getLength()< 4) {
+                        super.insertString(offs, str, a);
+                    }
+                }
+            }
+        });
         add(pinTextField);
     }
 
@@ -116,14 +131,14 @@ public class Login extends JFrame implements ActionListener {
 
     private void signIn() {
         Conn databaseConnector = new Conn();
-        String cardnumber = cardNumberField.getText();
-        String pinnumber = pinTextField.getText();
-        String query = "select * from login where cardnumber = '"+cardnumber+"' and pin = '"+pinnumber+"'";
+        String cardNumber = cardNumberField.getText();
+        String pinNumber = pinTextField.getText();
+        String query = "select * from signup where card_number = '"+cardNumber+"' and pin_number = '"+pinNumber+"'";
         try{
             ResultSet rs = databaseConnector.s.executeQuery(query);
             if(rs.next()){
                 setVisible(false);
-                new Transactions(pinnumber).setVisible(true);
+                new Transactions(pinNumber).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, "Incorrect Card Number or Pin");
             }

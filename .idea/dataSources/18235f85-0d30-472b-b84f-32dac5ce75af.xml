@@ -1012,7 +1012,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="292" parent="1" name="bank">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-07-13.22:33:01</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-07-21.22:20:24</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="293" parent="1" name="mysql.infoschema">
@@ -1038,153 +1038,192 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="298" parent="292" name="login">
+    <table id="298" parent="292" name="signup">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="299" parent="292" name="signup">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="300" parent="292" name="signupthree">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <table id="301" parent="292" name="signuptwo">
-      <Engine>InnoDB</Engine>
-      <CollationName>utf8mb4_0900_ai_ci</CollationName>
-    </table>
-    <column id="302" parent="297" name="pin">
+    <column id="299" parent="297" name="pin">
       <DasType>varchar(10)|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="303" parent="297" name="date">
+    <column id="300" parent="297" name="date">
       <DasType>varchar(50)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="304" parent="297" name="type">
+    <column id="301" parent="297" name="type">
       <DasType>varchar(20)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="305" parent="297" name="amount">
+    <column id="302" parent="297" name="amount">
       <DasType>varchar(20)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="306" parent="298" name="formno">
+    <check id="303" parent="298" name="signup_chk_1">
+      <NameSurrogate>1</NameSurrogate>
+      <Predicate>`years_at_job` &gt;= 0</Predicate>
+    </check>
+    <check id="304" parent="298" name="signup_chk_2">
+      <NameSurrogate>1</NameSurrogate>
+      <Predicate>regexp_like(`pin_number`,_utf8mb4\&apos;^[0-9]{4}$\&apos;)</Predicate>
+    </check>
+    <column id="305" parent="298" name="form_number">
       <DasType>varchar(20)|0s</DasType>
+      <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="307" parent="298" name="cardnumber">
-      <DasType>varchar(25)|0s</DasType>
+    <column id="306" parent="298" name="full_name">
+      <DasType>varchar(50)|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="308" parent="298" name="pin">
-      <DasType>varchar(10)|0s</DasType>
-      <Position>3</Position>
-    </column>
-    <column id="309" parent="299" name="formno">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>1</Position>
-    </column>
-    <column id="310" parent="299" name="name">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="311" parent="299" name="father_name">
+    <column id="307" parent="298" name="date_of_birth">
       <DasType>varchar(20)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="312" parent="299" name="dob">
-      <DasType>varchar(20)|0s</DasType>
+    <column id="308" parent="298" name="gender">
+      <DasType>enum(&apos;Male&apos;, &apos;Female&apos;, &apos;Other&apos;)|0e</DasType>
       <Position>4</Position>
     </column>
-    <column id="313" parent="299" name="gender">
-      <DasType>varchar(20)|0s</DasType>
+    <column id="309" parent="298" name="email">
+      <DasType>varchar(50)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="314" parent="299" name="email">
+    <column id="310" parent="298" name="phone_number">
       <DasType>varchar(30)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="315" parent="299" name="marital_status">
-      <DasType>varchar(20)|0s</DasType>
+    <column id="311" parent="298" name="marital_status">
+      <DasType>enum(&apos;Single&apos;, &apos;Married&apos;, &apos;Divorced&apos;, &apos;Widowed&apos;)|0e</DasType>
       <Position>7</Position>
     </column>
-    <column id="316" parent="299" name="address">
-      <DasType>varchar(40)|0s</DasType>
+    <column id="312" parent="298" name="address">
+      <DasType>varchar(100)|0s</DasType>
       <Position>8</Position>
     </column>
-    <column id="317" parent="299" name="city">
-      <DasType>varchar(25)|0s</DasType>
+    <column id="313" parent="298" name="city">
+      <DasType>varchar(50)|0s</DasType>
       <Position>9</Position>
     </column>
-    <column id="318" parent="299" name="pin">
-      <DasType>varchar(20)|0s</DasType>
+    <column id="314" parent="298" name="state">
+      <DasType>varchar(50)|0s</DasType>
       <Position>10</Position>
     </column>
-    <column id="319" parent="299" name="state">
-      <DasType>varchar(25)|0s</DasType>
+    <column id="315" parent="298" name="zip">
+      <DasType>varchar(10)|0s</DasType>
       <Position>11</Position>
     </column>
-    <column id="320" parent="300" name="formno">
+    <column id="316" parent="298" name="ssn">
       <DasType>varchar(20)|0s</DasType>
-      <Position>1</Position>
+      <Position>12</Position>
     </column>
-    <column id="321" parent="300" name="accountType">
-      <DasType>varchar(40)|0s</DasType>
-      <Position>2</Position>
-    </column>
-    <column id="322" parent="300" name="cardnumber">
+    <column id="317" parent="298" name="drivers_license_or_stateid">
       <DasType>varchar(20)|0s</DasType>
-      <Position>3</Position>
+      <Position>13</Position>
     </column>
-    <column id="323" parent="300" name="pin">
+    <column id="318" parent="298" name="employer_name">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>14</Position>
+    </column>
+    <column id="319" parent="298" name="job_title">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>15</Position>
+    </column>
+    <column id="320" parent="298" name="years_at_job">
+      <DasType>int|0s</DasType>
+      <Position>16</Position>
+    </column>
+    <column id="321" parent="298" name="income">
+      <DasType>varchar(20)|0s</DasType>
+      <Position>17</Position>
+    </column>
+    <column id="322" parent="298" name="us_citizen">
       <DasType>varchar(10)|0s</DasType>
-      <Position>4</Position>
+      <Position>18</Position>
     </column>
-    <column id="324" parent="300" name="facility">
-      <DasType>varchar(100)|0s</DasType>
-      <Position>5</Position>
+    <column id="323" parent="298" name="existing_account">
+      <DasType>varchar(10)|0s</DasType>
+      <Position>19</Position>
     </column>
-    <column id="325" parent="301" name="formno">
+    <column id="324" parent="298" name="beneficiary_name">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>20</Position>
+    </column>
+    <column id="325" parent="298" name="beneficiary_contact_number">
       <DasType>varchar(20)|0s</DasType>
-      <Position>1</Position>
+      <Position>21</Position>
     </column>
-    <column id="326" parent="301" name="religion">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>2</Position>
+    <column id="326" parent="298" name="account_type">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>22</Position>
     </column>
-    <column id="327" parent="301" name="category">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>3</Position>
+    <column id="327" parent="298" name="card_number">
+      <DasType>varchar(25)|0s</DasType>
+      <Position>23</Position>
     </column>
-    <column id="328" parent="301" name="income">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>4</Position>
+    <column id="328" parent="298" name="pin_number">
+      <DasType>char(4)|0s</DasType>
+      <Position>24</Position>
     </column>
-    <column id="329" parent="301" name="education">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>5</Position>
+    <column id="329" parent="298" name="facility">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>25</Position>
     </column>
-    <column id="330" parent="301" name="occupation">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>6</Position>
-    </column>
-    <column id="331" parent="301" name="pan">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>7</Position>
-    </column>
-    <column id="332" parent="301" name="aadhar">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>8</Position>
-    </column>
-    <column id="333" parent="301" name="seniorcitizen">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>9</Position>
-    </column>
-    <column id="334" parent="301" name="existingaccount">
-      <DasType>varchar(20)|0s</DasType>
-      <Position>10</Position>
-    </column>
+    <index id="330" parent="298" name="PRIMARY">
+      <ColNames>form_number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="331" parent="298" name="email">
+      <ColNames>email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="332" parent="298" name="phone_number">
+      <ColNames>phone_number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="333" parent="298" name="ssn">
+      <ColNames>ssn</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="334" parent="298" name="drivers_license_or_stateid">
+      <ColNames>drivers_license_or_stateid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="335" parent="298" name="card_number">
+      <ColNames>card_number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="336" parent="298" name="pin_number">
+      <ColNames>pin_number</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="337" parent="298" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="338" parent="298" name="email">
+      <UnderlyingIndexName>email</UnderlyingIndexName>
+    </key>
+    <key id="339" parent="298" name="phone_number">
+      <UnderlyingIndexName>phone_number</UnderlyingIndexName>
+    </key>
+    <key id="340" parent="298" name="ssn">
+      <UnderlyingIndexName>ssn</UnderlyingIndexName>
+    </key>
+    <key id="341" parent="298" name="drivers_license_or_stateid">
+      <UnderlyingIndexName>drivers_license_or_stateid</UnderlyingIndexName>
+    </key>
+    <key id="342" parent="298" name="card_number">
+      <UnderlyingIndexName>card_number</UnderlyingIndexName>
+    </key>
+    <key id="343" parent="298" name="pin_number">
+      <UnderlyingIndexName>pin_number</UnderlyingIndexName>
+    </key>
   </database-model>
 </dataSource>

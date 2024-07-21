@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import java.util.Random;
 import com.toedter.calendar.JDateChooser;
 
@@ -12,7 +13,8 @@ public class SignupOne extends JFrame implements ActionListener {
     long randomFormNumber;
     JTextField fullNameTextField, phoneNumberTextField, emailTextField, addressTextField, cityTextField, stateTextField, zipTextField;
     JButton nextButton;
-    JRadioButton maleRadioButton, femaleRadioButton, otherGenderRadioButton, marriedRadioButton, unmarriedRadioButton, otherMaritalRadioButton;
+    JComboBox maritalComboBox;
+    JRadioButton maleRadioButton, femaleRadioButton, otherGenderRadioButton;
     JDateChooser dobChooser;
 
     CreateComponents components;
@@ -42,8 +44,6 @@ public class SignupOne extends JFrame implements ActionListener {
         addGenderButtonGroup();
         addEmailLabel();
         addEmailTextField();
-        addPhoneNumberLabel();
-        addPhoneNumberTextField();
         addMaritalStatusLabel();
         addMaritalStatusButtonGroup();
         addAddressLabel();
@@ -104,7 +104,7 @@ public class SignupOne extends JFrame implements ActionListener {
         femaleRadioButton = components.createRadioButton("Female",450,240,120,30,16,Color.white);
         add(femaleRadioButton);
 
-        otherGenderRadioButton = components.createRadioButton("Other",630,240,120,30,16,Color.white);
+        otherGenderRadioButton = components.createRadioButton("Other",620,240,120,30,16,Color.white);
         add(otherGenderRadioButton);
 
         ButtonGroup genderButtonGroup = new ButtonGroup();
@@ -138,19 +138,9 @@ public class SignupOne extends JFrame implements ActionListener {
     }
 
     private void addMaritalStatusButtonGroup() {
-        marriedRadioButton = components.createRadioButton("Married",300,390,100,30,16,Color.white);
-        add(marriedRadioButton);
-
-        unmarriedRadioButton = components.createRadioButton("Unmarried", 450,390,100,30,16,Color.white);
-        add(unmarriedRadioButton);
-
-        otherMaritalRadioButton = components.createRadioButton("Other",630,390,100,30,16,Color.white);
-        add(otherMaritalRadioButton);
-
-        ButtonGroup maritalStatusButtonGroup = new ButtonGroup();
-        maritalStatusButtonGroup.add(marriedRadioButton);
-        maritalStatusButtonGroup.add(unmarriedRadioButton);
-        maritalStatusButtonGroup.add(otherMaritalRadioButton);
+        String maritalValues[] = {"Single", "Married", "Divorced", "Widowed"};
+        maritalComboBox = components.createComboBox(maritalValues,300,390,400,30,Color.white);
+        add(maritalComboBox);
     }
 
     private void addAddressLabel() {
@@ -214,29 +204,71 @@ public class SignupOne extends JFrame implements ActionListener {
             gender = "Male";
         } else if (femaleRadioButton.isSelected()) {
             gender = "Female";
+        } else if (otherGenderRadioButton.isSelected()) {
+            gender = "Other";
         }
 
         String email = emailTextField.getText();
-        String maritalStatus = null;
-        if(marriedRadioButton.isSelected()){
-            maritalStatus = "Married";
-        } else if (unmarriedRadioButton.isSelected()) {
-            maritalStatus = "Unmarried";
-        } else if (otherMaritalRadioButton.isSelected()) {
-            maritalStatus = "Other";
-        }
-
+        String maritalStatus = (String) maritalComboBox.getSelectedItem();
         String address = addressTextField.getText();
         String city = cityTextField.getText();
         String state = stateTextField.getText();
         String zip = zipTextField.getText();
 
+        System.out.println("Full Name: " + fullName);
+        System.out.println("Phone Number: " + phoneNumber);
+        System.out.println("DOB: " + dob);
+        System.out.println("Gender: " + gender);
+        System.out.println("Email: " + email);
+        System.out.println("Marital Status: " + maritalStatus);
+        System.out.println("Address: " + address);
+        System.out.println("City: " + city);
+        System.out.println("State: " + state);
+        System.out.println("ZIP: " + zip);
+
         try{
-            if(fullName.equals("") || phoneNumber.equals("") || dob.equals("") || gender.equals("") || email.equals("") || maritalStatus.equals("") || address.equals("") || city.equals("") || state.equals("") || zip.equals("")){
-                JOptionPane.showMessageDialog(null, "Not all fields are filled!");
+            if (fullName.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Full Name is not filled!");
+                return;
+            } else
+            if (phoneNumber.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Phone Number is not filled!");
+                return;
+            } else
+            if (dob.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Date of Birth is not filled!");
+                return;
+            } else
+            if (gender == null) {
+                JOptionPane.showMessageDialog(null, "Gender is not selected!");
+                return;
+            } else
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Email is not filled!");
+                return;
+            } else
+            if (maritalStatus == null) {
+                JOptionPane.showMessageDialog(null, "Marital Status is not selected!");
+                return;
+            } else
+            if (address.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Address is not filled!");
+                return;
+            } else
+            if (city.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "City is not filled!");
+                return;
+            } else
+            if (state.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "State is not filled!");
+                return;
+            }else if (zip.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "ZIP Code is not filled!");
+                return;
             } else {
                 Conn c = new Conn();
-                String query = "insert into signup values('"+formNumber+"','"+fullName+"','"+dob+"','"+gender+"','"+email+"','"+phoneNumber+"','"+maritalStatus+"','"+address+"','"+city+"','"+state+"','"+zip+"')";
+                String query = "INSERT INTO signup (form_number, full_name, date_of_birth, gender, email, phone_number, marital_status, address, city, state, zip) " +
+                               "VALUES ('" + formNumber + "','" + fullName + "','" + dob + "','" + gender + "','" + email + "','" + phoneNumber + "','" + maritalStatus + "','" + address + "','" + city + "','" + state + "','" + zip + "')";
                 c.s.executeUpdate(query);
 
                 setVisible(false);
@@ -246,6 +278,7 @@ public class SignupOne extends JFrame implements ActionListener {
             System.out.println(ae);
         }
     }
+
     public static void main(String[] args){
         new SignupOne();
     }

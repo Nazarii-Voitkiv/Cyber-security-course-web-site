@@ -8,7 +8,7 @@ public class SignupTwo extends JFrame implements ActionListener {
     private static final int FRAME_HEIGHT = 800;
     JTextField ssnTextField, driversLicenseOrStateIDTextField, employerNameTextField, jobTitleTextField, yearsAtJobTextField, beneficiaryContactNumberTextField, beneficiaryNameTextField;
     JButton nextButton;
-    JRadioButton yesUsCitizenRadioButton, noUsCitizenRadioButton, yesExisitingAccountButton, noExisitingAccountButton;
+    JRadioButton yesUsCitizenRadioButton, noUsCitizenRadioButton, yesExistingAccountButton, noExistingAccountButton;
     JComboBox incomeComboBox;
     String formNumber;
 
@@ -124,9 +124,7 @@ public class SignupTwo extends JFrame implements ActionListener {
     }
 
     private void addUsCitizenButtonGroup() {
-        yesUsCitizenRadioButton = new JRadioButton("Yes");
-        yesUsCitizenRadioButton.setBounds(450,440,100,30);
-        yesUsCitizenRadioButton.setBackground(Color.white);
+        yesUsCitizenRadioButton = components.createRadioButton("Yes",450,440,100,30,16,Color.white);
         add(yesUsCitizenRadioButton);
 
         noUsCitizenRadioButton = components.createRadioButton("No",600,440,100,30, 16, Color.white);
@@ -144,15 +142,15 @@ public class SignupTwo extends JFrame implements ActionListener {
     }
 
     private void addExisitingAccountButtonGroup() {
-        yesExisitingAccountButton = components.createRadioButton("Yes",450,490,100,30,16,Color.white);
-        add(yesExisitingAccountButton);
+        yesExistingAccountButton = components.createRadioButton("Yes",450,490,100,30,16,Color.white);
+        add(yesExistingAccountButton);
 
-        noExisitingAccountButton = components.createRadioButton("No",600,490,100,30,16,Color.white);
-        add(noExisitingAccountButton);
+        noExistingAccountButton = components.createRadioButton("No",600,490,100,30,16,Color.white);
+        add(noExistingAccountButton);
 
         ButtonGroup exisitingAccountButtonGroup = new ButtonGroup();
-        exisitingAccountButtonGroup.add(yesExisitingAccountButton);
-        exisitingAccountButtonGroup.add(noExisitingAccountButton);
+        exisitingAccountButtonGroup.add(yesExistingAccountButton);
+        exisitingAccountButtonGroup.add(noExistingAccountButton);
     }
 
     private void addBeneficiaryNameLabel() {
@@ -201,11 +199,11 @@ public class SignupTwo extends JFrame implements ActionListener {
             usCitizen = "No";
         }
 
-        String exisitingAccount = null;
-        if(yesExisitingAccountButton.isSelected()){
-            exisitingAccount = "Yes";
-        } else if (noExisitingAccountButton.isSelected()) {
-            exisitingAccount = "No";
+        String existingAccount = null;
+        if(yesExistingAccountButton.isSelected()){
+            existingAccount = "Yes";
+        } else if (noExistingAccountButton.isSelected()) {
+            existingAccount = "No";
         }
 
         String beneficiaryName = beneficiaryNameTextField.getText();
@@ -213,7 +211,7 @@ public class SignupTwo extends JFrame implements ActionListener {
 
         try{
             Conn c = new Conn();
-            String query = "insert into signuptwo values('"+ formNumber +"','"+ssn+"','"+driversLicenseOrStateID+"','"+employerName+"','"+jobTitle+"','"+yearsAtJob+"','"+income+"','"+usCitizen+"','"+exisitingAccount+"','"+beneficiaryName+"','"+beneficiaryContactNumber+"')";
+            String query = "UPDATE signup SET ssn = '" + ssn + "', drivers_license_or_stateid = '" + driversLicenseOrStateID + "', employer_name = '" + employerName + "', job_title = '" + jobTitle + "', years_at_job = '" + yearsAtJob + "', income = '" + income + "', us_citizen = '" + usCitizen + "', existing_account = '" + existingAccount + "', beneficiary_name = '" + beneficiaryName + "', beneficiary_contact_number = '" + beneficiaryContactNumber + "' WHERE form_number = '" + formNumber + "'";
             c.s.executeUpdate(query);
 
             setVisible(false);
@@ -222,6 +220,7 @@ public class SignupTwo extends JFrame implements ActionListener {
             System.out.println(ae);
         }
     }
+
     public static void main(String[] args){
         new SignupTwo("");
     }

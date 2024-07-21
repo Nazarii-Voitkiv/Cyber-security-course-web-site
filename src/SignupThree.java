@@ -168,22 +168,22 @@ public class SignupThree extends JFrame implements ActionListener {
 
             String facility = "";
             if(atmCardCheckBox.isSelected()){
-                facility = facility + " ATM Card";
+                facility += " ATM Card";
             }
             if(onlineBanking.isSelected()){
-                facility = facility + " Internet Banking";
+                facility += " Internet Banking";
             }
             if(mobileBankingCheckBox.isSelected()){
-                facility = facility + " Mobile Banking";
+                facility += " Mobile Banking";
             }
             if(emailSmsAlertsCheckBox.isSelected()){
-                facility = facility + " EMAIL Alerts";
+                facility += " EMAIL Alerts";
             }
             if(checkbookCheckBox.isSelected()){
-                facility = facility + " Cheque Book";
+                facility += " Cheque Book";
             }
             if(statementsCheckBox.isSelected()){
-                facility = facility + " E-Statement";
+                facility += " E-Statement";
             }
 
             try{
@@ -191,13 +191,10 @@ public class SignupThree extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Fill all the required fields");
                 } else {
                     Conn conn = new Conn();
-                    String query1 = "insert into signupthree values('"+ formNumber +"','"+accountType+"','"+cardNumber+"','"+pinNumber+"','"+facility+"')";
-                    String query2 = "insert into login values('"+ formNumber +"','"+cardNumber+"','"+pinNumber+"')";
+                    String query = "UPDATE signup SET account_type = '" + accountType + "', card_number = '" + cardNumber + "', pin_number = '" + pinNumber + "', facility = '" + facility + "' WHERE form_number = '" + formNumber + "'";
+                    conn.s.executeUpdate(query);
 
-                    conn.s.executeUpdate(query1);
-                    conn.s.executeUpdate(query2);
-
-                    JOptionPane.showMessageDialog(null, "Card Number: " + cardNumber + "\n Pin: "+pinNumber);
+                    JOptionPane.showMessageDialog(null, "Card Number: " + cardNumber + "\n Pin: " + pinNumber);
 
                     setVisible(false);
                     new Transactions(pinNumber).setVisible(true);
@@ -210,6 +207,7 @@ public class SignupThree extends JFrame implements ActionListener {
             new Login().setVisible(true);
         }
     }
+
     public static void main(String[] args){
         new SignupThree("");
     }
