@@ -229,42 +229,32 @@ public class SignupOne extends JFrame implements ActionListener {
         try{
             if (fullName.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Full Name is not filled!");
-                return;
             } else
             if (phoneNumber.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Phone Number is not filled!");
-                return;
             } else
             if (dob.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Date of Birth is not filled!");
-                return;
             } else
             if (gender == null) {
                 JOptionPane.showMessageDialog(null, "Gender is not selected!");
-                return;
             } else
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Email is not filled!");
-                return;
             } else
             if (maritalStatus == null) {
                 JOptionPane.showMessageDialog(null, "Marital Status is not selected!");
-                return;
             } else
             if (address.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Address is not filled!");
-                return;
             } else
             if (city.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "City is not filled!");
-                return;
             } else
             if (state.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "State is not filled!");
-                return;
             }else if (zip.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "ZIP Code is not filled!");
-                return;
             } else {
                 Conn c = new Conn();
                 String query = "INSERT INTO signup (form_number, full_name, date_of_birth, gender, email, phone_number, marital_status, address, city, state, zip) " +

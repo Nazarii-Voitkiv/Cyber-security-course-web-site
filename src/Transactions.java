@@ -7,13 +7,13 @@ public class Transactions extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 690;
     private static final int FRAME_HEIGHT = 900;
     JButton depositButton, withdrawlButton, fastCashButton, ministatementButton, pinChangeButton, balanceEnquiryButton, exitButton;
-    String pinnumber;
+    String cardNumber;
     JLabel imageBackgroundLabel;
 
     CreateComponents components;
-    Transactions(String pinNumber) {
+    Transactions(String cardNumber) {
         components = new CreateComponents();
-        this.pinnumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setLayout(null);
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -93,22 +93,22 @@ public class Transactions extends JFrame implements ActionListener {
             System.exit(0);
         } else if (e.getSource() == depositButton) {
             setVisible(false);
-            new Deposit(pinnumber).setVisible(true);
+            new Deposit(cardNumber).setVisible(true);
         } else if (e.getSource() == withdrawlButton) {
             setVisible(false);
-            new Withdrawl(pinnumber).setVisible(true);
+            new Withdrawl(cardNumber).setVisible(true);
         } else if (e.getSource() == fastCashButton) {
             setVisible(false);
-            new FastCash(pinnumber).setVisible(true);
+            new FastCash(cardNumber).setVisible(true);
         } else if (e.getSource() == pinChangeButton) {
             setVisible(false);
-            new PinChange(pinnumber).setVisible(true);
+            new PinChange(cardNumber).setVisible(true);
         } else if (e.getSource() == balanceEnquiryButton) {
             setVisible(false);
-            new BalanceEnquiry(pinnumber).setVisible(true);
+            new BalanceEnquiry(cardNumber).setVisible(true);
         } else if (e.getSource() == ministatementButton) {
             setVisible(false);
-            new MiniStatement(pinnumber).setVisible(true);
+            new MiniStatement(cardNumber).setVisible(true);
         }
     }
 

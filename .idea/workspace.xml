@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="" />
+    <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SignupOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupOne.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SignupThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupThree.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,6 +90,7 @@
       <workItem from="1720790090606" duration="35667000" />
       <workItem from="1720877251573" duration="74565000" />
       <workItem from="1721544401961" duration="10526000" />
+      <workItem from="1722117115579" duration="357000" />
     </task>
     <servers />
   </component>
