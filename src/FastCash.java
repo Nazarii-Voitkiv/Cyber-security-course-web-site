@@ -10,12 +10,12 @@ public class FastCash extends JFrame implements ActionListener {
     private static final int FRAME_HEIGHT = 900;
     JButton fastcash100Button, fastcash500Button, fastcash1000Button, fastcash2000Button, fastcash5000Button, fastcash10000Button, backButton;
     JLabel imageBackgroundLabel;
-    String pinNumber;
+    String cardNumber;
 
     CreateComponents components;
-    FastCash(String pinNumber) {
+    FastCash(String cardNumber) {
         components = new CreateComponents();
-        this.pinNumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setLayout(null);
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -93,12 +93,12 @@ public class FastCash extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == backButton) {
             setVisible(false);
-            new Transactions(pinNumber);
+            new Transactions(cardNumber);
         } else {
             String amount = ((JButton) e.getSource()).getText().substring(1);;
             Conn c = new Conn();
             try{
-                ResultSet rs = c.s.executeQuery("select * from bank where pin = '"+ pinNumber +"'");
+                ResultSet rs = c.s.executeQuery("select * from transactions where card_number = '"+ cardNumber +"'");
                 int balance = 0;
                 while (rs.next()){
                     if (rs.getString("type").equals("Deposit")) {
@@ -114,12 +114,12 @@ public class FastCash extends JFrame implements ActionListener {
                 }
 
                 Date date = new Date();
-                String query = "insert into bank values('"+ pinNumber +"', '"+date+"', 'Withdrawl', '"+amount+"')";
+                String query = "insert into transactions values('"+ cardNumber +"', '"+date+"', 'Withdrawl', '"+amount+"')";
                 c.s.executeUpdate(query);
                 JOptionPane.showMessageDialog(null, "$"+amount+" Debited Successfully");
 
                 setVisible(false);
-                new Transactions(pinNumber).setVisible(true);
+                new Transactions(cardNumber).setVisible(true);
             } catch (Exception ae) {
                 System.out.println(ae);
             }
@@ -129,6 +129,4 @@ public class FastCash extends JFrame implements ActionListener {
     public static void main(String[] args){
         new FastCash("");
     }
-
-
 }

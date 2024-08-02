@@ -7,13 +7,13 @@ import java.sql.ResultSet;
 public class MiniStatement extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 400;
     private static final int FRAME_HEIGHT = 600;
-    String pinNumber;
+    String cardNumber;
     JLabel transactionsLabel, cardNumberLabel, balanceLabel;
     JButton backButton;
     CreateComponents components;
-    MiniStatement(String pinNumber) {
+    MiniStatement(String cardNumber) {
         components = new CreateComponents();
-        this.pinNumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
@@ -58,7 +58,7 @@ public class MiniStatement extends JFrame implements ActionListener {
     private void showCardNumber() {
         try {
             Conn conn = new Conn();
-            ResultSet rs = conn.s.executeQuery("select * from login where pin = '"+ pinNumber +"'");
+            ResultSet rs = conn.s.executeQuery("select * from signup where card_number = '"+ cardNumber +"'");
             while (rs.next()) {
                 cardNumberLabel.setText("Card Number:    " + rs.getString("cardnumber").substring(0, 4) + "XXXXXXXX" + rs.getString("cardnumber").substring(12));
             }
@@ -77,7 +77,7 @@ public class MiniStatement extends JFrame implements ActionListener {
         try {
             Conn conn = new Conn();
             int balance = 0;
-            ResultSet rs = conn.s.executeQuery("select * from bank where pin = '"+ pinNumber +"'");
+            ResultSet rs = conn.s.executeQuery("select * from transactions where card_number = '"+ cardNumber +"'");
             while (rs.next()) {
                 transactionsLabel.setText(transactionsLabel.getText() + "<html>"+rs.getString("date")+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("type") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("amount") + "<br><br><html>");
                 if (rs.getString("type").equals("Deposit")) {
@@ -96,7 +96,7 @@ public class MiniStatement extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        new Transactions(pinNumber).setVisible(true);
+        new Transactions(cardNumber).setVisible(true);
     }
 
     public static void main(String[] args){

@@ -9,11 +9,11 @@ public class PinChange extends JFrame implements ActionListener {
     JPasswordField pinPasswordField, rePinPasswordField;
     JButton changeButton, backButton;
     JLabel imageBackgroundLabel;
-    String pinNumber;
+    String cardNumber;
     CreateComponents components;
-    PinChange(String pinNumber) {
+    PinChange(String cardNumber) {
         components = new CreateComponents();
-        this.pinNumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setLayout(null);
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -102,13 +102,8 @@ public class PinChange extends JFrame implements ActionListener {
                 }
 
                 Conn conn = new Conn();
-                String query1 = "update bank set pin = '"+rpin+"' where pin = '"+ pinNumber +"' ";
-                String query2 = "update login set pin = '"+rpin+"' where pin = '"+ pinNumber +"' ";
-                String query3 = "update signupthree set pin = '"+rpin+"' where pin = '"+ pinNumber +"' ";
-
-                conn.s.executeUpdate(query1);
-                conn.s.executeUpdate(query2);
-                conn.s.executeUpdate(query3);
+                String query = "update signup set pin_number = '"+rpin+"' where card_number = '"+ cardNumber +"' ";
+                conn.s.executeUpdate(query);
 
                 JOptionPane.showMessageDialog(null, "PIN changed successfully");
                 setVisible(false);
@@ -118,7 +113,7 @@ public class PinChange extends JFrame implements ActionListener {
             }
         } else {
             setVisible(false);
-            new Transactions(pinNumber).setVisible(true);
+            new Transactions(cardNumber).setVisible(true);
         }
 
     }

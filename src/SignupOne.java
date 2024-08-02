@@ -215,46 +215,18 @@ public class SignupOne extends JFrame implements ActionListener {
         String state = stateTextField.getText();
         String zip = zipTextField.getText();
 
-        System.out.println("Full Name: " + fullName);
-        System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("DOB: " + dob);
-        System.out.println("Gender: " + gender);
-        System.out.println("Email: " + email);
-        System.out.println("Marital Status: " + maritalStatus);
-        System.out.println("Address: " + address);
-        System.out.println("City: " + city);
-        System.out.println("State: " + state);
-        System.out.println("ZIP: " + zip);
-
         try{
-            if (fullName.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Full Name is not filled!");
-            } else
-            if (phoneNumber.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Phone Number is not filled!");
-            } else
-            if (dob.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Date of Birth is not filled!");
-            } else
-            if (gender == null) {
-                JOptionPane.showMessageDialog(null, "Gender is not selected!");
-            } else
-            if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Email is not filled!");
-            } else
-            if (maritalStatus == null) {
-                JOptionPane.showMessageDialog(null, "Marital Status is not selected!");
-            } else
-            if (address.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Address is not filled!");
-            } else
-            if (city.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "City is not filled!");
-            } else
-            if (state.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "State is not filled!");
-            }else if (zip.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "ZIP Code is not filled!");
+            if (fullName.isEmpty() ||
+                    phoneNumber.isEmpty() ||
+                    dob.isEmpty() ||
+                    gender == null ||
+                    email.isEmpty() ||
+                    maritalStatus == null ||
+                    address.isEmpty() ||
+                    city.isEmpty() ||
+                    state.isEmpty() ||
+                    zip.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Fill in all fields!");
             } else {
                 Conn c = new Conn();
                 String query = "INSERT INTO signup (form_number, full_name, date_of_birth, gender, email, phone_number, marital_status, address, city, state, zip) " +

@@ -10,11 +10,11 @@ public class Deposit extends JFrame implements ActionListener {
     JTextField amountTextField;
     JButton depositButton, backButton;
     JLabel imageBackgroundLabel;
-    String pinNumber;
+    String cardNumber;
     CreateComponents components;
-    Deposit(String pinNumber){
+    Deposit(String cardNumber){
         components = new CreateComponents();
-        this.pinNumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setLayout(null);
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -70,15 +70,15 @@ public class Deposit extends JFrame implements ActionListener {
                 } else {
                     Conn conn = new Conn();
 
-                    String query = "insert into bank values('"+ pinNumber +"', '"+date+"', 'Deposit', '"+number+"')";
+                    String query = "insert into transactions values('"+ cardNumber +"', '"+date+"', 'Deposit', '"+number+"')";
                     conn.s.executeUpdate(query);
                     JOptionPane.showMessageDialog(null, "$"+number+" Deposited Successfully");
                     setVisible(false);
-                    new Transactions(pinNumber).setVisible(true);
+                    new Transactions(cardNumber).setVisible(true);
                 }
             } else if (e.getSource() == backButton) {
                 setVisible(false);
-                new Transactions(pinNumber).setVisible(true);
+                new Transactions(cardNumber).setVisible(true);
             }
         } catch (Exception ae) {
             System.out.println(ae);

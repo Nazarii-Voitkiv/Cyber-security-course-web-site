@@ -8,14 +8,14 @@ public class BalanceEnquiry extends JFrame implements ActionListener {
     private static final int FRAME_WIDTH = 690;
     private static final int FRAME_HEIGHT = 900;
 
-    String pinNumber;
+    String cardNumber;
     JButton backButton;
     JLabel imageBackgroundLabel;
 
     CreateComponents components;
-    BalanceEnquiry(String pinNumber) {
+    BalanceEnquiry(String cardNumber) {
         components = new CreateComponents();
-        this.pinNumber = pinNumber;
+        this.cardNumber = cardNumber;
 
         setLayout(null);
         setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -46,7 +46,7 @@ public class BalanceEnquiry extends JFrame implements ActionListener {
         Conn c = new Conn();
         int balance = 0;
         try {
-            ResultSet rs = c.s.executeQuery("select * from bank where pin = '" + pinNumber + "'");
+            ResultSet rs = c.s.executeQuery("select * from transactions where card_number = '" + cardNumber + "'");
 
             while (rs.next()) {
                 if (rs.getString("type").equals("Deposit")) {
@@ -66,7 +66,7 @@ public class BalanceEnquiry extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         setVisible(false);
-        new Transactions(pinNumber).setVisible(true);
+        new Transactions(cardNumber).setVisible(true);
     }
 
     public static void main(String[] args){
