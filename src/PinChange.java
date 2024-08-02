@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,6 +57,17 @@ public class PinChange extends JFrame implements ActionListener {
 
     private void addPinPasswordField() {
         pinPasswordField = components.createPasswordField(340,320,180,25,25);
+        pinPasswordField.setDocument(new PlainDocument() {
+            String chars = "0123456789";
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (chars.indexOf(str) != -1) {
+                    if (getLength()< 4) {
+                        super.insertString(offs, str, a);
+                    }
+                }
+            }
+        });
         imageBackgroundLabel.add(pinPasswordField);
     }
 
@@ -64,6 +78,17 @@ public class PinChange extends JFrame implements ActionListener {
 
     private void addRePinPasswordField() {
         rePinPasswordField = components.createPasswordField(340,360,180,25,25);
+        rePinPasswordField.setDocument(new PlainDocument() {
+            String chars = "0123456789";
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (chars.indexOf(str) != -1) {
+                    if (getLength()< 4) {
+                        super.insertString(offs, str, a);
+                    }
+                }
+            }
+        });
         imageBackgroundLabel.add(rePinPasswordField);
     }
 

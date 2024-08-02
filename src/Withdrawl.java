@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,6 +50,15 @@ public class Withdrawl extends JFrame implements ActionListener {
 
     private void addAmountTextField() {
         amountTextField = components.createTextField(185,350,320,30,22);
+        amountTextField.setDocument(new PlainDocument() {
+            String chars = "0123456789";
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (chars.indexOf(str) != -1) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
         imageBackgroundLabel.add(amountTextField);
     }
 

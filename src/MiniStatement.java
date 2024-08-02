@@ -51,7 +51,7 @@ public class MiniStatement extends JFrame implements ActionListener {
     }
 
     private void addBalanceLabel() {
-        balanceLabel = components.createLabel("",20,400,300,20,16);
+        balanceLabel = components.createLabel("",20,400,500,20,16);
         add(balanceLabel);
     }
 

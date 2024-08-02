@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BalanceEnquiry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BalanceEnquiry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Conn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Conn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Deposit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Deposit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FastCash.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FastCash.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MiniStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MiniStatement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PinChange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PinChange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupOne.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupOne.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SignupThree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SignupThree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Withdrawl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Withdrawl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +93,7 @@
       <workItem from="1721544401961" duration="10526000" />
       <workItem from="1722117115579" duration="1119000" />
       <workItem from="1722165697924" duration="1681000" />
-      <workItem from="1722601538260" duration="2879000" />
+      <workItem from="1722601538260" duration="3726000" />
     </task>
     <servers />
   </component>
