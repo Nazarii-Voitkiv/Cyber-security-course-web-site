@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="" />
+    <list default="true" id="f64954c9-1641-4f54-9fee-a70b48cbc98d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/4134b8dc-5c79-4d17-8cc0-94c93a5e1af5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/4134b8dc-5c79-4d17-8cc0-94c93a5e1af5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,44 +35,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Application.BalanceEnquiry.executor": "Run",
-    "Application.Deposit.executor": "Run",
-    "Application.FastCash.executor": "Run",
-    "Application.Login.executor": "Run",
-    "Application.MiniStatement.executor": "Run",
-    "Application.PinChange.executor": "Run",
-    "Application.SignupOne.executor": "Run",
-    "Application.SignupThree.executor": "Run",
-    "Application.SignupTwo.executor": "Run",
-    "Application.Transactions.executor": "Run",
-    "Application.Withdrawl.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/nazarii/IdeaProjects/Bank/src/icons",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "/Users/nazarii/IdeaProjects/Bank/src/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Database",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Application.BalanceEnquiry.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Deposit.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FastCash.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Login.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MiniStatement.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PinChange.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignupOne.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignupThree.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SignupTwo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Transactions.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Withdrawl.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/nazarii/IdeaProjects/Bank/src/icons&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/nazarii/IdeaProjects/Bank/src/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Database&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/icons" />
@@ -89,7 +93,9 @@
       <workItem from="1721544401961" duration="10526000" />
       <workItem from="1722117115579" duration="1119000" />
       <workItem from="1722165697924" duration="1681000" />
-      <workItem from="1722601538260" duration="4031000" />
+      <workItem from="1722601538260" duration="4777000" />
+      <workItem from="1722691226999" duration="797000" />
+      <workItem from="1722779472949" duration="158000" />
     </task>
     <servers />
   </component>
