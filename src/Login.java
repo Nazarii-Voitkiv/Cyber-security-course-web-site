@@ -27,12 +27,8 @@ public class Login extends JFrame implements ActionListener {
         setTitle("AUTOMATED TELLER MACHINE");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         addComponents();
-
-
         getContentPane().setBackground(FRAME_BACKGROUND_COLOR);
-
         setSize(FRAME_WIDTH, FRAME_HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
