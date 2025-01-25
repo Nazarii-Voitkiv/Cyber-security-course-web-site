@@ -103,7 +103,7 @@ export default function ProgramSection() {
                       <h3 className="text-xl font-semibold text-white">
                         Модуль {module.id}: {module.title}
                       </h3>
-                      <p className="text-gray-400 mt-1">{module.description}</p>
+                      <p className="text-gray-400 mt-1">{module.description.replace("'", "&apos;")}</p>
                     </div>
                     <ChevronDownIcon 
                       className={`h-6 w-6 text-cyan-400 transition-transform duration-300 
