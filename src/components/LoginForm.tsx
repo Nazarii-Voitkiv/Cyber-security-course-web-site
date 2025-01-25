@@ -7,11 +7,13 @@ import { useRouter } from 'next/navigation';
 export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+
     try {
       const result = await signIn('credentials', {
         username,
@@ -20,12 +22,13 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        setError('Невірні дані для входу');
-      } else {
-        router.push('/dashboard');
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      setError('Помилка входу');
+
+      router.push('/dashboard');
+    } catch {
+      setLoading(false);
     }
   };
 
@@ -62,15 +65,12 @@ export default function LoginForm() {
           />
         </div>
 
-        {error && (
-          <div className="text-red-500 text-sm text-center">{error}</div>
-        )}
-
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-cyan-400 hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+          disabled={loading}
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black bg-cyan-400 hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-50"
         >
-          Увійти
+          {loading ? 'Вхід...' : 'Увійти'}
         </button>
       </form>
     </div>

@@ -48,7 +48,7 @@ export default function DashboardContent() {
   ]);
 
   const [activeSection, setActiveSection] = useState(sections[0].id);
-  const [pixelId, setPixelId] = useState(process.env.NEXT_PUBLIC_FB_PIXEL_ID || '');
+  const [pixelId, setPixelId] = useState('');
 
   const handleContentChange = (sectionId: string, newContent: string) => {
     setSections(sections.map(section => 
@@ -68,7 +68,7 @@ export default function DashboardContent() {
         body: JSON.stringify({ sections, pixelId }),
       });
       // Show success message
-    } catch (error) {
+    } catch {
       // Show error message
     }
   };
@@ -83,7 +83,7 @@ export default function DashboardContent() {
         body: JSON.stringify({ pixelId }),
       });
       // Show success message
-    } catch (error) {
+    } catch {
       // Show error message
     }
   };
