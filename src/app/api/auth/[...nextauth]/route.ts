@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { compare } from 'bcryptjs';
 
 const handler = NextAuth({
   providers: [
@@ -10,31 +11,45 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        // In production, replace with secure credentials check
-        if (credentials?.username === process.env.ADMIN_USERNAME && 
-            credentials?.password === process.env.ADMIN_PASSWORD) {
+        if (!credentials?.username || !credentials?.password) {
+          return null;
+        }
+
+        const expectedUsername = process.env.ADMIN_USERNAME;
+        const expectedPassword = process.env.ADMIN_PASSWORD;
+
+        if (!expectedUsername || !expectedPassword) {
+          throw new Error('Missing environment variables for authentication');
+        }
+
+        if (credentials.username === expectedUsername && credentials.password === expectedPassword) {
           return {
             id: '1',
             name: 'Admin',
+            email: 'admin@example.com'
           };
         }
+
         return null;
       }
     })
   ],
-  pages: {
-    signIn: '/dashboard-login',
-  },
-  session: {
-    strategy: 'jwt',
-  },
   callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
     async session({ session, token }) {
       if (session?.user) {
         session.user.id = token.sub;
       }
       return session;
     },
+  },
+  pages: {
+    signIn: '/admin/login',
   },
 });
 
