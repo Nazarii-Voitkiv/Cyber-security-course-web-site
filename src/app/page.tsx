@@ -9,6 +9,7 @@ import ProgramSection from '@/components/ProgramSection';
 import ComparePlansSection from '@/components/ComparePlansSection';
 import FaqSection from '@/components/FaqSection';
 import FooterSection from '@/components/FooterSection';
+import LearningProcessSection from '@/components/LearningProcessSection';
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <HeroSection />
       <ForWhomSection />
       <BenefitsSection />
+      <LearningProcessSection />
       <ProgramSection />
       <ComparePlansSection />
       <FaqSection />

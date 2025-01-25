@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon } from '@heroicons/react/24/outline';
+import CountdownTimer from './CountdownTimer';
 
 const courseTypes = [
   {
@@ -33,25 +34,15 @@ const courseTypes = [
   }
 ];
 
-function GlitchText({ text, className, alwaysGlitch = false }) {
-  return (
-    <span className={`cyber-glitch-effect ${className}`}>
-      {text}
-      <span className="cyber-glitch-effect__layer cyber-glitch-effect__layer--1">{text}</span>
-      <span className="cyber-glitch-effect__layer cyber-glitch-effect__layer--2">{text}</span>
-      <span className="cyber-glitch-effect__layer cyber-glitch-effect__layer--3">{text}</span>
-    </span>
-  );
-}
-
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center">
-      {/* Неонова лінія зверху */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500" />
+    <section className="relative min-h-screen cyber-background">
+      {/* Кібер-елементи */}
+      <div className="matrix-grid" />
+      <div className="glitch-overlay" />
       
       {/* Основний контент */}
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 py-8 relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,24 +56,18 @@ export default function HeroSection() {
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className="mb-8"
           >
-            <ShieldCheckIcon className="h-20 w-20 mx-auto text-cyan-400" />
+            <ShieldCheckIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto text-cyan-400" />
           </motion.div>
 
           {/* Заголовок */}
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-            <GlitchText text="Онлайн-курс з кібербезпеки" />
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient">
+            Онлайн-курс з кібербезпеки
           </h1>
 
           {/* Підзаголовок */}
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            <GlitchText 
-              text="Захистіть себе та свій бізнес від шахраїв в інтернеті."
-              className="block mb-2"
-            />
-            <GlitchText 
-              text="Отримайте практичні навички кібербезпеки від експертів."
-              className="block"
-            />
+          <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
+            Захистіть себе та свій бізнес від шахраїв в інтернеті. 
+            Отримайте практичні навички кібербезпеки від експертів.
           </p>
 
           {/* Банер зі знижкою */}
@@ -90,16 +75,18 @@ export default function HeroSection() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 px-6 rounded-full text-xl font-bold mb-8 inline-block relative overflow-hidden group"
+            className="bg-gradient-to-r from-red-500 to-pink-500 text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold mb-6 md:mb-8 inline-block shadow-lg shadow-red-500/20"
           >
-            <div className="relative z-10">
-              <GlitchText text="🔥 Спеціальна пропозиція: Знижка 67% на всі курси! 🔥" />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            🔥 Спеціальна пропозиція: Знижка 67% на всі курси! 🔥
           </motion.div>
 
+          {/* Таймер */}
+          <div className="mb-8">
+            <CountdownTimer />
+          </div>
+
           {/* Картки курсів */}
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
             {courseTypes.map((course, index) => (
               <motion.div
                 key={course.title}
@@ -109,71 +96,47 @@ export default function HeroSection() {
                 className="relative pt-6"
               >
                 {course.recommended && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap">
+                  <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
                     Рекомендовано
                   </div>
                 )}
-                <div className={`p-8 rounded-xl backdrop-blur-sm border shadow-xl h-full flex flex-col relative
-                              ${course.recommended 
-                                ? 'bg-gradient-to-b from-gray-800/80 to-gray-900/80 border-cyan-500/50' 
-                                : 'bg-gradient-to-b from-gray-800/50 to-gray-900/50 border-gray-700'}
-                              before:absolute before:inset-0 before:rounded-xl before:border before:border-cyan-500/30 before:scale-105 before:opacity-0 before:hover:scale-100 before:hover:opacity-100 before:transition-all before:duration-300`}>
-                  {/* Декоративні кути */}
-                  <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-cyan-500/50"></div>
-                  <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-cyan-500/50"></div>
-                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-cyan-500/50"></div>
-                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-cyan-500/50"></div>
-                  
-                  <h3 className="text-2xl font-bold mb-2 cyber-glitch-effect">{course.title}</h3>
-                  <p className="text-gray-400 mb-4">{course.description}</p>
+                <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
+                              ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">{course.title}</h3>
+                  <p className="text-gray-400 mb-4 text-sm md:text-base">{course.description}</p>
                   
                   {/* Блок з ціною та знижкою */}
-                  <div className="mb-6 relative">
+                  <div className="mb-6">
                     <div className="flex items-center justify-center gap-3 mb-2">
-                      <span className="text-gray-400 line-through text-lg">{course.originalPrice}</span>
-                      <span className="bg-red-500 text-white px-2 py-1 rounded-md text-sm font-bold animate-pulse">
+                      <span className="text-gray-400 line-through text-base md:text-lg">{course.originalPrice}</span>
+                      <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
                         -{course.discount}
                       </span>
                     </div>
-                    <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                    <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
                       {course.price}
                     </div>
                   </div>
 
-                  <ul className="space-y-3 mb-8 flex-grow">
+                  <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
                     {course.features.map((feature, i) => (
-                      <li key={i} className="flex items-center text-gray-300 group">
-                        <div className="h-2 w-2 rounded-full bg-cyan-400 mr-3 group-hover:animate-ping"></div>
+                      <li key={i} className="flex items-center text-cyan-100">
+                        <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
                         {feature}
                       </li>
                     ))}
                   </ul>
-                  
                   <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-full py-4 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 relative overflow-hidden
-                              ${course.recommended 
-                                ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-black hover:from-cyan-300 hover:to-blue-400' 
-                                : 'bg-gray-700 text-white hover:bg-gray-600'}
-                              after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:-translate-x-full after:hover:translate-x-full after:transition-transform after:duration-500`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg`}
                   >
-                    <span className="relative z-10">Почати навчання</span>
+                    Почати навчання
                   </motion.button>
                 </div>
               </motion.div>
             ))}
           </div>
-
-          {/* Таймер акції */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            className="text-gray-400 text-sm"
-          >
-            ⏰ Пропозиція діє обмежений час
-          </motion.div>
         </motion.div>
       </div>
     </section>

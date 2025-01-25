@@ -1,165 +1,25 @@
+@import '../styles/cyber-background.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.glitch-text {
-  animation: glitch 1s linear infinite;
-  color: white;
-  position: relative;
-  text-shadow: 
-    2px 0 0 red,
-    -2px 0 0 blue;
-}
-
-@keyframes glitch {
-  0% {
-    text-shadow: 
-      2px 0 0 red,
-      -2px 0 0 blue;
-  }
-  25% {
-    text-shadow: 
-      -2px 0 0 red,
-      2px 0 0 blue;
-  }
-  50% {
-    text-shadow: 
-      2px 0 0 red,
-      -2px 0 0 blue;
-  }
-  75% {
-    text-shadow: 
-      -2px 0 0 red,
-      2px 0 0 blue;
-  }
-  100% {
-    text-shadow: 
-      2px 0 0 red,
-      -2px 0 0 blue;
-  }
-}
-
-/* Решта стилів */
 :root {
   --foreground-rgb: 255, 255, 255;
-  --background: #0a0a0a;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-start-rgb: 10, 10, 10;
+    --background-end-rgb: 10, 10, 10;
+    --foreground-rgb: 237, 237, 237;
+  }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: var(--background);
+  background: rgb(var(--background-start-rgb));
   font-family: Arial, Helvetica, sans-serif;
-}
-
-.cyber-glitch-effect {
-  position: relative;
-  display: inline-block;
-}
-
-.cyber-glitch-effect__layer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.cyber-glitch-effect:hover .cyber-glitch-effect__layer--1 {
-  animation: glitch-1 0.2s infinite;
-  opacity: 0.75;
-  color: #0ff;
-}
-
-.cyber-glitch-effect:hover .cyber-glitch-effect__layer--2 {
-  animation: glitch-2 0.3s infinite;
-  opacity: 0.75;
-  color: #f0f;
-}
-
-.cyber-glitch-effect:hover .cyber-glitch-effect__layer--3 {
-  animation: glitch-3 0.4s infinite;
-  opacity: 0.75;
-  color: #0f0;
-}
-
-@keyframes glitch-1 {
-  0% { transform: translate(0); }
-  20% { transform: translate(-5px, 5px); }
-  40% { transform: translate(-5px, -5px); }
-  60% { transform: translate(5px, 5px); }
-  80% { transform: translate(5px, -5px); }
-  100% { transform: translate(0); }
-}
-
-@keyframes glitch-2 {
-  0% { transform: translate(0); }
-  20% { transform: translate(5px, -5px); }
-  40% { transform: translate(5px, 5px); }
-  60% { transform: translate(-5px, -5px); }
-  80% { transform: translate(-5px, 5px); }
-  100% { transform: translate(0); }
-}
-
-@keyframes glitch-3 {
-  0% { transform: translate(0); }
-  20% { transform: translate(3px, 3px); }
-  40% { transform: translate(3px, -3px); }
-  60% { transform: translate(-3px, 3px); }
-  80% { transform: translate(-3px, -3px); }
-  100% { transform: translate(0); }
-}
-
-/* Додаткові кібер-ефекти */
-.cyber-scanner {
-  position: relative;
-  overflow: hidden;
-}
-
-.cyber-scanner::after {
-  content: '';
-  position: absolute;
-  top: -150%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    transparent,
-    rgba(32, 255, 77, 0.1),
-    rgba(32, 255, 77, 0.2),
-    rgba(32, 255, 77, 0.1),
-    transparent
-  );
-  transform: rotate(45deg);
-  animation: cyber-scan 3s linear infinite;
-}
-
-@keyframes cyber-scan {
-  0% { transform: rotate(45deg) translateY(0%); }
-  100% { transform: rotate(45deg) translateY(100%); }
-}
-
-/* Неонові ефекти */
-.neon-text {
-  text-shadow: 
-    0 0 5px rgba(32, 255, 77, 0.5),
-    0 0 10px rgba(32, 255, 77, 0.3),
-    0 0 15px rgba(32, 255, 77, 0.2);
-}
-
-.neon-border {
-  box-shadow: 
-    0 0 5px rgba(32, 255, 77, 0.5),
-    0 0 10px rgba(32, 255, 77, 0.3) inset;
-}
-
-/* Пульсуючий ефект */
-.cyber-pulse {
-  animation: cyber-pulse 2s ease-in-out infinite;
-}
-
-@keyframes cyber-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
 }
