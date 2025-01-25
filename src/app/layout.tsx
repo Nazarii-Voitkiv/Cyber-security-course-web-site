@@ -1,10 +1,17 @@
 import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Share_Tech_Mono } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
 import { FB_PIXEL_ID } from '@/lib/fpixel';
+import CyberBackground from '@/components/CyberBackground';
+import CyberStyles from '@/components/CyberStyles';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
+const shareTechMono = Share_Tech_Mono({ 
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-share-tech-mono'
+});
 
 export const metadata: Metadata = {
   title: 'Курс з кібербезпеки',
@@ -19,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <head>
-        {/* Facebook Pixel Code */}
         <Script
           id="fb-pixel"
           strategy="afterInteractive"
@@ -39,8 +45,14 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
-        {children}
+      <body className={`${inter.className} ${shareTechMono.variable} bg-gray-900 min-h-screen relative`}>
+        <div className="cyber-lines" />
+        <div className="cyber-glow" />
+        <CyberBackground />
+        <CyberStyles />
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );
