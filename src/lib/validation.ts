@@ -2,17 +2,20 @@ import { z } from 'zod';
 
 export const loginSchema = z.object({
   username: z
-    .string()
+    .string({
+      required_error: "Username is required",
+      invalid_type_error: "Username must be a string",
+    })
     .min(3, 'Username must be at least 3 characters')
-    .max(50, 'Username must not exceed 50 characters'),
+    .max(50, 'Username must not exceed 50 characters')
+    .trim(),
   password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters')
+    .string({
+      required_error: "Password is required",
+      invalid_type_error: "Password must be a string",
+    })
+    .min(6, 'Password must be at least 6 characters')
     .max(100, 'Password must not exceed 100 characters')
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Password must contain at least one uppercase letter, one lowercase letter, one number and one special character'
-    )
 });
 
 export const contentUpdateSchema = z.object({

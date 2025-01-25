@@ -1,11 +1,11 @@
 'use client';
 
 import HeroSection from '@/components/HeroSection';
-import ComparePlansSection from '@/components/ComparePlansSection';
-import LearningProcessSection from '@/components/LearningProcessSection';
 import ForWhomSection from '@/components/ForWhomSection';
 import BenefitsSection from '@/components/BenefitsSection';
+import LearningProcessSection from '@/components/LearningProcessSection';
 import ProgramSection from '@/components/ProgramSection';
+import ComparePlansSection from '@/components/ComparePlansSection';
 import FaqSection from '@/components/FaqSection';
 import FooterSection from '@/components/FooterSection';
 
