@@ -136,7 +136,7 @@ export default function HeroSection() {
                     whileTap={{ scale: 0.98 }}
                     className={`cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center`}
                   >
-                    {course.recommended ? 'Виберіть свій курс' : 'Почати навчання'}
+                    Почати навчання
                   </motion.a>
                 </div>
               </motion.div>

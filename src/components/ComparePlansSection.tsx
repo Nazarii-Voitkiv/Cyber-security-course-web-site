@@ -86,7 +86,7 @@ const plans = [
 
 export default function ComparePlansSection() {
   return (
-    <section className="py-16 relative overflow-hidden">
+    <section id="compare-plans" className="py-16 relative overflow-hidden">
       {/* Кібер-елементи */}
       <div className="matrix-grid" />
       <div className="glitch-overlay" />
@@ -171,11 +171,11 @@ export default function ComparePlansSection() {
                   href={plan.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center mt-auto`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="cyber-button w-full py-3 rounded-full text-base font-semibold shadow-lg text-center"
                 >
-                  {plan.recommended ? 'Виберіть свій курс' : 'Почати навчання'}
+                  Почати навчання
                 </motion.a>
               </div>
             </motion.div>

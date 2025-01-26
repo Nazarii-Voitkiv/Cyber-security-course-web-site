@@ -6,6 +6,7 @@ import BenefitsSection from '@/components/BenefitsSection';
 import LearningProcessSection from '@/components/LearningProcessSection';
 import ProgramSection from '@/components/ProgramSection';
 import ComparePlansSection from '@/components/ComparePlansSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
 import FaqSection from '@/components/FaqSection';
 import FooterSection from '@/components/FooterSection';
 
@@ -18,6 +19,7 @@ export default function Home() {
       <LearningProcessSection />
       <ProgramSection />
       <ComparePlansSection />
+      <TestimonialsSection />
       <FaqSection />
       <FooterSection />
     </main>

@@ -23,3 +23,46 @@ body {
   background: rgb(var(--background-start-rgb));
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Стилі для кнопок каруселі */
+.cyber-button-circle {
+  @apply bg-gray-800 hover:bg-gray-700 text-cyan-400 rounded-full shadow-lg 
+         border border-cyan-500/30 transition-all duration-200 
+         hover:border-cyan-400/50 hover:shadow-cyan-500/20;
+}
+
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+}
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+/* Стилі для навбару */
+nav {
+  transition: background-color 0.3s ease;
+}
+
+nav.scrolled {
+  @apply bg-gray-900/80 backdrop-blur-md border-b border-cyan-500/20;
+}
+
+/* Анімація появи навбару */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.nav-slide-down {
+  animation: slideDown 0.3s ease forwards;
+}
