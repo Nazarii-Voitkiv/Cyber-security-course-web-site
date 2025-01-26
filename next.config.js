@@ -31,15 +31,15 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-inline' 'unsafe-eval' *.facebook.net;
-              style-src 'self' 'unsafe-inline';
-              img-src 'self' data: *.facebook.com;
-              font-src 'self';
-              connect-src 'self';
-              frame-ancestors 'none';
-            `.replace(/\s+/g, ' ').trim()
+            value:
+              "default-src 'self'; " +
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+              "style-src 'self' 'unsafe-inline'; " +
+              "img-src 'self' data:; " +
+              "font-src 'self'; " +
+              "connect-src 'self'; " +
+              "media-src 'self'; " +
+              "frame-src 'self';"
           }
         ]
       }
