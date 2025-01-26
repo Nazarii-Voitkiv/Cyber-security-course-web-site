@@ -16,7 +16,8 @@ const courseTypes = [
       'Базові практичні завдання',
       'Підтримка в чаті',
       '3 місяці доступу'
-    ]
+    ],
+    link: 'https://app.zenedu.io/l/rgRiNyJUs9bksy8n' 
   },
   {
     title: 'Повний курс',
@@ -30,7 +31,8 @@ const courseTypes = [
       'Особисті консультації',
       'Довічний доступ'
     ],
-    recommended: true
+    recommended: true,
+    link: 'https://app.zenedu.io/l/1vqwwe8Zkq50sCf9'
   }
 ];
 
@@ -126,13 +128,16 @@ export default function HeroSection() {
                       </li>
                     ))}
                   </ul>
-                  <motion.button
+                  <motion.a
+                    href={course.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg`}
+                    className={`cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center`}
                   >
-                    Почати навчання
-                  </motion.button>
+                    {course.recommended ? 'Виберіть свій курс' : 'Почати навчання'}
+                  </motion.a>
                 </div>
               </motion.div>
             ))}
