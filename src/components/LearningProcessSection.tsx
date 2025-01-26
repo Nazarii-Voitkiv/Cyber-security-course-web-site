@@ -73,19 +73,30 @@ export default function LearningProcessSection() {
         </motion.div>
 
         {/* Основні особливості */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="cyber-card p-6 rounded-xl border border-cyan-500/30"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative"
+              style={{
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                perspective: 1000,
+                WebkitPerspective: 1000,
+              }}
             >
-              <feature.icon className="h-12 w-12 text-cyan-400 mb-4" />
-              <h3 className="text-xl font-bold mb-2 text-white">{feature.title}</h3>
-              <p className="text-cyan-100">{feature.description}</p>
+              <div className="cyber-card p-6 h-full neon-border-minimal border-cyan-500/20">
+                <div className="text-cyan-400/90 mb-4">
+                  <feature.icon className="h-8 w-8" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                <p className="text-gray-400">{feature.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -98,11 +109,18 @@ export default function LearningProcessSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative"
+              style={{
+                transform: 'translate3d(0, 0, 0)',
+                backfaceVisibility: 'hidden',
+                WebkitBackfaceVisibility: 'hidden',
+                perspective: 1000,
+                WebkitPerspective: 1000,
+              }}
             >
-              <div className="cyber-card p-6 rounded-xl border border-cyan-500/30 h-full">
-                <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
+              <div className="cyber-card p-6 h-full neon-border-minimal border-cyan-500/20">
+                <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400/90 to-blue-500/90 mb-4">
                   {step.number}
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-white">{step.title}</h3>

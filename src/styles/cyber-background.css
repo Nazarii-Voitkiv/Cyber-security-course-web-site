@@ -95,6 +95,39 @@
   }
 }
 
+/* Неонові елементи з мінімальним світінням */
+.neon-border-minimal {
+  position: relative;
+}
+
+.neon-border-minimal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(0, 255, 255, 0.1);
+  border-radius: inherit;
+  animation: neonPulseMinimal 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes neonPulseMinimal {
+  0% {
+    box-shadow: 0 0 2px rgba(0, 255, 255, 0.1),
+                inset 0 0 2px rgba(0, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2),
+                inset 0 0 3px rgba(0, 255, 255, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 2px rgba(0, 255, 255, 0.1),
+                inset 0 0 2px rgba(0, 255, 255, 0.1);
+  }
+}
+
 /* Оптимізація для мобільних пристроїв */
 @media (max-width: 768px) {
   .matrix-grid {
