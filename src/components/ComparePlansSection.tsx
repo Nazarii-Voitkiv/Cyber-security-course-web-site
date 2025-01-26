@@ -184,36 +184,51 @@ export default function ComparePlansSection() {
 
         {/* Таблиця порівняння */}
         <div className="border border-gray-700 rounded-xl overflow-hidden mt-12">
+          {/* Заголовки курсів */}
+          <div className="grid grid-cols-3 gap-2 md:gap-8 bg-gray-800">
+            <div className="col-span-1 p-2 md:p-4 border-r border-gray-700"></div>
+            <div className="col-span-1 p-2 md:p-4 text-center border-r border-gray-700">
+              <h3 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-sm md:text-base whitespace-normal">
+                Ознайомчий курс
+              </h3>
+            </div>
+            <div className="col-span-1 p-2 md:p-4 text-center">
+              <h3 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-sm md:text-base">
+                Повний курс
+              </h3>
+            </div>
+          </div>
+
           {features.map((feature, index) => (
             <div 
               key={feature.name}
-              className={`grid grid-cols-3 gap-4 md:gap-8 ${
+              className={`grid grid-cols-3 gap-2 md:gap-8 ${
                 index % 2 === 0 ? 'bg-gray-800/50' : 'bg-gray-900/50'
               }`}
             >
-              <div className="col-span-1 p-4 border-r border-gray-700">
-                <span className="text-gray-300 text-sm md:text-base">{feature.name}</span>
+              <div className="col-span-1 p-2 md:p-4 border-r border-gray-700">
+                <span className="text-gray-300 text-xs md:text-base">{feature.name}</span>
               </div>
-              <div className="col-span-1 p-4 text-center border-r border-gray-700">
+              <div className="col-span-1 p-2 md:p-4 text-center border-r border-gray-700">
                 {typeof feature.basic === 'boolean' ? (
                   feature.basic ? (
-                    <CheckIcon className="h-5 w-5 md:h-6 md:w-6 text-green-400 mx-auto" />
+                    <CheckIcon className="h-4 w-4 md:h-6 md:w-6 text-green-400 mx-auto" />
                   ) : (
-                    <XMarkIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-500 mx-auto" />
+                    <XMarkIcon className="h-4 w-4 md:h-6 md:w-6 text-gray-500 mx-auto" />
                   )
                 ) : (
-                  <span className="text-gray-300 text-sm md:text-base">{feature.basic}</span>
+                  <span className="text-gray-300 text-xs md:text-base">{feature.basic}</span>
                 )}
               </div>
-              <div className="col-span-1 p-4 text-center">
+              <div className="col-span-1 p-2 md:p-4 text-center">
                 {typeof feature.full === 'boolean' ? (
                   feature.full ? (
-                    <CheckIcon className="h-5 w-5 md:h-6 md:w-6 text-green-400 mx-auto" />
+                    <CheckIcon className="h-4 w-4 md:h-6 md:w-6 text-green-400 mx-auto" />
                   ) : (
-                    <XMarkIcon className="h-5 w-5 md:h-6 md:w-6 text-gray-500 mx-auto" />
+                    <XMarkIcon className="h-4 w-4 md:h-6 md:w-6 text-gray-500 mx-auto" />
                   )
                 ) : (
-                  <span className="text-gray-300 text-sm md:text-base">{feature.full}</span>
+                  <span className="text-gray-300 text-xs md:text-base">{feature.full}</span>
                 )}
               </div>
             </div>
