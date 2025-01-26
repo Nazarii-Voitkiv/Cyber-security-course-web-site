@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 
 const testimonials = [
   {
@@ -115,10 +116,12 @@ export default function TestimonialsSection() {
                   className="flex-[0_0_100%] min-w-0 pl-4"
                 >
                   <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-                    <img
+                    <Image
                       src={testimonial.image}
                       alt="Відгук студента"
-                      className="object-contain w-full h-full"
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   </div>
                 </motion.div>

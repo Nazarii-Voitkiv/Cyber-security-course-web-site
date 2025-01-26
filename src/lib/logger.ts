@@ -1,17 +1,22 @@
 const logger = {
-  info: (...args: any[]) => {
+  info: (message: string, ...args: unknown[]) => {
     if (process.env.NODE_ENV !== 'production') {
-      console.log(...args);
+      console.log(`[INFO] ${message}`, ...args);
     }
   },
-  warn: (...args: any[]) => {
+  warn: (message: string, ...args: unknown[]) => {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(...args);
+      console.warn(`[WARN] ${message}`, ...args);
     }
   },
-  error: (...args: any[]) => {
+  error: (message: string, ...args: unknown[]) => {
     if (process.env.NODE_ENV !== 'production') {
-      console.error(...args);
+      console.error(`[ERROR] ${message}`, ...args);
+    }
+  },
+  debug: (message: string, ...args: unknown[]) => {
+    if (process.env.NODE_ENV !== 'production') {
+      console.debug(`[DEBUG] ${message}`, ...args);
     }
   }
 };

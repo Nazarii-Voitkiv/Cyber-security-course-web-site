@@ -2,13 +2,19 @@
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ShieldCheckIcon } from '@heroicons/react/24/outline';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const { scrollY } = useScroll();
+  const [windowHeight, setWindowHeight] = useState(0);
+  
+  useEffect(() => {
+    setWindowHeight(window.innerHeight);
+  }, []);
   
   // Навбар з'являється після прокрутки висоти екрану
-  const opacity = useTransform(scrollY, [0, window.innerHeight * 0.8, window.innerHeight], [0, 0, 1]);
-  const translateY = useTransform(scrollY, [0, window.innerHeight * 0.8, window.innerHeight], [-100, -100, 0]);
+  const opacity = useTransform(scrollY, [0, windowHeight * 0.8, windowHeight], [0, 0, 1]);
+  const translateY = useTransform(scrollY, [0, windowHeight * 0.8, windowHeight], [-100, -100, 0]);
 
   const scrollToPlans = (e: React.MouseEvent) => {
     e.preventDefault();
