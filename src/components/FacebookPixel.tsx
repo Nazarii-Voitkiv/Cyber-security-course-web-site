@@ -4,6 +4,14 @@ import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
+// Declare the fbq function type
+declare global {
+  interface Window {
+    fbq: any;
+    _fbq: any;
+  }
+}
+
 export default function FacebookPixel() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
