@@ -1,8 +1,20 @@
 'use client';
 
 import Script from 'next/script';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function FacebookPixel() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // This will track page views after client-side navigation
+    if (window.fbq) {
+      window.fbq('track', 'PageView');
+    }
+  }, [pathname, searchParams]);
+
   return (
     <>
       {/* Основний скрипт Pixel */}
@@ -21,12 +33,16 @@ export default function FacebookPixel() {
         `}
       </Script>
 
-      
-
       {/* NoScript для відстеження без JavaScript */}
-      <noscript><img height="1" width="1" style={{display:'none'}}
-        src="https://www.facebook.com/tr?id=1397875247860051&ev=PageView&noscript=1"
-        /></noscript>
+      <noscript>
+        <img 
+          height="1" 
+          width="1" 
+          style={{ display: 'none' }}
+          src="https://www.facebook.com/tr?id=1397875247860051&ev=PageView&noscript=1"
+          alt=""
+        />
+      </noscript>
     </>
   );
 }

@@ -19,7 +19,6 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <head>
-        <FacebookPixel />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
           rel="apple-touch-icon"
@@ -29,6 +28,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <FacebookPixel />
         <Navbar />
         {children}
       </body>
