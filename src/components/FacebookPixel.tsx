@@ -3,12 +3,22 @@
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
-// Declare the fbq function type
+// Оголошуємо типи для Facebook Pixel
 declare global {
   interface Window {
-    fbq: any;
-    _fbq: any;
+    fbq: (
+      type: string,
+      eventName: string,
+      params?: Record<string, unknown>
+    ) => void;
+    _fbq: {
+      push: (arg: unknown) => void;
+      loaded: boolean;
+      version: string;
+      queue: unknown[];
+    };
   }
 }
 
@@ -17,7 +27,7 @@ export default function FacebookPixel() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // This will track page views after client-side navigation
+    // Відстеження переглядів сторінки після клієнтської навігації
     if (window.fbq) {
       window.fbq('track', 'PageView');
     }
@@ -43,12 +53,12 @@ export default function FacebookPixel() {
 
       {/* NoScript для відстеження без JavaScript */}
       <noscript>
-        <img 
-          height="1" 
-          width="1" 
+        <Image
+          height={1}
+          width={1}
           style={{ display: 'none' }}
           src="https://www.facebook.com/tr?id=1397875247860051&ev=PageView&noscript=1"
-          alt=""
+          alt="Facebook Pixel"
         />
       </noscript>
     </>
