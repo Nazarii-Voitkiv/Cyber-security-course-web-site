@@ -4,23 +4,54 @@ import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { StarIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
 const testimonials = [
   {
     id: 1,
-    image: '/testimonials/review1.jpg',
+    content: '"Курс перевершив усі мої очікування! Особливо сподобалися практичні завдання та індивідуальний підхід до кожного студента. Тепер я впевнено можу захистити себе та свою родину в інтернеті."',
+    rating: 5,
+    name: 'Олександра Петренко',
+    position: 'IT-спеціаліст',
+    image: '/testimonials/person1.jpg'
   },
   {
     id: 2,
-    image: '/testimonials/review2.jpg',
+    content: '"Дуже структурований та зрозумілий матеріал. За короткий час я отримав базові знання з кібербезпеки, які вже застосовую у своїй роботі. Рекомендую всім, хто хоче розібратися в цій темі."',
+    rating: 4,
+    name: 'Марія Коваленко',
+    position: 'Підприємець',
+    image: '/testimonials/person2.jpg'
   },
   {
     id: 3,
-    image: '/testimonials/review3.jpg',
+    content: '"Найкраще співвідношення ціни та якості! Матеріал подається доступно, з реальними прикладами. Окремо хочу відзначити оперативну підтримку та відповіді на всі питання."',
+    rating: 4.5,
+    name: 'Віктор Мельник',
+    position: 'Системний адміністратор',
+    image: '/testimonials/person3.jpg'
   },
-  // Додайте більше відгуків за потреби
 ];
+
+const Rating = ({ rating }: { rating: number }) => {
+  return (
+    <div className="flex items-center space-x-1 mb-4">
+      {[1, 2, 3, 4, 5].map((star) => {
+        const isFull = star <= rating;
+        const isHalf = !isFull && star - 0.5 <= rating;
+        return (
+          <StarIcon
+            key={star}
+            className={`h-6 w-6 ${
+              isFull ? 'text-yellow-400' : isHalf ? 'text-yellow-400/50' : 'text-gray-400'
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 export default function TestimonialsSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -77,8 +108,8 @@ export default function TestimonialsSection() {
         </motion.h2>
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Кнопки навігації */}
-          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-10 px-4">
+          {/* Кнопки навігації - тільки для десктопу */}
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 hidden md:flex justify-between pointer-events-none z-10 px-4">
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
@@ -103,28 +134,46 @@ export default function TestimonialsSection() {
             </motion.button>
           </div>
 
+          {/* Текст для свайпу - тільки для мобільних */}
+          <div className="md:hidden text-center mb-4">
+            <p className="text-cyan-400 text-sm animate-pulse">
+              &#8592; Гортайте для перегляду відгуків &#8594;
+            </p>
+          </div>
+
           {/* Карусель */}
-          <div className="overflow-hidden rounded-xl" ref={emblaRef}>
+          <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {testimonials.map((testimonial) => (
-                <motion.div
-                  key={testimonial.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="flex-[0_0_100%] min-w-0 pl-4"
-                >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-                    <Image
-                      src={testimonial.image}
-                      alt="Відгук студента"
-                      fill
-                      className="object-contain"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
-                </motion.div>
+                <div key={testimonial.id} className="flex-[0_0_100%] min-w-0 pl-4">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-gradient-to-b from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-lg p-6 h-[600px] mx-auto max-w-lg relative overflow-hidden"
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(4,159,255,0.1),transparent_70%)]" />
+                    <Rating rating={testimonial.rating} />
+                    <p className="text-2xl italic text-gray-300 mb-8 leading-relaxed">{testimonial.content}</p>
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="flex items-center space-x-6">
+                        <div className="relative w-16 h-16 md:w-24 md:h-24 flex-shrink-0 rounded-full overflow-hidden">
+                          <Image
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 64px, 96px"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="text-xl md:text-2xl font-semibold text-white mb-1">{testimonial.name}</h4>
+                          <p className="text-base md:text-lg text-cyan-400">{testimonial.position}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>

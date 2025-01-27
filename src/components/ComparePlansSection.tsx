@@ -102,17 +102,36 @@ export default function ComparePlansSection() {
           >
             Виберіть свій курс
           </motion.h2>
-          
-          {/* Банер зі знижкою */}
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+
+          <motion.button
+            onClick={() => {
+              const element = document.getElementById('compare-plans');
+              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="bg-gradient-to-r from-red-500 to-pink-500 text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold mb-6 inline-block shadow-lg shadow-red-500/20"
+            whileHover={{ 
+              scale: 1.05,
+              rotate: [0, -1, 1, -1, 0],
+              transition: {
+                rotate: {
+                  repeat: Infinity,
+                  duration: 0.5
+                }
+              }
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ 
+              delay: 0.2,
+              type: "spring",
+              stiffness: 300,
+              damping: 15 
+            }}
+            className="relative discount-button bg-gradient-to-r from-red-500 via-pink-500 to-red-500 text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold mb-6 shadow-lg shadow-red-500/20 cursor-pointer hover:shadow-xl hover:shadow-red-500/30 transition-shadow duration-300"
           >
             🔥 Спеціальна пропозиція: Знижка 67% на всі курси! 🔥
-          </motion.div>
+          </motion.button>
 
           {/* Таймер */}
           <motion.div
@@ -133,8 +152,9 @@ export default function ComparePlansSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className="relative"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative cursor-pointer"
+              onClick={() => window.open(plan.link, '_blank', 'noopener,noreferrer')}
             >
               {plan.recommended && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">

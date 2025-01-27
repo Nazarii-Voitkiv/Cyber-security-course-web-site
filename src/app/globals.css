@@ -66,3 +66,43 @@ nav.scrolled {
 .nav-slide-down {
   animation: slideDown 0.3s ease forwards;
 }
+
+/* Анімація градієнта для кнопки знижки */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.discount-button {
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.discount-button::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 9999px;
+  background: linear-gradient(45deg, #ff0000, #ff69b4, #ff0000);
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.discount-button:hover::after {
+  opacity: 0.5;
+}
+
+/* Анімація появи навбару */
