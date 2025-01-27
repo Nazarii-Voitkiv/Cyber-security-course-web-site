@@ -5,7 +5,13 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import Image from 'next/image';
 
-// Компонент для відстеження сторінки
+declare global {
+  interface Window {
+    fbq: (type: string, eventName: string, params?: object) => void;
+    _fbq: object;
+  }
+}
+
 function PageViewTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -22,7 +28,6 @@ function PageViewTracker() {
 export default function FacebookPixel() {
   return (
     <>
-      {/* Основний скрипт Pixel */}
       <Script id="facebook-pixel" strategy="afterInteractive">
         {`
             !function(f,b,e,v,n,t,s)
@@ -42,7 +47,6 @@ export default function FacebookPixel() {
         <PageViewTracker />
       </Suspense>
 
-      {/* NoScript для відстеження без JavaScript */}
       <noscript>
         <Image
           height={1}
