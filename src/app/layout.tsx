@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import FacebookPixel from '@/components/FacebookPixel';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <head>
+        <FacebookPixel />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
           rel="apple-touch-icon"
