@@ -2,12 +2,13 @@ import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
+import FacebookPixel from '@/components/FacebookPixel';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
-  title: 'Курс з кібербезпеки',
-  description: 'Навчіться захищати себе та свій бізнес від кіберзагроз',
+  title: 'Курси з кібербезпеки',
+  description: 'Навчіться захищати себе та свій бізнес в інтернеті',
 };
 
 export default function RootLayout({
@@ -28,6 +29,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Navbar />
+        <FacebookPixel />
         {children}
       </body>
     </html>
