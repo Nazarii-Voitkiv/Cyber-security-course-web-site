@@ -16,15 +16,18 @@ function PageViewTracker() {
     const searchParams = useSearchParams();
 
     useEffect(() => {
-        // Викликається щоразу при зміні роуту/параметрів (SPA-навігація)
-        if (typeof window !== 'undefined' && window.fbq) {
+        console.log("Trying to track page view!", pathname, searchParams.toString());
+        if (window.fbq) {
             window.fbq('track', 'PageView');
-            console.log('Facebook Pixel PageView fired!', pathname, searchParams.toString());
+            console.log("PageView event fired to Facebook Pixel!");
+        } else {
+            console.log("fbq is not defined?");
         }
     }, [pathname, searchParams]);
 
     return null;
 }
+
 
 export default function FacebookPixel() {
     return (
