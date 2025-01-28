@@ -10,14 +10,16 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import FaqSection from '@/components/FaqSection';
 import FooterSection from '@/components/FooterSection';
 import IntroSection from '@/components/IntroSection';
+import WhyThisCourseSection from '@/components/WhyThisCourseSection';
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-900 text-white">
       <HeroSection />
       <IntroSection />
-      <ForWhomSection />
+      <WhyThisCourseSection />
       <BenefitsSection />
+      <ForWhomSection />
       <LearningProcessSection />
       <ProgramSection />
       <ComparePlansSection />
