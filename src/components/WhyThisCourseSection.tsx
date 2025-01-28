@@ -5,26 +5,34 @@ import { ShieldCheckIcon, LightBulbIcon, BanknotesIcon, ExclamationTriangleIcon 
 
 const reasons = [
     {
-      title: 'Зрозумій кіберзлочинців',
-      description: 'Дізнайся, які загрози існують в інтернеті, чому злочинці постійно їх вдосконалюють та як вони можуть зачепити тебе особисто;',
-      Icon: LightBulbIcon,
+        title: 'Зрозумій кіберзлочинців',
+        description: 'Дізнайся, які загрози існують в інтернеті, чому злочинці постійно їх вдосконалюють та як вони можуть зачепити тебе особисто;',
+        Icon: LightBulbIcon,
+        color: 'text-cyan-400',
+        bgColor: 'bg-cyan-500/10'
     },
     {
-      title: 'Навчися захищатися',
-      description: 'Ти отримаєш теорію та практичні навички, які допоможуть уникнути фішингу, шахрайства з криптовалютою та інших розповсюджених атак;',
-      Icon: ShieldCheckIcon,
+        title: 'Навчися захищатися',
+        description: 'Ти отримаєш теорію та практичні навички, які допоможуть уникнути фішингу, шахрайства з криптовалютою та інших розповсюджених атак;',
+        Icon: ShieldCheckIcon,
+        color: 'text-cyan-400',
+        bgColor: 'bg-cyan-500/10'
     },
     {
-      title: 'Захистити свої гроші',
-      description: 'Ми навчимо, як захистити свої фінанси у банку, банківські картки та криптовалютні гаманці від хакерів;',
-      Icon: BanknotesIcon,
+        title: 'Захистити свої гроші',
+        description: 'Ми навчимо, як захистити свої фінанси у банку, банківські картки та криптовалютні гаманці від хакерів;',
+        Icon: BanknotesIcon,
+        color: 'text-cyan-400',
+        bgColor: 'bg-cyan-500/10'
     },
     {
-      title: 'Не стань черговою жертвою',
-      description: 'Ми покажемо тобі реальні приклади шахрайства з минулого та сьогодення, щоб ти навчився розпізнавати загрози з самого їх початку та уникати їх.',
-      Icon: ExclamationTriangleIcon,
+        title: 'Не стань черговою жертвою',
+        description: 'Ми покажемо тобі реальні приклади шахрайства з минулого та сьогодення, щоб ти навчився розпізнавати загрози з самого їх початку та уникати їх.',
+        Icon: ExclamationTriangleIcon,
+        color: 'text-cyan-400',
+        bgColor: 'bg-cyan-500/10'
     },
-  ];
+];
 
 export default function WhyThisCourseSection() {
     return (
@@ -47,15 +55,22 @@ export default function WhyThisCourseSection() {
                                 key={reason.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.2 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
-                                className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl"
+                                className="relative group h-full"
                             >
-                                <div className="flex flex-col items-center mb-4">
-                                    <reason.Icon className="h-6 w-6 text-cyan-400 mb-2" />
-                                    <h3 className="text-xl font-semibold text-center">{reason.title}</h3>
+                                <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl
+                              transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col items-center">
+                                    <div className="mb-4">
+                                        <reason.Icon className={`h-12 w-12 ${reason.color} transition-transform duration-300 group-hover:scale-110`} />
+                                    </div>
+                                    <h3 className="text-xl font-semibold mb-4 text-white text-center">{reason.title}</h3>
+                                    <p className="text-gray-400 text-center">{reason.description}</p>
                                 </div>
-                                <p className="text-gray-400 text-center">{reason.description}</p>
+
+                                {/* Subtle glow effect on hover */}
+                                <div className={`absolute -inset-0.5 ${reason.bgColor} opacity-0 group-hover:opacity-20 
+                                rounded-xl blur transition duration-300`} />
                             </motion.div>
                         ))}
                     </div>

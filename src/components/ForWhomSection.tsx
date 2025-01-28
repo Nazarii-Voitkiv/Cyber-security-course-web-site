@@ -50,44 +50,49 @@ const groups = [
 
 export default function ForWhomSection() {
   return (
-    <section className="py-20 bg-gray-800/50">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-        className="container mx-auto px-4"
-      >
-        <div className="text-center max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-            Для кого цей курс?
-          </h2>
+      <section className="py-20 bg-gray-800/50">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="container mx-auto px-4"
+        >
+          <div className="text-center max-w-7xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
+              Для кого цей курс?
+            </h2>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {groups.map((group, index) => (
-              <motion.div
-                key={group.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.05 }}
-                className="h-full"
-              >
-                <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl h-full flex flex-col">
-                  <div className={`${group.bgColor} p-4 rounded-full w-fit mx-auto mb-6 flex-shrink-0`}>
-                    <group.Icon className={`h-12 w-12 ${group.iconColor}`} />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-4 flex-shrink-0">{group.title}</h3>
-                  <p className="text-gray-400 flex-grow">
-                    {group.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {groups.map((group, index) => (
+                  <motion.div
+                      key={group.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="relative group h-full"
+                  >
+                    <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl
+                              transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
+                      <div className={`${group.bgColor} p-4 rounded-full w-fit mx-auto mb-6 
+                                  transition-transform duration-300 group-hover:scale-110`}>
+                        <group.Icon className={`h-12 w-12 ${group.iconColor}`} />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-4 flex-shrink-0">{group.title}</h3>
+                      <p className="text-gray-400 flex-grow">
+                        {group.description}
+                      </p>
+                    </div>
+
+                    {/* Світловий ефект при ховері */}
+                    <div className={`absolute -inset-0.5 ${group.bgColor} opacity-0 group-hover:opacity-20 
+                                rounded-xl blur transition duration-300`} />
+                  </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </motion.div>
-    </section>
+        </motion.div>
+      </section>
   );
 }
