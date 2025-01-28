@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { UserIcon, HomeIcon, BriefcaseIcon } from '@heroicons/react/24/outline';
+import { UserIcon, HomeIcon, BriefcaseIcon, CommandLineIcon, ComputerDesktopIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 
 const groups = [
   {
@@ -24,6 +24,27 @@ const groups = [
     Icon: BriefcaseIcon,
     iconColor: 'text-purple-400',
     bgColor: 'bg-purple-500/10'
+  },
+  {
+    title: 'IT-початківці',
+    description: 'Отримають базові знання з кібербезпеки, які необхідні для старту кар\'єри в IT та розуміння основних принципів захисту.',
+    Icon: CommandLineIcon,
+    iconColor: 'text-green-400',
+    bgColor: 'bg-green-500/10'
+  },
+  {
+    title: 'Офісні працівники',
+    description: 'Навчаться захищати робочі дані, розпізнавати фішингові атаки та дотримуватися правил цифрової гігієни.',
+    Icon: ComputerDesktopIcon,
+    iconColor: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/10'
+  },
+  {
+    title: 'Студенти',
+    description: 'Отримають практичні навички з кібербезпеки, які будуть корисні для навчання та майбутньої кар\'єри.',
+    Icon: AcademicCapIcon,
+    iconColor: 'text-red-400',
+    bgColor: 'bg-red-500/10'
   }
 ];
 
@@ -37,12 +58,12 @@ export default function ForWhomSection() {
         viewport={{ once: true }}
         className="container mx-auto px-4"
       >
-        <div className="text-center max-w-4xl mx-auto">
+        <div className="text-center max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
             Для кого цей курс?
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {groups.map((group, index) => (
               <motion.div
                 key={group.title}

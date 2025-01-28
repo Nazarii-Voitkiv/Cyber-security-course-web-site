@@ -34,7 +34,7 @@ export default function IntroSection() {
           >
             <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm">
               <p className="text-lg text-cyan-100 mb-6">
-                Щодня ти, як і мільйони ризикуєш стати жертвою фішингу або іншого онлайн-шахрайства. Дізнайся, як захистити свої дані, листування та фінанси!
+                Щодня ти, як і <span className="font-bold">мільйони</span> ризикуєш стати жертвою фішингу або іншого онлайн-шахрайства. Дізнайся, як захистити свої дані, листування та фінанси!
               </p>
 
               <p className="text-gray-400 mb-8">
@@ -43,31 +43,34 @@ export default function IntroSection() {
 
               <ul className="space-y-6">
                 <li className="flex items-start">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full mt-2 mr-4 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-semibold text-cyan-400 mb-2">Фішинг</h3>
+                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
+                      <span className="font-bold">Фішинг</span></h3>
                     <p className="text-gray-400">
-                      У 2023 році понад 80% всіх кібер атак у світі були пов&apos;язані з фішингом, а збитки від фішингових атак щорічно становлять мільярди доларів
+                      У 2023 році понад <span className="font-bold">80%</span> всіх кібер атак у світі були пов&apos;язані з фішингом, а збитки від фішингових атак щорічно становлять <span className="font-bold">мільярди доларів</span>
                     </p>
                   </div>
                 </li>
 
                 <li className="flex items-start">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-semibold text-blue-400 mb-2">Криптовалютне шахрайство</h3>
+                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
+                      <span className="font-bold">Криптовалютне шахрайство</span></h3>
                     <p className="text-gray-400">
-                      За даними Chainalysis, у 2022 році було вкрадено понад 7 мільярдів доларів у криптовалютах через підроблені сайти та фішингові схеми
+                      За даними <span className="font-bold">Chainalysis</span>, у 2022 році було вкрадено понад <span className="font-bold">7 мільярдів доларів</span> у криптовалютах через підроблені сайти та фішингові схеми
                     </p>
                   </div>
                 </li>
 
                 <li className="flex items-start">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 mr-4 flex-shrink-0" />
+                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
                   <div>
-                    <h3 className="text-lg font-semibold text-purple-400 mb-2">Соціальна інженерія</h3>
+                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
+                      <span className="font-bold">Соціальна інженерія</span></h3>
                     <p className="text-gray-400">
-                      Більше 35% користувачів інтернету у світі стали жертвами атак через соціальну інженерію, навіть не підозрюючи про це
+                    Більше <span className="font-bold">35%</span> користувачів інтернету у світі стали жертвами атак через соціальну інженерію, <span className="font-bold">навіть не підозрюючи про це</span>
                     </p>
                   </div>
                 </li>
