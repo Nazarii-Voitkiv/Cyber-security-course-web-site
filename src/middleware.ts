@@ -6,11 +6,12 @@ import logger from './lib/logger';
 const securityHeaders = {
   'Content-Security-Policy': 
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net; " +
     "style-src 'self' 'unsafe-inline'; " +
     "font-src 'self'; " +
     "img-src 'self' data: https:; " +
-    "connect-src 'self';",
+    "connect-src 'self' https://connect.facebook.net; " +
+    "frame-src 'self' https://www.facebook.com;",
   'X-DNS-Prefetch-Control': 'on',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
   'X-Frame-Options': 'SAMEORIGIN',
