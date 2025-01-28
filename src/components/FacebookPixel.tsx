@@ -28,7 +28,6 @@ function PageViewTracker() {
 export default function FacebookPixel() {
     return (
         <>
-            {/* Увесь код – в одному Script */}
             <Script id="facebook-pixel" strategy="afterInteractive">
                 {`
           !function(f,b,e,v,n,t,s)
@@ -58,7 +57,6 @@ export default function FacebookPixel() {
                     alt="fbpx"
                 />
             </noscript>
-
         </>
     );
 }

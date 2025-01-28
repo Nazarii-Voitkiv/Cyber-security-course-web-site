@@ -147,58 +147,85 @@ export default function ComparePlansSection() {
 
         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {plans.map((plan, index) => (
-            <motion.div
-              key={plan.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative cursor-pointer"
-              onClick={() => window.open(plan.link, '_blank', 'noopener,noreferrer')}
-            >
-              {plan.recommended && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
-                  Рекомендовано
-                </div>
-              )}
-              <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
-                            ${plan.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
-                <h3 className="text-xl md:text-2xl font-bold mb-2">{plan.title}</h3>
-                <p className="text-gray-400 mb-4 text-sm md:text-base">{plan.description}</p>
-                
-                {/* Блок з ціною та знижкою */}
-                <div className="mb-6">
-                  <div className="flex items-center justify-center gap-3 mb-2">
-                    <span className="text-gray-400 line-through text-base md:text-lg">{plan.originalPrice}</span>
-                    <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
-                      -{plan.discount}
-                    </span>
-                  </div>
-                  <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                    {plan.price}
-                  </div>
-                </div>
+              <motion.div
+                  key={plan.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative cursor-pointer"
+                  // ТУТ: Викликаємо подію "Lead" при кліку на всю картку
+                  onClick={() => {
+                    if (typeof window !== 'undefined' && window.fbq) {
+                      window.fbq('track', 'Lead', {
+                        content_name: plan.title,
+                        currency: 'UAH',
+                        value: parseFloat(plan.price.replace(' ₴', ''))
+                      });
+                    }
+                    // Переходимо за лінком
+                    window.open(plan.link, '_blank', 'noopener,noreferrer');
+                  }}
+              >
+                {plan.recommended && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
+                      Рекомендовано
+                    </div>
+                )}
 
-                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-cyan-100">
-                      <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <motion.a
-                  href={plan.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="cyber-button w-full py-3 rounded-full text-base font-semibold shadow-lg text-center"
-                >
-                  Почати навчання
-                </motion.a>
-              </div>
-            </motion.div>
+                <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
+      ${plan.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
+
+                  <h3 className="text-xl md:text-2xl font-bold mb-2">{plan.title}</h3>
+                  <p className="text-gray-400 mb-4 text-sm md:text-base">{plan.description}</p>
+
+                  <div className="mb-6">
+                    <div className="flex items-center justify-center gap-3 mb-2">
+          <span className="text-gray-400 line-through text-base md:text-lg">
+            {plan.originalPrice}
+          </span>
+                      <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
+            -{plan.discount}
+          </span>
+                    </div>
+                    <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                      {plan.price}
+                    </div>
+                  </div>
+
+                  <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
+                    {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-center text-cyan-100">
+                          <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
+                          {feature}
+                        </li>
+                    ))}
+                  </ul>
+
+                  {/* КНОПКА */}
+                  <motion.a
+                      href={plan.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      // Тут: stopPropagation, щоб не викликати onClick батька
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (typeof window !== 'undefined' && window.fbq) {
+                          window.fbq('track', 'Lead', {
+                            content_name: plan.title,
+                            currency: 'UAH',
+                            value: parseFloat(plan.price.replace(' ₴', ''))
+                          });
+                        }
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="cyber-button w-full py-3 rounded-full text-base font-semibold shadow-lg text-center"
+                  >
+                    Почати навчання
+                  </motion.a>
+                </div>
+              </motion.div>
           ))}
         </div>
 
