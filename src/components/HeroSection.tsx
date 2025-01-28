@@ -61,12 +61,14 @@ export default function HeroSection() {
             <ShieldCheckIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto text-cyan-400" />
           </motion.div>
 
-          {/* Заголовок */}
-          <h1 className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient"
-              style={{fontSize: '72px', lineHeight: '1.2'}}>
+          <h1
+              className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient text-5xl sm:text-6xl md:text-7xl lg:text-[72px] leading-snug sm:leading-tight max-w-3xl mx-auto"
+          >
             Онлайн-курс з кібербезпеки
           </h1>
-          
+
+
+
           {/* Підзаголовок */}
           <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
             Захистіть себе та свій бізнес від шахраїв в інтернеті.
