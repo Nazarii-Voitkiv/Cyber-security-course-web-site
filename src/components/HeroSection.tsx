@@ -4,34 +4,51 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon } from '@heroicons/react/24/outline';
 import CountdownTimer from './CountdownTimer';
-import { HeroContent, CourseType } from '@/types/heroContent';
+
+// Описуємо типи
+export interface CourseType {
+    title: string;
+    description: string;
+    originalPrice: string;
+    price: string;
+    discount: string;
+    recommended?: boolean;
+    features: string[];
+    link: string;
+}
+
+export interface HeroData {
+    heroTitle: string;
+    heroSubtitle: string;
+    discountBanner: string;
+    courseTypes: CourseType[];
+}
 
 export default function HeroSection() {
-    const [data, setData] = useState<HeroContent | null>(null);
+    const [data, setData] = useState<HeroData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Завантажуємо контент із нашого API
-        fetch('/api/hero-content/get')
+        fetch('/api/hero/get')
             .then((res) => res.json())
             .then((json) => {
                 if (json.success) {
                     setData(json.data);
                 } else {
-                    setError('Помилка завантаження даних');
+                    setError('Не вдалося завантажити Hero-дані');
                 }
                 setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
-                setError('Щось пішло не так...');
+                setError('Помилка завантаження Hero');
                 setLoading(false);
             });
     }, []);
 
     if (loading) {
-        return <div className="text-center py-10 text-cyan-200">Завантаження...</div>;
+        return <div className="text-center py-10 text-cyan-200">Завантаження Hero...</div>;
     }
 
     if (error) {

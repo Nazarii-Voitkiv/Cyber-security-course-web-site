@@ -1,9 +1,58 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
+
+interface IntroPoint {
+    title: string;
+    description: string;
+}
+
+interface IntroData {
+    mainTitle: string;
+    mainSubtitle: string;
+    paragraphs: string[];
+    points: IntroPoint[];
+    conclusion: string;
+}
 
 export default function IntroSection() {
-  return (
+    const [intro, setIntro] = useState<IntroData | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    useEffect(() => {
+        fetch('/api/intro/get')
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success) {
+                    setIntro(json.data);
+                } else {
+                    setError('Не вдалося завантажити Intro');
+                }
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setError('Помилка завантаження Intro');
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) {
+        return <div className="text-center py-10 text-cyan-200">Завантаження Intro...</div>;
+    }
+
+    if (error) {
+        return <div className="text-center py-10 text-red-400">{error}</div>;
+    }
+
+    if (!intro) {
+        return null;
+    }
+
+    return (
       <section className="relative py-20 bg-gradient-to-b from-gray-900 to-gray-800">
         {/* Кібер-ефекти */}
         <div className="absolute inset-0 opacity-20 bg-[url('/noise.png')]" />
@@ -18,10 +67,10 @@ export default function IntroSection() {
               className="max-w-4xl mx-auto text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text animate-gradient">
-              Захисти себе, свою компанію та свій бізнес в інтернеті
+                <ReactMarkdown>{intro.mainTitle}</ReactMarkdown>
             </h2>
             <p className="text-xl text-cyan-100 max-w-3xl mx-auto leading-relaxed">
-              Почни навчання з кібербезпеки і отримай практичні навички від експертів вже сьогодні!
+                <ReactMarkdown>{intro.mainSubtitle}</ReactMarkdown>
             </p>
           </motion.div>
 
@@ -33,48 +82,23 @@ export default function IntroSection() {
               className="max-w-5xl mx-auto space-y-8"
           >
             <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm">
-              <p className="text-lg text-cyan-100 mb-6">
-                Щодня ти, як і <span className="font-bold">мільйони</span> ризикуєш стати жертвою фішингу або іншого онлайн-шахрайства. Дізнайся, як захистити свої дані, листування та фінанси!
-              </p>
+              <div className="text-lg text-cyan-100 mb-6"> <ReactMarkdown>{intro.paragraphs[0]}</ReactMarkdown> </div>
 
-              <p className="text-gray-400 mb-8">
-                Сьогодні кіберзагрози стали невід&apos;ємною частиною нашого цифрового життя. Шахраї кожного дня вигадують нові способи обману користувачів інтернету. Кожен користувач, кожен роутер, кожен бізнес — усі під загрозою.
-              </p>
+              <div className="text-gray-400 mb-8"><ReactMarkdown>{intro.paragraphs[1]}</ReactMarkdown></div>
 
-              <ul className="space-y-6">
-                <li className="flex items-start">
-                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
-                      <span className="font-bold">Фішинг</span></h3>
-                    <p className="text-gray-400">
-                      У 2023 році понад <span className="font-bold">80%</span> всіх кібер атак у світі були пов&apos;язані з фішингом, а збитки від фішингових атак щорічно становлять <span className="font-bold">мільярди доларів</span>
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex items-start">
-                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
-                      <span className="font-bold">Криптовалютне шахрайство</span></h3>
-                    <p className="text-gray-400">
-                      За даними <span className="font-bold">Chainalysis</span>, у 2022 році було вкрадено понад <span className="font-bold">7 мільярдів доларів</span> у криптовалютах через підроблені сайти та фішингові схеми
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex items-start">
-                  <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
-                  <div>
-                    <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
-                      <span className="font-bold">Соціальна інженерія</span></h3>
-                    <p className="text-gray-400">
-                    Більше <span className="font-bold">35%</span> користувачів інтернету у світі стали жертвами атак через соціальну інженерію, <span className="font-bold">навіть не підозрюючи про це</span>
-                    </p>
-                  </div>
-                </li>
-              </ul>
+                <ul className="space-y-6">
+                    {intro.points.map((point, idx) => (
+                        <li key={idx} className="flex items-start">
+                            <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
+                            <div>
+                                <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
+                                    <ReactMarkdown>{point.title}</ReactMarkdown>
+                                </h3>
+                                <p className="text-gray-400"><ReactMarkdown>{point.description}</ReactMarkdown></p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
 
               <motion.div
                   initial={{opacity: 0, x: -100}}
@@ -89,8 +113,7 @@ export default function IntroSection() {
                   className="mt-8 pt-8 border-t border-gray-700"
               >
                 <p className="text-xl font-semibold text-red-400">
-                  Ти не можеш ігнорувати ці загрози. Кожен день ти ризикуєш стати жертвою фішингу, втратити гроші,
-                  особисті дані та свої секрети.
+                    <ReactMarkdown>{intro.conclusion}</ReactMarkdown>
                 </p>
               </motion.div>
             </div>
