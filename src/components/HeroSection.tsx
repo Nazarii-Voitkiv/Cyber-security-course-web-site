@@ -62,10 +62,13 @@ export default function HeroSection() {
           </motion.div>
 
           <h1
-              className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient text-5xl sm:text-6xl md:text-7xl lg:text-[72px] leading-snug sm:leading-tight max-w-3xl mx-auto"
+              className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient text-[2.8rem] sm:text-4xl md:text-5xl lg:text-[72px] leading-snug sm:leading-tight max-w-3xl mx-auto"
           >
             Онлайн-курс з кібербезпеки
           </h1>
+
+
+
 
 
 
