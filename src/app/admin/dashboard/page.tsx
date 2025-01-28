@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Інтерфейси
+// Типи для Hero
 interface CourseType {
     title: string;
     description: string;
@@ -23,6 +23,7 @@ interface HeroData {
     courseTypes: CourseType[];
 }
 
+// Типи для Intro
 interface IntroPoint {
     title: string;
     description: string;
@@ -36,15 +37,10 @@ interface IntroData {
     conclusion: string;
 }
 
-interface PageContent {
-    hero: HeroData;
-    intro: IntroData;
-}
-
 export default function Dashboard() {
     const router = useRouter();
 
-    // Авторизація
+    // Перевірка авторизації (кукі isAuthenticated=true)
     useEffect(() => {
         const isAuthenticated = document.cookie.includes('isAuthenticated=true');
         if (!isAuthenticated) {
@@ -52,422 +48,387 @@ export default function Dashboard() {
         }
     }, [router]);
 
-    const [pageData, setPageData] = useState<PageContent | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [message, setMessage] = useState('');
+    // Hero state
+    const [hero, setHero] = useState<HeroData | null>(null);
+    const [heroMessage, setHeroMessage] = useState('');
 
-    // 1. Завантажити повний об'єкт PageContent (hero, intro)
+    // Intro state
+    const [intro, setIntro] = useState<IntroData | null>(null);
+    const [introMessage, setIntroMessage] = useState('');
+
+    const [loadingHero, setLoadingHero] = useState(true);
+    const [loadingIntro, setLoadingIntro] = useState(true);
+
+    // ===== 1. Завантажити Hero
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await fetch('/api/hero-content/get');
-                const data = await res.json();
+        fetch('/api/hero/get')
+            .then((r) => r.json())
+            .then((data) => {
                 if (data.success) {
-                    setPageData(data.data); // <- { hero: {...}, intro: {...} }
+                    setHero(data.data);
                 }
-                setLoading(false);
-            } catch (error) {
-                console.error(error);
-                setLoading(false);
-            }
-        };
-        fetchData();
+                setLoadingHero(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoadingHero(false);
+            });
     }, []);
 
-    // 2. Зберегти (POST)
-    const handleSave = async () => {
-        if (!pageData) return;
-        setMessage('');
+    // ===== 2. Завантажити Intro
+    useEffect(() => {
+        fetch('/api/intro/get')
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.success) {
+                    setIntro(data.data);
+                }
+                setLoadingIntro(false);
+            })
+            .catch((err) => {
+                console.error(err);
+                setLoadingIntro(false);
+            });
+    }, []);
+
+    // ===== 3. Зберегти Hero
+    const saveHero = async () => {
+        if (!hero) return;
+        setHeroMessage('');
 
         try {
-            const res = await fetch('/api/hero-content/update', {
+            const res = await fetch('/api/hero/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(pageData),
+                body: JSON.stringify(hero)
             });
-            const json = await res.json();
-            if (json.success) {
-                setMessage('Зміни успішно збережено!');
+            const data = await res.json();
+            if (data.success) {
+                setHeroMessage('Hero збережено успішно!');
             } else {
-                setMessage('Помилка збереження. Перевірте консоль.');
+                setHeroMessage('Помилка збереження Hero.');
             }
         } catch (error) {
             console.error(error);
-            setMessage('Щось пішло не так...');
+            setHeroMessage('Щось пішло не так при збереженні Hero...');
         }
     };
 
-    // 3. Зміна полів Hero
-    const handleHeroChange = (field: keyof HeroData, value: string) => {
-        if (!pageData) return;
-        setPageData({
-            ...pageData,
-            hero: {
-                ...pageData.hero,
-                [field]: value,
-            },
-        });
+    // ===== 4. Зберегти Intro
+    const saveIntro = async () => {
+        if (!intro) return;
+        setIntroMessage('');
+
+        try {
+            const res = await fetch('/api/intro/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(intro)
+            });
+            const data = await res.json();
+            if (data.success) {
+                setIntroMessage('Intro збережено успішно!');
+            } else {
+                setIntroMessage('Помилка збереження Intro.');
+            }
+        } catch (error) {
+            console.error(error);
+            setIntroMessage('Щось пішло не так при збереженні Intro...');
+        }
     };
 
-    // 4. Зміна курсу в Hero
-    const handleCourseChange = (
-        courseIndex: number,
-        field: keyof CourseType,
-        value: CourseType[keyof CourseType]
-    ) => {
-        if (!pageData) return;
-        const updatedCourses = [...pageData.hero.courseTypes];
-        updatedCourses[courseIndex] = {
-            ...updatedCourses[courseIndex],
-            [field]: value,
-        };
-        setPageData({
-            ...pageData,
-            hero: {
-                ...pageData.hero,
-                courseTypes: updatedCourses,
-            },
-        });
-    };
-
-    // 5. Зміна полів Intro (title, subtitle, conclusion, etc.)
-    const handleIntroChange = (field: keyof IntroData, value: string | string[]) => {
-        if (!pageData) return;
-        setPageData({
-            ...pageData,
-            intro: {
-                ...pageData.intro,
-                [field]: value,
-            },
-        });
-    };
-
-    // 6. Зміна point-ів Intro
-    const handleIntroPointChange = (
-        index: number,
-        field: keyof IntroPoint,
-        value: string
-    ) => {
-        if (!pageData) return;
-        const updatedPoints = [...pageData.intro.points];
-        updatedPoints[index] = {
-            ...updatedPoints[index],
-            [field]: value,
-        };
-        setPageData({
-            ...pageData,
-            intro: {
-                ...pageData.intro,
-                points: updatedPoints,
-            },
-        });
-    };
-
-    // 7. Зміна окремих абзаців paragraphs (якщо треба)
-    const handleParagraphChange = (index: number, value: string) => {
-        if (!pageData) return;
-        const updatedParagraphs = [...pageData.intro.paragraphs];
-        updatedParagraphs[index] = value;
-        setPageData({
-            ...pageData,
-            intro: {
-                ...pageData.intro,
-                paragraphs: updatedParagraphs,
-            },
-        });
-    };
-
-    // Вихід (Logout)
+    // Логаут
     const handleLogout = () => {
         document.cookie = 'isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         router.push('/admin');
     };
 
-    if (loading) {
-        return <div className="text-center py-10 text-cyan-200">Завантаження даних...</div>;
+    if (loadingHero || loadingIntro) {
+        return <div className="text-center py-10 text-cyan-200">Завантаження...</div>;
     }
 
     return (
-        <section className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
-            <div className="absolute inset-0 opacity-20 bg-[url('/noise.png')]" />
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10" />
-
-            <div className="container mx-auto px-4 relative py-20">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="max-w-6xl mx-auto"
-                >
-                    {/* Шапка Dashboard */}
-                    <div className="flex justify-between items-center mb-12 p-6 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm">
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                            Панель управління
-                        </h1>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={handleLogout}
-                            className="px-6 py-2 bg-red-500/20 border border-red-400 rounded-lg text-red-300 hover:bg-red-500/30 transition-colors"
-                        >
-                            Вийти
-                        </motion.button>
-                    </div>
-
-                    {/* Форма редагування */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="p-8 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm"
+        <section className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+            <div className="container mx-auto px-4 py-10">
+                <div className="flex justify-between mb-8">
+                    <h1 className="text-3xl font-bold text-cyan-400">Адмін-панель</h1>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleLogout}
+                        className="bg-red-600 text-white px-4 py-2 rounded"
                     >
-                        <h2 className="text-2xl font-semibold mb-8 text-cyan-100">
-                            Редагування контенту
-                        </h2>
+                        Вийти
+                    </motion.button>
+                </div>
 
-                        {/* Повідомлення про збереження */}
-                        {message && (
-                            <div className="mb-4 p-2 text-center bg-gray-700 text-green-400 rounded">
-                                {message}
+                {/* ============== HERO FORM ============== */}
+                <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">
+                    <h2 className="text-xl text-cyan-100 font-bold mb-4">Hero Section</h2>
+
+                    {heroMessage && (
+                        <div className="mb-4 p-2 bg-gray-700 text-green-400 rounded">
+                            {heroMessage}
+                        </div>
+                    )}
+
+                    {!hero ? (
+                        <p className="text-gray-400">Не вдалося завантажити hero.json</p>
+                    ) : (
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-cyan-100">Заголовок (heroTitle):</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                    value={hero.heroTitle}
+                                    onChange={(e) => setHero({ ...hero, heroTitle: e.target.value })}
+                                />
                             </div>
-                        )}
 
-                        {!pageData ? (
-                            <p className="text-gray-400">Не вдалося завантажити дані...</p>
-                        ) : (
-                            <div className="space-y-8">
-
-                                {/* ========== Hero Section ========== */}
-                                <details className="bg-gray-700/30 border border-gray-600 rounded-lg p-4" open>
-                                    <summary className="cursor-pointer text-cyan-100 text-xl font-bold mb-4">
-                                        Hero Section
-                                    </summary>
-
-                                    <div className="mt-4 space-y-6">
-                                        {/* Hero Title */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Заголовок (heroTitle):</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={pageData.hero.heroTitle}
-                                                onChange={(e) => handleHeroChange('heroTitle', e.target.value)}
-                                            />
-                                        </div>
-
-                                        {/* Hero Subtitle */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Підзаголовок (heroSubtitle):</label>
-                                            <textarea
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                                                value={pageData.hero.heroSubtitle}
-                                                onChange={(e) => handleHeroChange('heroSubtitle', e.target.value)}
-                                            />
-                                        </div>
-
-                                        {/* Discount Banner */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Текст акції (discountBanner):</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={pageData.hero.discountBanner}
-                                                onChange={(e) => handleHeroChange('discountBanner', e.target.value)}
-                                            />
-                                        </div>
-
-                                        {/* Courses */}
-                                        <details className="bg-gray-700/20 border border-gray-600 rounded-lg p-4">
-                                            <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                                Список курсів
-                                            </summary>
-                                            <div className="mt-4 space-y-4">
-                                                {pageData.hero.courseTypes.map((course, idx) => (
-                                                    <div key={idx} className="p-4 border border-gray-600 rounded bg-gray-700/40">
-                                                        <div className="mb-2">
-                                                            <label className="block text-cyan-100">Назва (title):</label>
-                                                            <input
-                                                                type="text"
-                                                                className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                value={course.title}
-                                                                onChange={(e) => handleCourseChange(idx, 'title', e.target.value)}
-                                                            />
-                                                        </div>
-
-                                                        <div className="mb-2">
-                                                            <label className="block text-cyan-100">Опис (description):</label>
-                                                            <textarea
-                                                                className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white h-20"
-                                                                value={course.description}
-                                                                onChange={(e) => handleCourseChange(idx, 'description', e.target.value)}
-                                                            />
-                                                        </div>
-
-                                                        <div className="flex flex-wrap gap-4 mb-2">
-                                                            <div>
-                                                                <label className="block text-cyan-100">Стара ціна (originalPrice):</label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                    value={course.originalPrice}
-                                                                    onChange={(e) =>
-                                                                        handleCourseChange(idx, 'originalPrice', e.target.value)
-                                                                    }
-                                                                />
-                                                            </div>
-                                                            <div>
-                                                                <label className="block text-cyan-100">Нова ціна (price):</label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                    value={course.price}
-                                                                    onChange={(e) => handleCourseChange(idx, 'price', e.target.value)}
-                                                                />
-                                                            </div>
-                                                            <div>
-                                                                <label className="block text-cyan-100">Знижка (discount):</label>
-                                                                <input
-                                                                    type="text"
-                                                                    className="p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                    value={course.discount}
-                                                                    onChange={(e) => handleCourseChange(idx, 'discount', e.target.value)}
-                                                                />
-                                                            </div>
-                                                        </div>
-
-                                                        <div className="mb-2">
-                                                            <label className="block text-cyan-100">Посилання (link):</label>
-                                                            <input
-                                                                type="text"
-                                                                className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                value={course.link}
-                                                                onChange={(e) => handleCourseChange(idx, 'link', e.target.value)}
-                                                            />
-                                                        </div>
-
-                                                        <div>
-                                                            <label className="flex items-center text-cyan-100">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    className="mr-2"
-                                                                    checked={course.recommended || false}
-                                                                    onChange={(e) =>
-                                                                        handleCourseChange(idx, 'recommended', e.target.checked)
-                                                                    }
-                                                                />
-                                                                Рекомендовано (recommended)
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </details>
-                                    </div>
-                                </details>
-
-                                {/* ========== Intro Section ========== */}
-                                <details className="bg-gray-700/30 border border-gray-600 rounded-lg p-4" open>
-                                    <summary className="cursor-pointer text-cyan-100 text-xl font-bold mb-4">
-                                        Intro Section
-                                    </summary>
-
-                                    <div className="mt-4 space-y-6">
-                                        {/* mainTitle */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Заголовок (mainTitle):</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={pageData.intro.mainTitle}
-                                                onChange={(e) => handleIntroChange('mainTitle', e.target.value)}
-                                            />
-                                        </div>
-
-                                        {/* mainSubtitle */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Підзаголовок (mainSubtitle):</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={pageData.intro.mainSubtitle}
-                                                onChange={(e) => handleIntroChange('mainSubtitle', e.target.value)}
-                                            />
-                                        </div>
-
-                                        {/* paragraphs */}
-                                        <details className="bg-gray-700/20 border border-gray-600 rounded-lg p-4">
-                                            <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                                Абзаци (paragraphs)
-                                            </summary>
-                                            <div className="mt-4 space-y-4">
-                                                {pageData.intro.paragraphs.map((paragraph, idx) => (
-                                                    <div key={idx}>
-                                                        <label className="block text-cyan-100">Абзац {idx + 1}:</label>
-                                                        <textarea
-                                                            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white h-20"
-                                                            value={paragraph}
-                                                            onChange={(e) => handleParagraphChange(idx, e.target.value)}
-                                                        />
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </details>
-
-                                        {/* points */}
-                                        <details className="bg-gray-700/20 border border-gray-600 rounded-lg p-4">
-                                            <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                                Пункти (points)
-                                            </summary>
-                                            <div className="mt-4 space-y-4">
-                                                {pageData.intro.points.map((p, idx) => (
-                                                    <div key={idx} className="p-4 border border-gray-600 rounded bg-gray-800/50">
-                                                        <div className="mb-2">
-                                                            <label className="block text-cyan-100">Заголовок (title):</label>
-                                                            <input
-                                                                type="text"
-                                                                className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
-                                                                value={p.title}
-                                                                onChange={(e) => handleIntroPointChange(idx, 'title', e.target.value)}
-                                                            />
-                                                        </div>
-                                                        <div>
-                                                            <label className="block text-cyan-100">Опис (description):</label>
-                                                            <textarea
-                                                                className="w-full p-2 bg-gray-800 border border-gray-600 rounded-lg text-white h-20"
-                                                                value={p.description}
-                                                                onChange={(e) =>
-                                                                    handleIntroPointChange(idx, 'description', e.target.value)
-                                                                }
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </details>
-
-                                        {/* conclusion */}
-                                        <div>
-                                            <label className="block text-cyan-100 mb-2">Висновок (conclusion):</label>
-                                            <textarea
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                                                value={pageData.intro.conclusion}
-                                                onChange={(e) => handleIntroChange('conclusion', e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                </details>
-
-                                {/* Кнопка збереження */}
-                                <motion.button
-                                    whileHover={{ scale: 1.03 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    onClick={handleSave}
-                                    className="px-6 py-2 bg-cyan-500 border border-cyan-400 rounded-lg text-white hover:bg-cyan-600 transition-colors"
-                                >
-                                    Зберегти
-                                </motion.button>
+                            <div>
+                                <label className="block text-cyan-100">Підзаголовок (heroSubtitle):</label>
+                                <textarea
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
+                                    value={hero.heroSubtitle}
+                                    onChange={(e) => setHero({ ...hero, heroSubtitle: e.target.value })}
+                                />
                             </div>
-                        )}
-                    </motion.div>
-                </motion.div>
+
+                            <div>
+                                <label className="block text-cyan-100">Банер (discountBanner):</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                    value={hero.discountBanner}
+                                    onChange={(e) => setHero({ ...hero, discountBanner: e.target.value })}
+                                />
+                            </div>
+
+                            {/* Курси */}
+                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
+                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
+                                    Список курсів
+                                </summary>
+                                <div className="mt-4 space-y-4">
+                                    {hero.courseTypes.map((course, idx) => (
+                                        <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
+                                            <label className="block text-cyan-100">Назва (title):</label>
+                                            <input
+                                                type="text"
+                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
+                                                value={course.title}
+                                                onChange={(e) => {
+                                                    const updated = [...hero.courseTypes];
+                                                    updated[idx] = { ...updated[idx], title: e.target.value };
+                                                    setHero({ ...hero, courseTypes: updated });
+                                                }}
+                                            />
+
+                                            <label className="block text-cyan-100">Опис (description):</label>
+                                            <textarea
+                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
+                                                value={course.description}
+                                                onChange={(e) => {
+                                                    const updated = [...hero.courseTypes];
+                                                    updated[idx] = { ...updated[idx], description: e.target.value };
+                                                    setHero({ ...hero, courseTypes: updated });
+                                                }}
+                                            />
+
+                                            {/* Ціни і т.д. */}
+                                            <div className="flex gap-4 mb-2">
+                                                <div>
+                                                    <label className="block text-cyan-100">Стара ціна:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                        value={course.originalPrice}
+                                                        onChange={(e) => {
+                                                            const updated = [...hero.courseTypes];
+                                                            updated[idx] = { ...updated[idx], originalPrice: e.target.value };
+                                                            setHero({ ...hero, courseTypes: updated });
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-cyan-100">Нова ціна:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                        value={course.price}
+                                                        onChange={(e) => {
+                                                            const updated = [...hero.courseTypes];
+                                                            updated[idx] = { ...updated[idx], price: e.target.value };
+                                                            setHero({ ...hero, courseTypes: updated });
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-cyan-100">Знижка:</label>
+                                                    <input
+                                                        type="text"
+                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                        value={course.discount}
+                                                        onChange={(e) => {
+                                                            const updated = [...hero.courseTypes];
+                                                            updated[idx] = { ...updated[idx], discount: e.target.value };
+                                                            setHero({ ...hero, courseTypes: updated });
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div className="mb-2">
+                                                <label className="block text-cyan-100">Посилання (link):</label>
+                                                <input
+                                                    type="text"
+                                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                    value={course.link}
+                                                    onChange={(e) => {
+                                                        const updated = [...hero.courseTypes];
+                                                        updated[idx] = { ...updated[idx], link: e.target.value };
+                                                        setHero({ ...hero, courseTypes: updated });
+                                                    }}
+                                                />
+                                            </div>
+
+                                            <div>
+                                                <label className="flex items-center text-cyan-100">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="mr-2"
+                                                        checked={course.recommended ?? false}
+                                                        onChange={(e) => {
+                                                            const updated = [...hero.courseTypes];
+                                                            updated[idx] = { ...updated[idx], recommended: e.target.checked };
+                                                            setHero({ ...hero, courseTypes: updated });
+                                                        }}
+                                                    />
+                                                    recommended
+                                                </label>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </details>
+
+                            <button
+                                onClick={saveHero}
+                                className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded"
+                            >
+                                Зберегти Hero
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                {/* ============== INTRO FORM ============== */}
+                <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">
+                    <h2 className="text-xl text-cyan-100 font-bold mb-4">Intro Section</h2>
+
+                    {introMessage && (
+                        <div className="mb-4 p-2 bg-gray-700 text-green-400 rounded">
+                            {introMessage}
+                        </div>
+                    )}
+
+                    {!intro ? (
+                        <p className="text-gray-400">Не вдалося завантажити intro.json</p>
+                    ) : (
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-cyan-100">Головний заголовок (mainTitle):</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                    value={intro.mainTitle}
+                                    onChange={(e) => setIntro({ ...intro, mainTitle: e.target.value })}
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-cyan-100">Підзаголовок (mainSubtitle):</label>
+                                <textarea
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
+                                    value={intro.mainSubtitle}
+                                    onChange={(e) => setIntro({ ...intro, mainSubtitle: e.target.value })}
+                                />
+                            </div>
+
+                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
+                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
+                                    Абзаци (paragraphs)
+                                </summary>
+                                <div className="mt-4 space-y-4">
+                                    {intro.paragraphs.map((p, idx) => (
+                                        <div key={idx}>
+                                            <label className="block text-cyan-100">Абзац {idx + 1}:</label>
+                                            <textarea
+                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                value={p}
+                                                onChange={(e) => {
+                                                    const updated = [...intro.paragraphs];
+                                                    updated[idx] = e.target.value;
+                                                    setIntro({ ...intro, paragraphs: updated });
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </details>
+
+                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
+                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
+                                    Пункти (points)
+                                </summary>
+                                <div className="mt-4 space-y-4">
+                                    {intro.points.map((pt, idx) => (
+                                        <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
+                                            <label className="block text-cyan-100">Заголовок:</label>
+                                            <input
+                                                type="text"
+                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
+                                                value={pt.title}
+                                                onChange={(e) => {
+                                                    const updated = [...intro.points];
+                                                    updated[idx] = { ...updated[idx], title: e.target.value };
+                                                    setIntro({ ...intro, points: updated });
+                                                }}
+                                            />
+                                            <label className="block text-cyan-100">Опис:</label>
+                                            <textarea
+                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                                value={pt.description}
+                                                onChange={(e) => {
+                                                    const updated = [...intro.points];
+                                                    updated[idx] = { ...updated[idx], description: e.target.value };
+                                                    setIntro({ ...intro, points: updated });
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            </details>
+
+                            <div>
+                                <label className="block text-cyan-100">Висновок (conclusion):</label>
+                                <textarea
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
+                                    value={intro.conclusion}
+                                    onChange={(e) => setIntro({ ...intro, conclusion: e.target.value })}
+                                />
+                            </div>
+
+                            <button
+                                onClick={saveIntro}
+                                className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded"
+                            >
+                                Зберегти Intro
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </section>
     );

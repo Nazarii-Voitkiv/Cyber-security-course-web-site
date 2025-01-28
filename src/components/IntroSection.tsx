@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import ReactMarkdown from 'react-markdown';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 interface IntroPoint {
     title: string;
@@ -67,10 +67,10 @@ export default function IntroSection() {
               className="max-w-4xl mx-auto text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-400 text-transparent bg-clip-text animate-gradient">
-                <ReactMarkdown>{intro.mainTitle}</ReactMarkdown>
+                <CustomMarkdown>{intro.mainTitle}</CustomMarkdown>
             </h2>
             <p className="text-xl text-cyan-100 max-w-3xl mx-auto leading-relaxed">
-                <ReactMarkdown>{intro.mainSubtitle}</ReactMarkdown>
+                <CustomMarkdown>{intro.mainSubtitle}</CustomMarkdown>
             </p>
           </motion.div>
 
@@ -82,9 +82,9 @@ export default function IntroSection() {
               className="max-w-5xl mx-auto space-y-8"
           >
             <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm">
-              <div className="text-lg text-cyan-100 mb-6"> <ReactMarkdown>{intro.paragraphs[0]}</ReactMarkdown> </div>
+              <p className="text-lg text-cyan-100 mb-6"> <CustomMarkdown>{intro.paragraphs[0]}</CustomMarkdown> </p>
 
-              <div className="text-gray-400 mb-8"><ReactMarkdown>{intro.paragraphs[1]}</ReactMarkdown></div>
+              <p className="text-gray-400 mb-8"><CustomMarkdown>{intro.paragraphs[1]}</CustomMarkdown></p>
 
                 <ul className="space-y-6">
                     {intro.points.map((point, idx) => (
@@ -92,9 +92,9 @@ export default function IntroSection() {
                             <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
                             <div>
                                 <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
-                                    <ReactMarkdown>{point.title}</ReactMarkdown>
+                                    <CustomMarkdown>{point.title}</CustomMarkdown>
                                 </h3>
-                                <p className="text-gray-400"><ReactMarkdown>{point.description}</ReactMarkdown></p>
+                                <p className="text-gray-400"><CustomMarkdown>{point.description}</CustomMarkdown></p>
                             </div>
                         </li>
                     ))}
@@ -113,7 +113,7 @@ export default function IntroSection() {
                   className="mt-8 pt-8 border-t border-gray-700"
               >
                 <p className="text-xl font-semibold text-red-400">
-                    <ReactMarkdown>{intro.conclusion}</ReactMarkdown>
+                    <CustomMarkdown>{intro.conclusion}</CustomMarkdown>
                 </p>
               </motion.div>
             </div>

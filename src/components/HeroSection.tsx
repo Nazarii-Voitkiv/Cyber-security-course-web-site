@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon } from '@heroicons/react/24/outline';
 import CountdownTimer from './CountdownTimer';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 // Описуємо типи
 export interface CourseType {
@@ -92,12 +93,12 @@ export default function HeroSection() {
                        animate-gradient text-[2.5rem] sm:text-[3rem] md:text-[5rem] lg:text-[72px]
                        leading-snug sm:leading-tight max-w-3xl mx-auto"
                     >
-                        {heroTitle}
+                        <CustomMarkdown>{heroTitle}</CustomMarkdown>
                     </h1>
 
                     {/* Підзаголовок */}
                     <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
-                        {heroSubtitle}
+                        <CustomMarkdown>{heroSubtitle}</CustomMarkdown>
                     </p>
 
                     {/* Банер зі знижкою */}
@@ -130,7 +131,7 @@ export default function HeroSection() {
                        mb-6 md:mb-8 inline-block shadow-lg shadow-red-500/20 cursor-pointer
                        hover:shadow-xl hover:shadow-red-500/30 transition-shadow duration-300"
                     >
-                        {discountBanner}
+                        <CustomMarkdown>{discountBanner}</CustomMarkdown>
                     </motion.button>
 
                     {/* Таймер */}
@@ -172,21 +173,21 @@ export default function HeroSection() {
                                 )}
                                 <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
                   ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
-                                    <h3 className="text-xl md:text-2xl font-bold mb-2">{course.title}</h3>
-                                    <p className="text-gray-400 mb-4 text-sm md:text-base">{course.description}</p>
+                                    <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{course.title}</CustomMarkdown></h3>
+                                    <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{course.description}</CustomMarkdown></p>
 
                                     {/* Блок з ціною та знижкою */}
                                     <div className="mb-6">
                                         <div className="flex items-center justify-center gap-3 mb-2">
                       <span className="text-gray-400 line-through text-base md:text-lg">
-                        {course.originalPrice}
+                        <CustomMarkdown>{course.originalPrice}</CustomMarkdown>
                       </span>
                                             <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
-                        -{course.discount}
+                        -<CustomMarkdown>{course.discount}</CustomMarkdown>
                       </span>
                                         </div>
                                         <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                                            {course.price}
+                                            <CustomMarkdown>{course.price}</CustomMarkdown>
                                         </div>
                                     </div>
 
@@ -194,7 +195,7 @@ export default function HeroSection() {
                                         {course.features.map((feature, i) => (
                                             <li key={i} className="flex items-center text-cyan-100">
                                                 <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
-                                                {feature}
+                                                <CustomMarkdown>{feature}</CustomMarkdown>
                                             </li>
                                         ))}
                                     </ul>
