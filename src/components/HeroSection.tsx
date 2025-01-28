@@ -62,13 +62,14 @@ export default function HeroSection() {
           </motion.div>
 
           {/* Заголовок */}
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient">
+          <h1 className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient"
+              style={{fontSize: '72px', lineHeight: '1.2'}}>
             Онлайн-курс з кібербезпеки
           </h1>
-
+          
           {/* Підзаголовок */}
           <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
-            Захистіть себе та свій бізнес від шахраїв в інтернеті. 
+            Захистіть себе та свій бізнес від шахраїв в інтернеті.
             Отримайте практичні навички кібербезпеки від експертів.
           </p>
 
