@@ -6,9 +6,6 @@ import { motion } from 'framer-motion';
 interface Group {
     title: string;
     description: string;
-    icon: string;
-    iconColor: string;
-    bgColor: string;
 }
 
 interface ForWhomData {
@@ -46,6 +43,7 @@ export default function ForWhomEdit() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
+
             const responseData = await res.json();
             if (responseData.success) {
                 setMessage('For Whom збережено успішно!');
@@ -118,48 +116,6 @@ export default function ForWhomEdit() {
                                                 setData({ ...data, groups: updated });
                                             }}
                                         />
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-2">
-                                        <div>
-                                            <label className="block text-cyan-100">Іконка:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={group.icon}
-                                                onChange={(e) => {
-                                                    const updated = [...data.groups];
-                                                    updated[idx] = { ...updated[idx], icon: e.target.value };
-                                                    setData({ ...data, groups: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір іконки:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={group.iconColor}
-                                                onChange={(e) => {
-                                                    const updated = [...data.groups];
-                                                    updated[idx] = { ...updated[idx], iconColor: e.target.value };
-                                                    setData({ ...data, groups: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір фону:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={group.bgColor}
-                                                onChange={(e) => {
-                                                    const updated = [...data.groups];
-                                                    updated[idx] = { ...updated[idx], bgColor: e.target.value };
-                                                    setData({ ...data, groups: updated });
-                                                }}
-                                            />
-                                        </div>
                                     </div>
                                 </div>
                             ))}
