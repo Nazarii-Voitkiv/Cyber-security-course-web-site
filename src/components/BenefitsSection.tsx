@@ -1,37 +1,55 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  ShieldCheckIcon, 
-  AcademicCapIcon, 
-  ChatBubbleBottomCenterTextIcon, 
-  DocumentCheckIcon,
-  ClockIcon,
-  UserGroupIcon
-} from '@heroicons/react/24/outline';
-
-const iconsMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+import {
   ShieldCheckIcon,
   AcademicCapIcon,
   ChatBubbleBottomCenterTextIcon,
   DocumentCheckIcon,
   ClockIcon,
   UserGroupIcon
-};
+} from '@heroicons/react/24/outline';
 
-interface Benefit {
-  title: string;
-  description: string;
-  icon: string;
-  color: string;
-  bgColor: string;
-}
+const benefits = [
+  {
+    Icon: ShieldCheckIcon,
+    color: 'text-red-400',
+    bgColor: 'bg-red-500/10'
+  },
+  {
+    Icon: AcademicCapIcon,
+    color: 'text-blue-400',
+    bgColor: 'bg-blue-500/10'
+  },
+  {
+    Icon: ChatBubbleBottomCenterTextIcon,
+    color: 'text-green-400',
+    bgColor: 'bg-green-500/10'
+  },
+  {
+    Icon: DocumentCheckIcon,
+    color: 'text-purple-400',
+    bgColor: 'bg-purple-500/10'
+  },
+  {
+    Icon: ClockIcon,
+    color: 'text-yellow-400',
+    bgColor: 'bg-yellow-500/10'
+  },
+  {
+    Icon: UserGroupIcon,
+    color: 'text-cyan-400',
+    bgColor: 'bg-cyan-500/10'
+  }
+];
 
 interface BenefitsData {
   title: string;
-  subtitle: string;
-  benefits: Benefit[];
+  benefits: {
+    title: string;
+    description: string;
+  }[];
 }
 
 export default function BenefitsSection() {
@@ -39,20 +57,18 @@ export default function BenefitsSection() {
 
   useEffect(() => {
     fetch('/api/benefits/get')
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.success) {
-          setData(json.data);
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success) {
+          setData(data.data);
         }
       })
       .catch((err) => {
-        console.error('Error loading benefits:', err);
+        console.error(err);
       });
   }, []);
 
-  if (!data) {
-    return null;
-  }
+  if (!data) return null;
 
   return (
     <section className="py-20">
@@ -67,14 +83,11 @@ export default function BenefitsSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
             {data.title}
           </h2>
-          <p className="text-xl text-gray-400">
-            {data.subtitle}
-          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {data.benefits.map((benefit, index) => {
-            const Icon = iconsMap[benefit.icon as keyof typeof iconsMap];
+            const { Icon, color, bgColor } = benefits[index];
             return (
               <motion.div
                 key={benefit.title}
@@ -84,18 +97,19 @@ export default function BenefitsSection() {
                 viewport={{ once: true }}
                 className="relative group h-full"
               >
-                <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl 
+                <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl
                              transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
-                  <div className={`${benefit.bgColor} p-4 rounded-full w-fit mb-6 
+                  <div className={`${bgColor} p-4 rounded-full w-fit mb-6 
                                 transition-transform duration-300 group-hover:scale-110 flex-shrink-0`}>
-                    {Icon && <Icon className={`h-8 w-8 ${benefit.color}`} />}
+                    <Icon className={`h-8 w-8 ${color}`} />
                   </div>
+
                   <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0">{benefit.title}</h3>
                   <p className="text-gray-400 flex-grow">{benefit.description}</p>
                 </div>
-                
+
                 {/* Subtle glow effect on hover */}
-                <div className={`absolute -inset-0.5 ${benefit.bgColor} opacity-0 group-hover:opacity-20 
+                <div className={`absolute -inset-0.5 ${bgColor} opacity-0 group-hover:opacity-20 
                               rounded-xl blur transition duration-300`} />
               </motion.div>
             );

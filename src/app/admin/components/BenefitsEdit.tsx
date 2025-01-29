@@ -6,14 +6,10 @@ import { motion } from 'framer-motion';
 interface Benefit {
     title: string;
     description: string;
-    icon: string;
-    color: string;
-    bgColor: string;
 }
 
 interface BenefitsData {
     title: string;
-    subtitle: string;
     benefits: Benefit[];
 }
 
@@ -77,8 +73,8 @@ export default function BenefitsEdit() {
                 <p className="text-gray-400">Не вдалося завантажити дані</p>
             ) : (
                 <div className="space-y-4">
-                    <div className="mb-2">
-                        <label className="block text-cyan-100">Заголовок секції:</label>
+                    <div>
+                        <label className="block text-cyan-100">Заголовок:</label>
                         <input
                             type="text"
                             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
@@ -86,18 +82,10 @@ export default function BenefitsEdit() {
                             onChange={(e) => setData({ ...data, title: e.target.value })}
                         />
                     </div>
-                    <div className="mb-2">
-                        <label className="block text-cyan-100">Підзаголовок секції:</label>
-                        <input
-                            type="text"
-                            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                            value={data.subtitle}
-                            onChange={(e) => setData({ ...data, subtitle: e.target.value })}
-                        />
-                    </div>
+
                     <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
                         <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                            Переваги
+                            Benefits
                         </summary>
                         <div className="mt-4 space-y-4">
                             {data.benefits.map((benefit, idx) => (
@@ -127,48 +115,6 @@ export default function BenefitsEdit() {
                                                 setData({ ...data, benefits: updated });
                                             }}
                                         />
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-2">
-                                        <div>
-                                            <label className="block text-cyan-100">Іконка:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={benefit.icon}
-                                                onChange={(e) => {
-                                                    const updated = [...data.benefits];
-                                                    updated[idx] = { ...updated[idx], icon: e.target.value };
-                                                    setData({ ...data, benefits: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір тексту:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={benefit.color}
-                                                onChange={(e) => {
-                                                    const updated = [...data.benefits];
-                                                    updated[idx] = { ...updated[idx], color: e.target.value };
-                                                    setData({ ...data, benefits: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір фону:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={benefit.bgColor}
-                                                onChange={(e) => {
-                                                    const updated = [...data.benefits];
-                                                    updated[idx] = { ...updated[idx], bgColor: e.target.value };
-                                                    setData({ ...data, benefits: updated });
-                                                }}
-                                            />
-                                        </div>
                                     </div>
                                 </div>
                             ))}
