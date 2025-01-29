@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon, LightBulbIcon, BanknotesIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 const reasons = [
     {
@@ -66,7 +67,7 @@ export default function WhyThisCourseSection() {
             >
                 <div className="text-center max-w-7xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-                        {data.title}
+                        <CustomMarkdown>{data.title}</CustomMarkdown>
                     </h2>
 
                     <div className="grid md:grid-cols-2 gap-8">
@@ -86,8 +87,8 @@ export default function WhyThisCourseSection() {
                                         <div className="mb-4">
                                             <Icon className={`h-12 w-12 ${color} transition-transform duration-300 group-hover:scale-110`} />
                                         </div>
-                                        <h3 className="text-xl font-semibold mb-4 text-white text-center">{reason.title}</h3>
-                                        <p className="text-gray-400 text-center">{reason.description}</p>
+                                        <h3 className="text-xl font-semibold mb-4 text-white text-center"><CustomMarkdown>{reason.title}</CustomMarkdown></h3>
+                                        <p className="text-gray-400 text-center"><CustomMarkdown>{reason.description}</CustomMarkdown></p>
                                     </div>
 
                                     {/* Subtle glow effect on hover */}
