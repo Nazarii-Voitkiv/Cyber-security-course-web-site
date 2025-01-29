@@ -22,6 +22,7 @@ interface Group {
 }
 
 interface ForWhomData {
+  title: string;
   groups: Group[];
 }
 
@@ -67,7 +68,7 @@ export default function ForWhomSection() {
       >
         <div className="text-center max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-            Для кого цей курс?
+            {data.title}
           </h2>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

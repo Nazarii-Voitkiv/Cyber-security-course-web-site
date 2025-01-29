@@ -12,6 +12,8 @@ interface Benefit {
 }
 
 interface BenefitsData {
+    title: string;
+    subtitle: string;
     benefits: Benefit[];
 }
 
@@ -75,6 +77,32 @@ export default function BenefitsEdit() {
                 <p className="text-gray-400">Не вдалося завантажити дані</p>
             ) : (
                 <div className="space-y-4">
+                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg" open>
+                        <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
+                            Заголовки секції
+                        </summary>
+                        <div className="mt-4 space-y-4">
+                            <div className="mb-2">
+                                <label className="block text-cyan-100">Заголовок:</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                    value={data.title}
+                                    onChange={(e) => setData({ ...data, title: e.target.value })}
+                                />
+                            </div>
+                            <div className="mb-2">
+                                <label className="block text-cyan-100">Підзаголовок:</label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                    value={data.subtitle}
+                                    onChange={(e) => setData({ ...data, subtitle: e.target.value })}
+                                />
+                            </div>
+                        </div>
+                    </details>
+
                     <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg" open>
                         <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
                             Переваги

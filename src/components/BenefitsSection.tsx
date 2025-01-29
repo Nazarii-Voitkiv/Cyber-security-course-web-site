@@ -30,6 +30,8 @@ interface Benefit {
 
 interface BenefitsData {
   benefits: Benefit[];
+  title: string;
+  subtitle: string;
 }
 
 export default function BenefitsSection() {
@@ -74,10 +76,10 @@ export default function BenefitsSection() {
       >
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-            Що ви отримаєте?
+            {data.title}
           </h2>
           <p className="text-xl text-gray-400">
-            Практичні знання та інструменти для безпечного життя в цифровому світі
+            {data.subtitle}
           </p>
         </div>
 
