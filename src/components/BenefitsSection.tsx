@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   ShieldCheckIcon, 
@@ -10,52 +11,58 @@ import {
   UserGroupIcon
 } from '@heroicons/react/24/outline';
 
-const benefits = [
-  {
-    title: 'Захист від шахраїв',
-    description: 'Навчитеся розпізнавати фішингові атаки, шахрайські схеми та захищати свої фінансові дані.',
-    Icon: ShieldCheckIcon,
-    color: 'text-red-400',
-    bgColor: 'bg-red-500/10'
-  },
-  {
-    title: 'Практичні навички',
-    description: 'Отримаєте реальні інструменти та техніки для захисту своїх пристроїв та даних.',
-    Icon: AcademicCapIcon,
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/10'
-  },
-  {
-    title: 'Особисті консультації',
-    description: 'Зможете отримати відповіді на свої питання від експертів з кібербезпеки.',
-    Icon: ChatBubbleBottomCenterTextIcon,
-    color: 'text-green-400',
-    bgColor: 'bg-green-500/10'
-  },
-  {
-    title: 'Сертифікат',
-    description: 'Отримаєте документ, що підтверджує ваші знання з кібербезпеки.',
-    Icon: DocumentCheckIcon,
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/10'
-  },
-  {
-    title: 'Довічний доступ',
-    description: 'Матимете постійний доступ до матеріалів курсу та всіх майбутніх оновлень.',
-    Icon: ClockIcon,
-    color: 'text-yellow-400',
-    bgColor: 'bg-yellow-500/10'
-  },
-  {
-    title: 'Спільнота',
-    description: 'Приєднаєтесь до спільноти однодумців, де зможете обмінюватися досвідом.',
-    Icon: UserGroupIcon,
-    color: 'text-cyan-400',
-    bgColor: 'bg-cyan-500/10'
-  }
-];
+const iconsMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  ShieldCheckIcon,
+  AcademicCapIcon,
+  ChatBubbleBottomCenterTextIcon,
+  DocumentCheckIcon,
+  ClockIcon,
+  UserGroupIcon
+};
+
+interface Benefit {
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+}
+
+interface BenefitsData {
+  benefits: Benefit[];
+}
 
 export default function BenefitsSection() {
+  const [data, setData] = useState<BenefitsData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetch('/api/benefits/get')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setData(json.data);
+        } else {
+          setError('Не вдалося завантажити Benefits');
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError('Помилка завантаження Benefits');
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-10 text-cyan-200">Завантаження Benefits...</div>;
+  }
+
+  if (error || !data) {
+    return <div className="text-center py-10 text-red-400">{error}</div>;
+  }
+
   return (
     <section className="py-20">
       <motion.div
@@ -75,30 +82,33 @@ export default function BenefitsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {benefits.map((benefit, index) => (
-            <motion.div
-              key={benefit.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative group h-full"
-            >
-              <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl 
-                             transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
-                <div className={`${benefit.bgColor} p-4 rounded-full w-fit mb-6 
-                                transition-transform duration-300 group-hover:scale-110 flex-shrink-0`}>
-                  <benefit.Icon className={`h-8 w-8 ${benefit.color}`} />
+          {data.benefits.map((benefit, idx) => {
+            const Icon = iconsMap[benefit.icon as keyof typeof iconsMap];
+            return (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true }}
+                className="relative group h-full"
+              >
+                <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl 
+                               transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
+                  <div className={`${benefit.bgColor} p-4 rounded-full w-fit mb-6 
+                                  transition-transform duration-300 group-hover:scale-110 flex-shrink-0`}>
+                    {Icon && <Icon className={`h-8 w-8 ${benefit.color}`} />}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0">{benefit.title}</h3>
+                  <p className="text-gray-400 flex-grow">{benefit.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0">{benefit.title}</h3>
-                <p className="text-gray-400 flex-grow">{benefit.description}</p>
-              </div>
-              
-              {/* Subtle glow effect on hover */}
-              <div className={`absolute -inset-0.5 ${benefit.bgColor} opacity-0 group-hover:opacity-20 
-                              rounded-xl blur transition duration-300`} />
-            </motion.div>
-          ))}
+                
+                {/* Subtle glow effect on hover */}
+                <div className={`absolute -inset-0.5 ${benefit.bgColor} opacity-0 group-hover:opacity-20 
+                                rounded-xl blur transition duration-300`} />
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
     </section>

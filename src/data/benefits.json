@@ -1,0 +1,48 @@
+{
+  "title": "Що ви отримаєте?",
+  "subtitle": "Практичні знання та інструменти для безпечного життя в цифровому світі",
+  "benefits": [
+    {
+      "title": "Захист від шахраїв1",
+      "description": "Навчитеся розпізнавати фішингові атаки, шахрайські схеми та захищати свої фінансові дані.",
+      "icon": "ShieldCheckIcon",
+      "color": "text-red-400",
+      "bgColor": "bg-red-500/10"
+    },
+    {
+      "title": "Практичні навички",
+      "description": "Отримаєте реальні інструменти та техніки для захисту своїх пристроїв та даних.",
+      "icon": "AcademicCapIcon",
+      "color": "text-blue-400",
+      "bgColor": "bg-blue-500/10"
+    },
+    {
+      "title": "Особисті консультації",
+      "description": "Зможете отримати відповіді на свої питання від експертів з кібербезпеки.",
+      "icon": "ChatBubbleBottomCenterTextIcon",
+      "color": "text-green-400",
+      "bgColor": "bg-green-500/10"
+    },
+    {
+      "title": "Сертифікат",
+      "description": "Отримаєте документ, що підтверджує ваші знання з кібербезпеки.",
+      "icon": "DocumentCheckIcon",
+      "color": "text-purple-400",
+      "bgColor": "bg-purple-500/10"
+    },
+    {
+      "title": "Довічний доступ",
+      "description": "Матимете постійний доступ до матеріалів курсу та всіх майбутніх оновлень.",
+      "icon": "ClockIcon",
+      "color": "text-yellow-400",
+      "bgColor": "bg-yellow-500/10"
+    },
+    {
+      "title": "Спільнота",
+      "description": "Приєднаєтесь до спільноти однодумців, де зможете обмінюватися досвідом.",
+      "icon": "UserGroupIcon",
+      "color": "text-cyan-400",
+      "bgColor": "bg-cyan-500/10"
+    }
+  ]
+}

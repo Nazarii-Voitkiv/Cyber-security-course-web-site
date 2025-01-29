@@ -1,5 +1,10 @@
 'use client';
 
+import HeroEdit from '@/app/admin/components/HeroEdit';
+import IntroEdit from '@/app/admin/components/IntroEdit';
+import WhyThisCourseEdit from '@/app/admin/components/WhyThisCourseEdit';
+import BenefitsEdit from '@/app/admin/components/BenefitsEdit';
+import ForWhomEdit from '@/app/admin/components/ForWhomEdit';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -163,272 +168,19 @@ export default function Dashboard() {
                 </div>
 
                 {/* ============== HERO FORM ============== */}
-                <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">
-                    <h2 className="text-xl text-cyan-100 font-bold mb-4">Hero Section</h2>
-
-                    {heroMessage && (
-                        <div className="mb-4 p-2 bg-gray-700 text-green-400 rounded">
-                            {heroMessage}
-                        </div>
-                    )}
-
-                    {!hero ? (
-                        <p className="text-gray-400">Не вдалося завантажити hero.json</p>
-                    ) : (
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-cyan-100">Заголовок (heroTitle):</label>
-                                <input
-                                    type="text"
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                    value={hero.heroTitle}
-                                    onChange={(e) => setHero({ ...hero, heroTitle: e.target.value })}
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-cyan-100">Підзаголовок (heroSubtitle):</label>
-                                <textarea
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                                    value={hero.heroSubtitle}
-                                    onChange={(e) => setHero({ ...hero, heroSubtitle: e.target.value })}
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-cyan-100">Банер (discountBanner):</label>
-                                <input
-                                    type="text"
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                    value={hero.discountBanner}
-                                    onChange={(e) => setHero({ ...hero, discountBanner: e.target.value })}
-                                />
-                            </div>
-
-                            {/* Курси */}
-                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
-                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                    Список курсів
-                                </summary>
-                                <div className="mt-4 space-y-4">
-                                    {hero.courseTypes.map((course, idx) => (
-                                        <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
-                                            <label className="block text-cyan-100">Назва (title):</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
-                                                value={course.title}
-                                                onChange={(e) => {
-                                                    const updated = [...hero.courseTypes];
-                                                    updated[idx] = { ...updated[idx], title: e.target.value };
-                                                    setHero({ ...hero, courseTypes: updated });
-                                                }}
-                                            />
-
-                                            <label className="block text-cyan-100">Опис (description):</label>
-                                            <textarea
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
-                                                value={course.description}
-                                                onChange={(e) => {
-                                                    const updated = [...hero.courseTypes];
-                                                    updated[idx] = { ...updated[idx], description: e.target.value };
-                                                    setHero({ ...hero, courseTypes: updated });
-                                                }}
-                                            />
-
-                                            {/* Ціни і т.д. */}
-                                            <div className="flex gap-4 mb-2">
-                                                <div>
-                                                    <label className="block text-cyan-100">Стара ціна:</label>
-                                                    <input
-                                                        type="text"
-                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                        value={course.originalPrice}
-                                                        onChange={(e) => {
-                                                            const updated = [...hero.courseTypes];
-                                                            updated[idx] = { ...updated[idx], originalPrice: e.target.value };
-                                                            setHero({ ...hero, courseTypes: updated });
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-cyan-100">Нова ціна:</label>
-                                                    <input
-                                                        type="text"
-                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                        value={course.price}
-                                                        onChange={(e) => {
-                                                            const updated = [...hero.courseTypes];
-                                                            updated[idx] = { ...updated[idx], price: e.target.value };
-                                                            setHero({ ...hero, courseTypes: updated });
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label className="block text-cyan-100">Знижка:</label>
-                                                    <input
-                                                        type="text"
-                                                        className="p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                        value={course.discount}
-                                                        onChange={(e) => {
-                                                            const updated = [...hero.courseTypes];
-                                                            updated[idx] = { ...updated[idx], discount: e.target.value };
-                                                            setHero({ ...hero, courseTypes: updated });
-                                                        }}
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="mb-2">
-                                                <label className="block text-cyan-100">Посилання (link):</label>
-                                                <input
-                                                    type="text"
-                                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                    value={course.link}
-                                                    onChange={(e) => {
-                                                        const updated = [...hero.courseTypes];
-                                                        updated[idx] = { ...updated[idx], link: e.target.value };
-                                                        setHero({ ...hero, courseTypes: updated });
-                                                    }}
-                                                />
-                                            </div>
-
-                                            <div>
-                                                <label className="flex items-center text-cyan-100">
-                                                    <input
-                                                        type="checkbox"
-                                                        className="mr-2"
-                                                        checked={course.recommended ?? false}
-                                                        onChange={(e) => {
-                                                            const updated = [...hero.courseTypes];
-                                                            updated[idx] = { ...updated[idx], recommended: e.target.checked };
-                                                            setHero({ ...hero, courseTypes: updated });
-                                                        }}
-                                                    />
-                                                    recommended
-                                                </label>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </details>
-
-                            <button
-                                onClick={saveHero}
-                                className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded"
-                            >
-                                Зберегти Hero
-                            </button>
-                        </div>
-                    )}
-                </div>
+                <HeroEdit />
 
                 {/* ============== INTRO FORM ============== */}
-                <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">
-                    <h2 className="text-xl text-cyan-100 font-bold mb-4">Intro Section</h2>
+                <IntroEdit />
 
-                    {introMessage && (
-                        <div className="mb-4 p-2 bg-gray-700 text-green-400 rounded">
-                            {introMessage}
-                        </div>
-                    )}
+                {/* ============== WHY THIS COURSE FORM ============== */}
+                <WhyThisCourseEdit />
 
-                    {!intro ? (
-                        <p className="text-gray-400">Не вдалося завантажити intro.json</p>
-                    ) : (
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-cyan-100">Головний заголовок (mainTitle):</label>
-                                <input
-                                    type="text"
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                    value={intro.mainTitle}
-                                    onChange={(e) => setIntro({ ...intro, mainTitle: e.target.value })}
-                                />
-                            </div>
+                {/* ============== BENEFITS FORM ============== */}
+                <BenefitsEdit />
 
-                            <div>
-                                <label className="block text-cyan-100">Підзаголовок (mainSubtitle):</label>
-                                <textarea
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                                    value={intro.mainSubtitle}
-                                    onChange={(e) => setIntro({ ...intro, mainSubtitle: e.target.value })}
-                                />
-                            </div>
-
-                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
-                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                    Абзаци (paragraphs)
-                                </summary>
-                                <div className="mt-4 space-y-4">
-                                    {intro.paragraphs.map((p, idx) => (
-                                        <div key={idx}>
-                                            <label className="block text-cyan-100">Абзац {idx + 1}:</label>
-                                            <textarea
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={p}
-                                                onChange={(e) => {
-                                                    const updated = [...intro.paragraphs];
-                                                    updated[idx] = e.target.value;
-                                                    setIntro({ ...intro, paragraphs: updated });
-                                                }}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </details>
-
-                            <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
-                                <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                                    Пункти (points)
-                                </summary>
-                                <div className="mt-4 space-y-4">
-                                    {intro.points.map((pt, idx) => (
-                                        <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
-                                            <label className="block text-cyan-100">Заголовок:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white mb-2"
-                                                value={pt.title}
-                                                onChange={(e) => {
-                                                    const updated = [...intro.points];
-                                                    updated[idx] = { ...updated[idx], title: e.target.value };
-                                                    setIntro({ ...intro, points: updated });
-                                                }}
-                                            />
-                                            <label className="block text-cyan-100">Опис:</label>
-                                            <textarea
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={pt.description}
-                                                onChange={(e) => {
-                                                    const updated = [...intro.points];
-                                                    updated[idx] = { ...updated[idx], description: e.target.value };
-                                                    setIntro({ ...intro, points: updated });
-                                                }}
-                                            />
-                                        </div>
-                                    ))}
-                                </div>
-                            </details>
-
-                            <div>
-                                <label className="block text-cyan-100">Висновок (conclusion):</label>
-                                <textarea
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                                    value={intro.conclusion}
-                                    onChange={(e) => setIntro({ ...intro, conclusion: e.target.value })}
-                                />
-                            </div>
-
-                            <button
-                                onClick={saveIntro}
-                                className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded"
-                            >
-                                Зберегти Intro
-                            </button>
-                        </div>
-                    )}
-                </div>
+                {/* ============== FOR WHOM FORM ============== */}
+                <ForWhomEdit />
             </div>
         </section>
     );
