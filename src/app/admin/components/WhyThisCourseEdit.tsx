@@ -6,9 +6,6 @@ import { motion } from 'framer-motion';
 interface WhyReason {
     title: string;
     description: string;
-    icon: string;
-    color: string;
-    bgColor: string;
 }
 
 interface WhyThisCourseData {
@@ -118,48 +115,6 @@ export default function WhyThisCourseEdit() {
                                                 setData({ ...data, reasons: updated });
                                             }}
                                         />
-                                    </div>
-
-                                    <div className="grid grid-cols-3 gap-2">
-                                        <div>
-                                            <label className="block text-cyan-100">Іконка:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={reason.icon}
-                                                onChange={(e) => {
-                                                    const updated = [...data.reasons];
-                                                    updated[idx] = { ...updated[idx], icon: e.target.value };
-                                                    setData({ ...data, reasons: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір тексту:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={reason.color}
-                                                onChange={(e) => {
-                                                    const updated = [...data.reasons];
-                                                    updated[idx] = { ...updated[idx], color: e.target.value };
-                                                    setData({ ...data, reasons: updated });
-                                                }}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label className="block text-cyan-100">Колір фону:</label>
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={reason.bgColor}
-                                                onChange={(e) => {
-                                                    const updated = [...data.reasons];
-                                                    updated[idx] = { ...updated[idx], bgColor: e.target.value };
-                                                    setData({ ...data, reasons: updated });
-                                                }}
-                                            />
-                                        </div>
                                     </div>
                                 </div>
                             ))}
