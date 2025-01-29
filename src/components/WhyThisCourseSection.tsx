@@ -86,15 +86,13 @@ export default function WhyThisCourseSection() {
                                     viewport={{ once: true }}
                                     className="relative group h-full"
                                 >
-                                    <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col items-center">
+                                    <div className="relative p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl transition-all duration-300 group-hover:scale-[1.02] h-full flex flex-col items-center group-hover:bg-cyan-500/10">
                                         <div className="mb-4">
                                             <IconComponent className={`h-12 w-12 ${reason.color} transition-transform duration-300 group-hover:scale-110`} />
                                         </div>
                                         <h3 className="text-xl font-semibold mb-4 text-white text-center">{reason.title}</h3>
                                         <p className="text-gray-400 text-center">{reason.description}</p>
                                     </div>
-
-                                    <div className={`absolute -inset-0.5 ${reason.bgColor} opacity-0 group-hover:opacity-20 rounded-xl blur transition duration-300`} />
                                 </motion.div>
                             );
                         })}
