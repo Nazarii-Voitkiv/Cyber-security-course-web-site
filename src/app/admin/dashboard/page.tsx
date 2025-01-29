@@ -8,6 +8,9 @@ import ForWhomEdit from '@/app/admin/components/ForWhomEdit';
 import LearningProcessEdit from '@/app/admin/components/LearningProcessEdit';
 import ProgramEdit from '@/app/admin/components/ProgramEdit';
 import ComparePlansEdit from '@/app/admin/components/ComparePlansEdit';
+import TestimonialsEdit from '@/app/admin/components/TestimonialsEdit';
+import FaqEdit from '@/app/admin/components/FaqEdit';
+import FooterEdit from '@/app/admin/components/FooterEdit';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -193,6 +196,15 @@ export default function Dashboard() {
 
                 {/* ============== COMPARE PLANS FORM ============== */}
                 <ComparePlansEdit />
+
+                {/* ============== TESTIMONIALS FORM ============== */}
+                <TestimonialsEdit />
+
+                {/* ============== FAQ FORM ============== */}
+                <FaqEdit />
+
+                {/* ============== FOOTER FORM ============== */}
+                <FooterEdit />
             </div>
         </section>
     );

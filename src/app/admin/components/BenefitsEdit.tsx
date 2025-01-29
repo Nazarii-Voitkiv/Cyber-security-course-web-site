@@ -121,14 +121,14 @@ export default function BenefitsEdit() {
                         </div>
                     </details>
 
-                    <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={save}
-                        className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded"
-                    >
-                        Зберегти Benefits
-                    </motion.button>
+                    <div className="mt-6">
+                        <button
+                            onClick={save}
+                            className="w-full py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
+                        >
+                            Зберегти зміни
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

@@ -160,12 +160,14 @@ export default function ProgramEdit() {
                     </div>
                 </details>
 
-                <button
-                    onClick={handleSave}
-                    className="mt-4 bg-cyan-500 text-white py-2 px-4 rounded hover:bg-cyan-600 transition-colors"
-                >
-                    Зберегти Program
-                </button>
+                <div className="mt-6">
+                    <button
+                        onClick={handleSave}
+                        className="w-full py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
+                    >
+                        Зберегти зміни
+                    </button>
+                </div>
             </div>
         </div>
     );

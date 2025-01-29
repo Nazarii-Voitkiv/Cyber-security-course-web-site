@@ -1,0 +1,30 @@
+{
+  "data": {
+    "contacts": {
+      "email": "support@cybersecurity.course1",
+      "phone": "+380 (99) 123-45-67",
+      "workHours": "9:00 - 21:00"
+    },
+    "socialLinks": [
+      {
+        "name": "Instagram",
+        "url": "https://instagram.com"
+      },
+      {
+        "name": "Telegram",
+        "url": "https://t.me/"
+      }
+    ],
+    "docs": [
+      {
+        "title": "Політика конфіденційності",
+        "url": "/privacy"
+      },
+      {
+        "title": "Умови використання",
+        "url": "/terms"
+      }
+    ],
+    "copyright": "2025 Курс з кібербезпеки. Всі права захищено."
+  }
+}

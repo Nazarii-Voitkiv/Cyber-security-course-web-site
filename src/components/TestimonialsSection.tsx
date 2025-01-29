@@ -6,33 +6,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-
-const testimonials = [
-  {
-    id: 1,
-    content: '"Курс перевершив усі мої очікування! Особливо сподобалися практичні завдання та індивідуальний підхід до кожного студента. Тепер я впевнено можу захистити себе та свою родину в інтернеті."',
-    rating: 5,
-    name: 'Олександра Петренко',
-    position: 'IT-спеціаліст',
-    image: '/testimonials/person1.jpg'
-  },
-  {
-    id: 2,
-    content: '"Дуже структурований та зрозумілий матеріал. За короткий час я отримав базові знання з кібербезпеки, які вже застосовую у своїй роботі. Рекомендую всім, хто хоче розібратися в цій темі."',
-    rating: 4,
-    name: 'Марія Коваленко',
-    position: 'Підприємець',
-    image: '/testimonials/person2.jpg'
-  },
-  {
-    id: 3,
-    content: '"Найкраще співвідношення ціни та якості! Матеріал подається доступно, з реальними прикладами. Окремо хочу відзначити оперативну підтримку та відповіді на всі питання."',
-    rating: 4.5,
-    name: 'Віктор Мельник',
-    position: 'Системний адміністратор',
-    image: '/testimonials/person3.jpg'
-  },
-];
+import testimonialsData from '@/data/testimonials.json';
 
 const Rating = ({ rating }: { rating: number }) => {
   return (
@@ -144,7 +118,7 @@ export default function TestimonialsSection() {
           {/* Карусель */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {testimonials.map((testimonial) => (
+              {testimonialsData.testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-[0_0_100%] min-w-0 pl-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
