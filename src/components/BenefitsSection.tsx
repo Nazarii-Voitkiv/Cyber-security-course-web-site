@@ -10,6 +10,7 @@ import {
   ClockIcon,
   UserGroupIcon
 } from '@heroicons/react/24/outline';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 const benefits = [
   {
@@ -81,7 +82,7 @@ export default function BenefitsSection() {
       >
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-            {data.title}
+            <CustomMarkdown>{data.title}</CustomMarkdown>
           </h2>
         </div>
 
@@ -104,8 +105,8 @@ export default function BenefitsSection() {
                     <Icon className={`h-8 w-8 ${color}`} />
                   </div>
 
-                  <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0">{benefit.title}</h3>
-                  <p className="text-gray-400 flex-grow">{benefit.description}</p>
+                  <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0"><CustomMarkdown>{benefit.title}</CustomMarkdown></h3>
+                  <p className="text-gray-400 flex-grow"><CustomMarkdown>{benefit.description}</CustomMarkdown></p>
                 </div>
 
                 {/* Subtle glow effect on hover */}
