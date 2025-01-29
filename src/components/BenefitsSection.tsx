@@ -29,15 +29,13 @@ interface Benefit {
 }
 
 interface BenefitsData {
-  benefits: Benefit[];
   title: string;
   subtitle: string;
+  benefits: Benefit[];
 }
 
 export default function BenefitsSection() {
   const [data, setData] = useState<BenefitsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     fetch('/api/benefits/get')
@@ -45,24 +43,15 @@ export default function BenefitsSection() {
       .then((json) => {
         if (json.success) {
           setData(json.data);
-        } else {
-          setError('Не вдалося завантажити Benefits');
         }
-        setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
-        setError('Помилка завантаження Benefits');
-        setLoading(false);
+        console.error('Error loading benefits:', err);
       });
   }, []);
 
-  if (loading) {
-    return <div className="text-center py-10 text-cyan-200">Завантаження Benefits...</div>;
-  }
-
-  if (error || !data) {
-    return <div className="text-center py-10 text-red-400">{error}</div>;
+  if (!data) {
+    return null;
   }
 
   return (
@@ -84,21 +73,21 @@ export default function BenefitsSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {data.benefits.map((benefit, idx) => {
+          {data.benefits.map((benefit, index) => {
             const Icon = iconsMap[benefit.icon as keyof typeof iconsMap];
             return (
               <motion.div
-                key={idx}
+                key={benefit.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 className="relative group h-full"
               >
                 <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl 
-                               transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
+                             transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col">
                   <div className={`${benefit.bgColor} p-4 rounded-full w-fit mb-6 
-                                  transition-transform duration-300 group-hover:scale-110 flex-shrink-0`}>
+                                transition-transform duration-300 group-hover:scale-110 flex-shrink-0`}>
                     {Icon && <Icon className={`h-8 w-8 ${benefit.color}`} />}
                   </div>
                   <h3 className="text-xl font-semibold mb-4 text-white flex-shrink-0">{benefit.title}</h3>
@@ -107,7 +96,7 @@ export default function BenefitsSection() {
                 
                 {/* Subtle glow effect on hover */}
                 <div className={`absolute -inset-0.5 ${benefit.bgColor} opacity-0 group-hover:opacity-20 
-                                rounded-xl blur transition duration-300`} />
+                              rounded-xl blur transition duration-300`} />
               </motion.div>
             );
           })}
