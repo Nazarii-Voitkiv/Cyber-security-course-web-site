@@ -5,6 +5,9 @@ import IntroEdit from '@/app/admin/components/IntroEdit';
 import WhyThisCourseEdit from '@/app/admin/components/WhyThisCourseEdit';
 import BenefitsEdit from '@/app/admin/components/BenefitsEdit';
 import ForWhomEdit from '@/app/admin/components/ForWhomEdit';
+import LearningProcessEdit from '@/app/admin/components/LearningProcessEdit';
+import ProgramEdit from '@/app/admin/components/ProgramEdit';
+import ComparePlansEdit from '@/app/admin/components/ComparePlansEdit';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -55,11 +58,11 @@ export default function Dashboard() {
 
     // Hero state
     const [hero, setHero] = useState<HeroData | null>(null);
-    const [heroMessage, setHeroMessage] = useState('');
+    const [, setHeroMessage] = useState('');
 
     // Intro state
     const [intro, setIntro] = useState<IntroData | null>(null);
-    const [introMessage, setIntroMessage] = useState('');
+    const [, setIntroMessage] = useState('');
 
     const [loadingHero, setLoadingHero] = useState(true);
     const [loadingIntro, setLoadingIntro] = useState(true);
@@ -181,6 +184,15 @@ export default function Dashboard() {
 
                 {/* ============== FOR WHOM FORM ============== */}
                 <ForWhomEdit />
+
+                {/* ============== LEARNING PROCESS FORM ============== */}
+                <LearningProcessEdit />
+
+                {/* ============== PROGRAM FORM ============== */}
+                <ProgramEdit />
+
+                {/* ============== COMPARE PLANS FORM ============== */}
+                <ComparePlansEdit />
             </div>
         </section>
     );
