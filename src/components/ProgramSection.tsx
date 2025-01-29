@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 interface Module {
     id: number;
@@ -47,10 +48,10 @@ export default function ProgramSection() {
             >
                 <div className="text-center max-w-4xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
-                        {data.title}
+                        <CustomMarkdown>{data.title}</CustomMarkdown>
                     </h2>
                     <p className="text-xl text-gray-400">
-                        {data.subtitle}
+                        <CustomMarkdown>{data.subtitle}</CustomMarkdown>
                     </p>
                 </div>
 
@@ -72,9 +73,9 @@ export default function ProgramSection() {
                                     <div className="flex items-center justify-between">
                                         <div>
                                             <h3 className="text-xl font-semibold text-white">
-                                                Модуль {module.id}: {module.title}
+                                                Модуль {module.id}: <CustomMarkdown>{module.title}</CustomMarkdown>
                                             </h3>
-                                            <p className="text-gray-400 mt-1">{module.description}</p>
+                                            <p className="text-gray-400 mt-1"><CustomMarkdown>{module.description}</CustomMarkdown></p>
                                         </div>
                                         <ChevronDownIcon 
                                             className={`h-6 w-6 text-cyan-400 transition-transform duration-300 
@@ -101,7 +102,7 @@ export default function ProgramSection() {
                                                             className="flex items-center text-gray-300"
                                                         >
                                                             <div className="h-2 w-2 rounded-full bg-cyan-400 mr-3" />
-                                                            {topic}
+                                                            <CustomMarkdown>{topic}</CustomMarkdown>
                                                         </motion.li>
                                                     ))}
                                                 </ul>

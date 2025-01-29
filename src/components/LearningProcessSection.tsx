@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RocketLaunchIcon, ClockIcon, DevicePhoneMobileIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 interface FeatureItem {
     title: string;
@@ -55,10 +56,10 @@ export default function LearningProcessSection() {
                     className="text-center mb-16"
                 >
                     <h2 className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                        {data.title}
+                        <CustomMarkdown>{data.title}</CustomMarkdown>
                     </h2>
                     <p className="text-lg text-cyan-100 max-w-2xl mx-auto">
-                        {data.subtitle}
+                        <CustomMarkdown>{data.subtitle}</CustomMarkdown>
                     </p>
                 </motion.div>
 
@@ -87,8 +88,8 @@ export default function LearningProcessSection() {
                                     {index === 2 && <AcademicCapIcon className="h-8 w-8" />}
                                     {index === 3 && <RocketLaunchIcon className="h-8 w-8" />}
                                 </div>
-                                <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                                <p className="text-gray-400">{feature.description}</p>
+                                <h3 className="text-xl font-bold mb-2"><CustomMarkdown>{feature.title}</CustomMarkdown></h3>
+                                <p className="text-gray-400"><CustomMarkdown>{feature.description}</CustomMarkdown></p>
                             </div>
                         </motion.div>
                     ))}
@@ -114,10 +115,10 @@ export default function LearningProcessSection() {
                         >
                             <div className="cyber-card p-6 h-full neon-border-minimal border-cyan-500/20">
                                 <div className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400/90 to-blue-500/90 mb-4">
-                                    {step.number}
+                                    <CustomMarkdown>{step.number}</CustomMarkdown>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2 text-white">{step.title}</h3>
-                                <p className="text-cyan-100">{step.description}</p>
+                                <h3 className="text-xl font-bold mb-2 text-white"><CustomMarkdown>{step.title}</CustomMarkdown></h3>
+                                <p className="text-cyan-100"><CustomMarkdown>{step.description}</CustomMarkdown></p>
                             </div>
                             {index < data.processSteps.length - 1 && (
                                 <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-0.5 bg-cyan-500/30" />

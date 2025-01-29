@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
 import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import CustomMarkdown from "@/utils/CustomMarkdown";
 
 interface ComparePlansData {
     title: string;
@@ -59,7 +60,7 @@ export default function ComparePlansSection() {
                         transition={{ duration: 0.6 }}
                         className="text-3xl md:text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500"
                     >
-                        {data.title}
+                      <CustomMarkdown>{data.title}</CustomMarkdown>
                     </motion.h2>
 
                     <motion.button
@@ -89,7 +90,7 @@ export default function ComparePlansSection() {
                         }}
                         className="relative discount-button bg-gradient-to-r from-red-500 via-pink-500 to-red-500 text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold mb-6 shadow-lg shadow-red-500/20 cursor-pointer hover:shadow-xl hover:shadow-red-500/30 transition-shadow duration-300"
                     >
-                        {data.specialOfferBanner}
+                      <CustomMarkdown>{data.specialOfferBanner}</CustomMarkdown>
                     </motion.button>
 
                     {/* Таймер */}
@@ -135,20 +136,20 @@ export default function ComparePlansSection() {
                             <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
                                 ${plan.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
 
-                                <h3 className="text-xl md:text-2xl font-bold mb-2">{plan.title}</h3>
-                                <p className="text-gray-400 mb-4 text-sm md:text-base">{plan.description}</p>
+                                <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{plan.title}</CustomMarkdown></h3>
+                                <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{plan.description}</CustomMarkdown></p>
 
                                 <div className="mb-6">
                                     <div className="flex items-center justify-center gap-3 mb-2">
                                         <span className="text-gray-400 line-through text-base md:text-lg">
-                                            {plan.originalPrice}
+                                            <CustomMarkdown>{plan.originalPrice}</CustomMarkdown>
                                         </span>
                                         <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
-                                            -{plan.discount}
+                                            -<CustomMarkdown>{plan.discount}</CustomMarkdown>
                                         </span>
                                     </div>
                                     <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                                        {plan.price}
+                                      <CustomMarkdown>{plan.price}</CustomMarkdown>
                                     </div>
                                 </div>
 
@@ -156,7 +157,7 @@ export default function ComparePlansSection() {
                                     {plan.features.map((feature, i) => (
                                         <li key={i} className="flex items-center text-cyan-100">
                                             <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
-                                            {feature}
+                                          <CustomMarkdown>{feature}</CustomMarkdown>
                                         </li>
                                     ))}
                                 </ul>
@@ -195,12 +196,12 @@ export default function ComparePlansSection() {
                         <div className="col-span-1 p-2 md:p-4 border-r border-gray-700"></div>
                         <div className="col-span-1 p-2 md:p-4 text-center border-r border-gray-700">
                             <h3 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-sm md:text-base whitespace-normal">
-                                {data.plans[0].title}
+                              <CustomMarkdown>{data.plans[0].title}</CustomMarkdown>
                             </h3>
                         </div>
                         <div className="col-span-1 p-2 md:p-4 text-center">
                             <h3 className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-sm md:text-base">
-                                {data.plans[1].title}
+                              <CustomMarkdown>{data.plans[1].title}</CustomMarkdown>
                             </h3>
                         </div>
                     </div>
@@ -213,7 +214,7 @@ export default function ComparePlansSection() {
                             }`}
                         >
                             <div className="col-span-1 p-2 md:p-4 border-r border-gray-700">
-                                <span className="text-gray-300 text-xs md:text-base">{feature.name}</span>
+                                <span className="text-gray-300 text-xs md:text-base"><CustomMarkdown>{feature.name}</CustomMarkdown></span>
                             </div>
                             <div className="col-span-1 p-2 md:p-4 text-center border-r border-gray-700">
                                 {typeof feature.basic === 'boolean' ? (
@@ -223,7 +224,7 @@ export default function ComparePlansSection() {
                                         <XMarkIcon className="h-4 w-4 md:h-6 md:w-6 text-gray-500 mx-auto" />
                                     )
                                 ) : (
-                                    <span className="text-gray-300 text-xs md:text-base">{feature.basic}</span>
+                                    <span className="text-gray-300 text-xs md:text-base"><CustomMarkdown>{feature.basic}</CustomMarkdown></span>
                                 )}
                             </div>
                             <div className="col-span-1 p-2 md:p-4 text-center">
@@ -234,7 +235,7 @@ export default function ComparePlansSection() {
                                         <XMarkIcon className="h-4 w-4 md:h-6 md:w-6 text-gray-500 mx-auto" />
                                     )
                                 ) : (
-                                    <span className="text-gray-300 text-xs md:text-base">{feature.full}</span>
+                                    <span className="text-gray-300 text-xs md:text-base"><CustomMarkdown>{feature.full}</CustomMarkdown></span>
                                 )}
                             </div>
                         </div>

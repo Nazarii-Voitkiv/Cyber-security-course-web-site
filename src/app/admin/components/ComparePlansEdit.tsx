@@ -102,16 +102,6 @@ export default function ComparePlansEdit() {
                     />
                 </div>
 
-                <div className="mb-2">
-                    <label className="block text-cyan-100">Заголовок порівняння:</label>
-                    <input
-                        type="text"
-                        className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                        value={data.featuresTitle}
-                        onChange={(e) => setData({ ...data, featuresTitle: e.target.value })}
-                    />
-                </div>
-
                 <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
                     <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
                         Плани
