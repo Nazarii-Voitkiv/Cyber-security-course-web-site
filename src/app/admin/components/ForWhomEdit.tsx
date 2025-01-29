@@ -76,24 +76,17 @@ export default function ForWhomEdit() {
                 <p className="text-gray-400">Не вдалося завантажити дані</p>
             ) : (
                 <div className="space-y-4">
-                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg" open>
-                        <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                            Заголовок секції
-                        </summary>
-                        <div className="mt-4">
-                            <div className="mb-2">
-                                <label className="block text-cyan-100">Заголовок:</label>
-                                <input
-                                    type="text"
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                    value={data.title}
-                                    onChange={(e) => setData({ ...data, title: e.target.value })}
-                                />
-                            </div>
-                        </div>
-                    </details>
+                    <div className="mb-2">
+                        <label className="block text-cyan-100">Заголовок секції:</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                            value={data.title}
+                            onChange={(e) => setData({ ...data, title: e.target.value })}
+                        />
+                    </div>
 
-                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg" open>
+                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
                         <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
                             Групи
                         </summary>

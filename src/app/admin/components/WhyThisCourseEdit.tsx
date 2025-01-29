@@ -86,7 +86,7 @@ export default function WhyThisCourseEdit() {
                         />
                     </div>
 
-                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg" open>
+                    <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
                         <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
                             Причини
                         </summary>
