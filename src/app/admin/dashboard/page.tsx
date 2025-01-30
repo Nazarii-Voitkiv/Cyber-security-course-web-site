@@ -12,7 +12,7 @@ import TestimonialsEdit from '@/app/admin/components/TestimonialsEdit';
 import FaqEdit from '@/app/admin/components/FaqEdit';
 import FooterEdit from '@/app/admin/components/FooterEdit';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
@@ -26,48 +26,11 @@ export default function AdminDashboard() {
         }
     }, [router]);
 
-    const [loadingHero, setLoadingHero] = useState(true);
-    const [loadingIntro, setLoadingIntro] = useState(true);
-
-    // ===== 1. Завантажити Hero
-    useEffect(() => {
-        fetch('/api/hero/get')
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    setLoadingHero(false);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                setLoadingHero(false);
-            });
-    }, []);
-
-    // ===== 2. Завантажити Intro
-    useEffect(() => {
-        fetch('/api/intro/get')
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    setLoadingIntro(false);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                setLoadingIntro(false);
-            });
-    }, []);
-
     // Логаут
     const handleLogout = () => {
         document.cookie = 'isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
         router.push('/admin');
     };
-
-    if (loadingHero || loadingIntro) {
-        return <div className="text-center py-10 text-cyan-200">Завантаження...</div>;
-    }
 
     return (
         <section className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -84,38 +47,40 @@ export default function AdminDashboard() {
                     </motion.button>
                 </div>
 
-                {/* ============== HERO FORM ============== */}
-                <HeroEdit />
+                <div className="space-y-8">
+                    {/* ============== HERO FORM ============== */}
+                    <HeroEdit />
 
-                {/* ============== INTRO FORM ============== */}
-                <IntroEdit />
+                    {/* ============== INTRO FORM ============== */}
+                    <IntroEdit />
 
-                {/* ============== WHY THIS COURSE FORM ============== */}
-                <WhyThisCourseEdit />
+                    {/* ============== WHY THIS COURSE FORM ============== */}
+                    <WhyThisCourseEdit />
 
-                {/* ============== BENEFITS FORM ============== */}
-                <BenefitsEdit />
+                    {/* ============== BENEFITS FORM ============== */}
+                    <BenefitsEdit />
 
-                {/* ============== FOR WHOM FORM ============== */}
-                <ForWhomEdit />
+                    {/* ============== FOR WHOM FORM ============== */}
+                    <ForWhomEdit />
 
-                {/* ============== LEARNING PROCESS FORM ============== */}
-                <LearningProcessEdit />
+                    {/* ============== LEARNING PROCESS FORM ============== */}
+                    <LearningProcessEdit />
 
-                {/* ============== PROGRAM FORM ============== */}
-                <ProgramEdit />
+                    {/* ============== PROGRAM FORM ============== */}
+                    <ProgramEdit />
 
-                {/* ============== COMPARE PLANS FORM ============== */}
-                <ComparePlansEdit />
+                    {/* ============== COMPARE PLANS FORM ============== */}
+                    <ComparePlansEdit />
 
-                {/* ============== TESTIMONIALS FORM ============== */}
-                <TestimonialsEdit />
+                    {/* ============== TESTIMONIALS FORM ============== */}
+                    <TestimonialsEdit />
 
-                {/* ============== FAQ FORM ============== */}
-                <FaqEdit />
+                    {/* ============== FAQ FORM ============== */}
+                    <FaqEdit />
 
-                {/* ============== FOOTER FORM ============== */}
-                <FooterEdit />
+                    {/* ============== FOOTER FORM ============== */}
+                    <FooterEdit />
+                </div>
             </div>
         </section>
     );
