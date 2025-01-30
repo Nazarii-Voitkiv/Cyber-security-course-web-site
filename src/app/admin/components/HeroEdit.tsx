@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 // Типи для Hero
 interface CourseType {
@@ -65,7 +64,7 @@ export default function HeroEdit() {
     };
 
     if (loading) {
-        return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+        return null;
     }
 
     return (

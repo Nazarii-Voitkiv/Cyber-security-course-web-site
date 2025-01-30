@@ -15,57 +15,16 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Типи для Hero
-interface CourseType {
-    title: string;
-    description: string;
-    originalPrice: string;
-    price: string;
-    discount: string;
-    recommended?: boolean;
-    features: string[];
-    link: string;
-}
-
-interface HeroData {
-    heroTitle: string;
-    heroSubtitle: string;
-    discountBanner: string;
-    courseTypes: CourseType[];
-}
-
-// Типи для Intro
-interface IntroPoint {
-    title: string;
-    description: string;
-}
-
-interface IntroData {
-    mainTitle: string;
-    mainSubtitle: string;
-    paragraphs: string[];
-    points: IntroPoint[];
-    conclusion: string;
-}
-
-export default function Dashboard() {
+export default function AdminDashboard() {
     const router = useRouter();
 
     // Перевірка авторизації (кукі isAuthenticated=true)
     useEffect(() => {
         const isAuthenticated = document.cookie.includes('isAuthenticated=true');
         if (!isAuthenticated) {
-            router.push('/admin');
+            router.push('/admin/login');
         }
     }, [router]);
-
-    // Hero state
-    const [hero, setHero] = useState<HeroData | null>(null);
-    const [, setHeroMessage] = useState('');
-
-    // Intro state
-    const [intro, setIntro] = useState<IntroData | null>(null);
-    const [, setIntroMessage] = useState('');
 
     const [loadingHero, setLoadingHero] = useState(true);
     const [loadingIntro, setLoadingIntro] = useState(true);
@@ -73,15 +32,14 @@ export default function Dashboard() {
     // ===== 1. Завантажити Hero
     useEffect(() => {
         fetch('/api/hero/get')
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) {
-                    setHero(data.data);
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success) {
+                    setLoadingHero(false);
                 }
-                setLoadingHero(false);
             })
-            .catch((err) => {
-                console.error(err);
+            .catch((error) => {
+                console.error(error);
                 setLoadingHero(false);
             });
     }, []);
@@ -89,64 +47,17 @@ export default function Dashboard() {
     // ===== 2. Завантажити Intro
     useEffect(() => {
         fetch('/api/intro/get')
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) {
-                    setIntro(data.data);
+            .then((res) => res.json())
+            .then((json) => {
+                if (json.success) {
+                    setLoadingIntro(false);
                 }
-                setLoadingIntro(false);
             })
-            .catch((err) => {
-                console.error(err);
+            .catch((error) => {
+                console.error(error);
                 setLoadingIntro(false);
             });
     }, []);
-
-    // ===== 3. Зберегти Hero
-    const saveHero = async () => {
-        if (!hero) return;
-        setHeroMessage('');
-
-        try {
-            const res = await fetch('/api/hero/update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(hero)
-            });
-            const data = await res.json();
-            if (data.success) {
-                setHeroMessage('Hero збережено успішно!');
-            } else {
-                setHeroMessage('Помилка збереження Hero.');
-            }
-        } catch (error) {
-            console.error(error);
-            setHeroMessage('Щось пішло не так при збереженні Hero...');
-        }
-    };
-
-    // ===== 4. Зберегти Intro
-    const saveIntro = async () => {
-        if (!intro) return;
-        setIntroMessage('');
-
-        try {
-            const res = await fetch('/api/intro/update', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(intro)
-            });
-            const data = await res.json();
-            if (data.success) {
-                setIntroMessage('Intro збережено успішно!');
-            } else {
-                setIntroMessage('Помилка збереження Intro.');
-            }
-        } catch (error) {
-            console.error(error);
-            setIntroMessage('Щось пішло не так при збереженні Intro...');
-        }
-    };
 
     // Логаут
     const handleLogout = () => {

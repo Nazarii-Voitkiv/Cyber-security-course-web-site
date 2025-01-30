@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 interface WhyReason {
     title: string;
@@ -56,7 +55,7 @@ export default function WhyThisCourseEdit() {
     };
 
     if (loading) {
-        return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+        return null;
     }
 
     return (

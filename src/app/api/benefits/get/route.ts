@@ -1,17 +1,32 @@
 // GET: app/api/benefits/get/route.ts
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
+
+interface Benefit {
+    title: string;
+    description: string;
+    icon?: string;
+}
+
+interface BenefitsData {
+    title: string;
+    subtitle: string;
+    benefits: Benefit[];
+}
 
 export async function GET() {
     try {
         const filePath = path.join(process.cwd(), 'src', 'data', 'benefits.json');
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(fileData);
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const data: BenefitsData = JSON.parse(fileContent);
 
-        return NextResponse.json({ success: true, data: jsonData });
-    } catch (error: any) {
+        return NextResponse.json({ success: true, data });
+    } catch (error) {
         console.error('GET /api/benefits/get error:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'An unknown error occurred' 
+        }, { status: 500 });
     }
 }

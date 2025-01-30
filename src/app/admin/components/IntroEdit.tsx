@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 interface IntroPoint {
     title: string;
@@ -59,7 +58,7 @@ export default function IntroEdit() {
     };
 
     if (loading) {
-        return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+        return null;
     }
 
     return (

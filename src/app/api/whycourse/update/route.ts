@@ -1,18 +1,32 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
 import path from 'path';
 
-export async function POST(request: Request) {
+interface WhyCourseReason {
+    title: string;
+    description: string;
+    icon?: string;
+}
+
+interface WhyCourseData {
+    title: string;
+    subtitle: string;
+    reasons: WhyCourseReason[];
+}
+
+export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        // Можна додатково перевірити, чи є body.title / body.reasons тощо
-
+        const data: WhyCourseData = await request.json();
         const filePath = path.join(process.cwd(), 'src', 'data', 'whyCourse.json');
-        fs.writeFileSync(filePath, JSON.stringify(body, null, 2), 'utf8');
-
+        
+        await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
+        
         return NextResponse.json({ success: true });
-    } catch (error: any) {
+    } catch (error) {
         console.error('POST /api/whycourse/update error:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'An unknown error occurred' 
+        }, { status: 500 });
     }
 }

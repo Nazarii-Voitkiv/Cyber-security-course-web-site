@@ -42,19 +42,7 @@ export default function FooterEdit() {
             .then((r) => r.json())
             .then((json) => {
                 if (json.success && json.data) {
-                    const receivedData = json.data;
-                    if (receivedData.contacts &&
-                        typeof receivedData.contacts.email === 'string' &&
-                        typeof receivedData.contacts.phone === 'string' &&
-                        typeof receivedData.contacts.workHours === 'string' &&
-                        Array.isArray(receivedData.socialLinks) &&
-                        Array.isArray(receivedData.docs) &&
-                        typeof receivedData.copyright === 'string'
-                    ) {
-                        setData(receivedData);
-                    } else {
-                        setError('Отримані дані мають неправильну структуру');
-                    }
+                    setData(json.data);
                 } else {
                     setError('Не вдалося завантажити дані');
                 }
@@ -87,8 +75,9 @@ export default function FooterEdit() {
         }
     };
 
-    if (loading) return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+    if (loading) return null;
     if (error) return <div className="text-center py-4 text-red-400">{error}</div>;
+    if (!data) return <div className="text-gray-400">Не вдалося завантажити дані</div>;
 
     return (
         <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">
@@ -121,7 +110,6 @@ export default function FooterEdit() {
                                     })}
                                 />
                             </div>
-
                             <div>
                                 <label className="block text-cyan-100">Телефон:</label>
                                 <input
@@ -134,7 +122,6 @@ export default function FooterEdit() {
                                     })}
                                 />
                             </div>
-
                             <div>
                                 <label className="block text-cyan-100">Години роботи:</label>
                                 <input

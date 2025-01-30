@@ -1,16 +1,31 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
+
+interface LearningProcessStep {
+    title: string;
+    description: string;
+    icon?: string;
+}
+
+interface LearningProcessData {
+    title: string;
+    subtitle: string;
+    steps: LearningProcessStep[];
+}
 
 export async function GET() {
     try {
         const filePath = path.join(process.cwd(), 'src', 'data', 'learningProcess.json');
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(fileData);
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const data: LearningProcessData = JSON.parse(fileContent);
 
-        return NextResponse.json({ success: true, data: jsonData });
-    } catch (error: any) {
+        return NextResponse.json({ success: true, data });
+    } catch (error) {
         console.error('GET /api/learningprocess/get error:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'An unknown error occurred' 
+        }, { status: 500 });
     }
 }

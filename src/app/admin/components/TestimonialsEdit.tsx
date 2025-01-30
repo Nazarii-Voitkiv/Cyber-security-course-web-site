@@ -64,7 +64,7 @@ export default function TestimonialsEdit() {
         }
     };
 
-    if (loading) return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+    if (loading) return null;
     if (error) return <div className="text-center py-4 text-red-400">{error}</div>;
 
     return (
@@ -86,17 +86,21 @@ export default function TestimonialsEdit() {
                     {data.testimonials.map((testimonial, index) => (
                         <div key={index} className="p-4 bg-gray-700/50 rounded-lg">
                             <div className="grid gap-4">
-                                <div>
-                                    <label className="block text-cyan-100">Ім'я:</label>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`testimonial-${index}-name`}>
+                                        Name
+                                    </label>
                                     <input
                                         type="text"
-                                        className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                                        id={`testimonial-${index}-name`}
                                         value={testimonial.name}
                                         onChange={(e) => {
                                             const updated = [...data.testimonials];
                                             updated[index] = { ...testimonial, name: e.target.value };
                                             setData({ ...data, testimonials: updated });
                                         }}
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="Enter client&apos;s name"
                                     />
                                 </div>
 
@@ -156,6 +160,7 @@ export default function TestimonialsEdit() {
                                             setData({ ...data, testimonials: updated });
                                         }}
                                     />
+                                    <p className="text-sm text-gray-500">Зображення не повинно бути більше ніж 1МБ. Використовуйте формат .jpg або .png</p>
                                 </div>
                             </div>
                         </div>

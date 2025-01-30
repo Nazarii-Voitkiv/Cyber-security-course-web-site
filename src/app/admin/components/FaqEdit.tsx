@@ -60,7 +60,7 @@ export default function FaqEdit() {
         }
     };
 
-    if (loading) return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+    if (loading) return null;
     if (error) return <div className="text-center py-4 text-red-400">{error}</div>;
 
     return (

@@ -1,17 +1,32 @@
 // GET: app/api/forwhom/get/route.ts
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
+
+interface ForWhomGroup {
+    title: string;
+    description: string;
+    image: string;
+}
+
+interface ForWhomData {
+    title: string;
+    subtitle: string;
+    groups: ForWhomGroup[];
+}
 
 export async function GET() {
     try {
         const filePath = path.join(process.cwd(), 'src', 'data', 'forWhom.json');
-        const fileData = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(fileData);
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const data: ForWhomData = JSON.parse(fileContent);
 
-        return NextResponse.json({ success: true, data: jsonData });
-    } catch (error: any) {
+        return NextResponse.json({ success: true, data });
+    } catch (error) {
         console.error('GET /api/forwhom/get error:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ 
+            success: false, 
+            error: error instanceof Error ? error.message : 'An unknown error occurred' 
+        }, { status: 500 });
     }
 }

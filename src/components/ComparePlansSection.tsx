@@ -32,15 +32,13 @@ export default function ComparePlansSection() {
 
     useEffect(() => {
         fetch('/api/compareplans/get')
-            .then((r) => r.json())
-            .then((json) => {
+            .then(res => res.json())
+            .then(json => {
                 if (json.success) {
                     setData(json.data);
                 }
             })
-            .catch((err) => {
-                console.error('Error loading compare plans data:', err);
-            });
+            .catch(err => console.error('Error loading compare plans data:', err));
     }, []);
 
     if (!data) return null;

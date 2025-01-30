@@ -41,7 +41,7 @@ export default function IntroSection() {
     }, []);
 
     if (loading) {
-        return <div className="text-center py-10 text-cyan-200">Завантаження Intro...</div>;
+        return null;
     }
 
     if (error) {

@@ -1,18 +1,33 @@
 // POST: app/api/forwhom/update/route.ts
-import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { NextRequest, NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
 import path from 'path';
 
-export async function POST(request: Request) {
+interface ForWhomGroup {
+    title: string;
+    description: string;
+    image: string;
+}
+
+interface ForWhomData {
+    title: string;
+    subtitle: string;
+    groups: ForWhomGroup[];
+}
+
+export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-
+        const data: ForWhomData = await request.json();
         const filePath = path.join(process.cwd(), 'src', 'data', 'forWhom.json');
-        fs.writeFileSync(filePath, JSON.stringify(body, null, 2), 'utf8');
-
+        
+        await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
+        
         return NextResponse.json({ success: true });
-    } catch (error: any) {
+    } catch (error) {
         console.error('POST /api/forwhom/update error:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json(
+            { success: false, error: error instanceof Error ? error.message : 'An unknown error occurred' },
+            { status: 500 }
+        );
     }
 }

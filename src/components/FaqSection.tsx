@@ -1,12 +1,32 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import faqData from '@/data/faq.json';
+
+interface FaqData {
+  faqs: {
+    question: string;
+    answer: string;
+  }[];
+}
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [data, setData] = useState<FaqData | null>(null);
+
+  useEffect(() => {
+    fetch('/api/faq/get')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setData(json.data);
+        }
+      })
+      .catch(err => console.error('Error loading FAQ data:', err));
+  }, []);
+
+  if (!data) return null;
 
   return (
     <section className="py-20">
@@ -27,7 +47,7 @@ export default function FaqSection() {
         </div>
 
         <div className="max-w-3xl mx-auto space-y-4">
-          {faqData.faqs.map((faq, index) => (
+          {data.faqs.map((faq, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}

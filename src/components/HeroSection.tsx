@@ -49,7 +49,7 @@ export default function HeroSection() {
     }, []);
 
     if (loading) {
-        return <div className="text-center py-10 text-cyan-200">Завантаження Hero...</div>;
+        return null;
     }
 
     if (error) {
@@ -71,8 +71,8 @@ export default function HeroSection() {
             {/* Основний контент */}
             <div className="container mx-auto px-4 py-8 relative">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                     transition={{ duration: 0.8 }}
                     className="text-center max-w-4xl mx-auto"
                 >
@@ -80,7 +80,7 @@ export default function HeroSection() {
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                        transition={{ delay: 0, type: "spring", stiffness: 200 }}
                         className="mb-8"
                     >
                         <ShieldCheckIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto text-cyan-400" />

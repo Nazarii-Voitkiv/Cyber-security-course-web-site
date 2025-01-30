@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 interface Group {
     title: string;
@@ -57,7 +56,7 @@ export default function ForWhomEdit() {
     };
 
     if (loading) {
-        return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+        return null;
     }
 
     return (

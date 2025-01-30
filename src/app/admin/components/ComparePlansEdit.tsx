@@ -68,8 +68,8 @@ export default function ComparePlansEdit() {
         }
     };
 
-    if (loading) return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
-    if (!data) return <div className="text-gray-400">Не вдалося завантажити comparePlans.json</div>;
+    if (loading) return null;
+    if (!data) return <div className="text-gray-400">Не вдалося завантажити дані</div>;
 
     return (
         <div className="mb-12 bg-gray-800/50 p-6 rounded-xl">

@@ -63,7 +63,7 @@ export default function LearningProcessEdit() {
     }
   };
 
-  if (loading) return <div className="text-center py-4 text-cyan-200">Завантаження...</div>;
+  if (loading) return null;
   if (!data) return <div className="text-gray-400">Не вдалося завантажити learningProcess.json</div>;
 
   return (

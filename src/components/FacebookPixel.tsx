@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import Script from 'next/script';
+import Image from 'next/image';
 
 declare global {
     interface Window {
@@ -49,12 +50,12 @@ export default function FacebookPixel() {
             </Suspense>
 
             <noscript>
-                <img
+                <Image
                     height={1}
                     width={1}
-                    style={{display: 'none'}}
                     src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
-                    alt="fbpx"
+                    alt=""
+                    priority={true}
                 />
             </noscript>
         </>

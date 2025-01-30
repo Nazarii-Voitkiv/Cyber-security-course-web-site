@@ -6,7 +6,19 @@ import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-import testimonialsData from '@/data/testimonials.json';
+
+interface Testimonial {
+  id: string;
+  rating: number;
+  content: string;
+  name: string;
+  position: string;
+  image: string;
+}
+
+interface TestimonialsData {
+  testimonials: Testimonial[];
+}
 
 const Rating = ({ rating }: { rating: number }) => {
   return (
@@ -34,6 +46,7 @@ export default function TestimonialsSection() {
     skipSnaps: false,
   });
 
+  const [data, setData] = useState<TestimonialsData | null>(null);
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(true);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(true);
 
@@ -52,11 +65,24 @@ export default function TestimonialsSection() {
   }, [emblaApi]);
 
   useEffect(() => {
+    fetch('/api/testimonials/get')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success) {
+          setData(json.data);
+        }
+      })
+      .catch(err => console.error('Error loading testimonials data:', err));
+  }, []);
+
+  useEffect(() => {
     if (!emblaApi) return;
     onSelect();
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
+
+  if (!data) return null;
 
   return (
     <section className="py-16 relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
@@ -118,7 +144,7 @@ export default function TestimonialsSection() {
           {/* Карусель */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
-              {testimonialsData.testimonials.map((testimonial) => (
+              {data.testimonials.map((testimonial) => (
                 <div key={testimonial.id} className="flex-[0_0_100%] min-w-0 pl-4">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
