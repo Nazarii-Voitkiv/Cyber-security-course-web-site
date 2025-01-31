@@ -18,20 +18,26 @@ import { useSession, signOut } from 'next-auth/react';
 
 export default function AdminDashboard() {
     const router = useRouter();
-    const { data: session, status } = useSession();
-
-    useEffect(() => {
-        if (status === 'unauthenticated') {
+    const { data: session, status } = useSession({
+        required: true,
+        onUnauthenticated() {
             router.push('/admin');
-        }
-    }, [status, router]);
+        },
+    });
 
     if (status === 'loading') {
-        return <div>Завантаження...</div>;
+        return (
+            <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center">
+                <div className="text-2xl text-cyan-400">Завантаження...</div>
+            </div>
+        );
     }
 
     const handleLogout = async () => {
-        await signOut({ redirect: false });
+        await signOut({ 
+            redirect: false,
+            callbackUrl: '/admin'
+        });
         router.push('/admin');
     };
 

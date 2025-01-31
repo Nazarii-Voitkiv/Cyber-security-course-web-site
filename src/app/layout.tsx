@@ -29,8 +29,8 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
+        <FacebookPixel/>
         <Providers>
-          <FacebookPixel/>
           <Navbar/>
           {children}
         </Providers>
