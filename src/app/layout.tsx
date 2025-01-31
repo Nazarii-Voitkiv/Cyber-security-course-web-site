@@ -3,12 +3,13 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import FacebookPixel from '@/components/FacebookPixel';
+import { Providers } from './providers';
 
-const inter = Inter({ subsets: ['latin', 'cyrillic'] });
+const inter = Inter({ subsets: ['latin', 'cyrillic-ext'] });
 
 export const metadata: Metadata = {
-  title: 'Курс з кібербезпеки',
-  description: 'Навчіться захищати себе та свій бізнес від кіберзагроз',
+  title: 'Cyber Security Course',
+  description: 'Курс з кібербезпеки',
 };
 
 export default function RootLayout({
@@ -18,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="uk">
-    <head>
+      <head>
         <link rel="icon" href="/favicon.ico" sizes="any"/>
         <link
             rel="apple-touch-icon"
@@ -26,12 +27,14 @@ export default function RootLayout({
             type="image/png"
             sizes="180x180"
         />
-    </head>
-    <body className={inter.className}>
-    <FacebookPixel/>
-    <Navbar/>
-    {children}
-    </body>
+      </head>
+      <body className={inter.className}>
+        <Providers>
+          <FacebookPixel/>
+          <Navbar/>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

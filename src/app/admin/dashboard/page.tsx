@@ -14,21 +14,24 @@ import FooterEdit from '@/app/admin/components/FooterEdit';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function AdminDashboard() {
     const router = useRouter();
+    const { data: session, status } = useSession();
 
-    // Перевірка авторизації (кукі isAuthenticated=true)
     useEffect(() => {
-        const isAuthenticated = document.cookie.includes('isAuthenticated=true');
-        if (!isAuthenticated) {
-            router.push('/admin/login');
+        if (status === 'unauthenticated') {
+            router.push('/admin');
         }
-    }, [router]);
+    }, [status, router]);
 
-    // Логаут
-    const handleLogout = () => {
-        document.cookie = 'isAuthenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    if (status === 'loading') {
+        return <div>Завантаження...</div>;
+    }
+
+    const handleLogout = async () => {
+        await signOut({ redirect: false });
         router.push('/admin');
     };
 

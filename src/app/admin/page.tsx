@@ -1,9 +1,9 @@
-// app/admin/page.tsx
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import { signIn } from 'next-auth/react';
 
 export default function AdminPage() {
     const [username, setUsername] = useState('');
@@ -11,14 +11,28 @@ export default function AdminPage() {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (username === process.env.NEXT_PUBLIC_ADMIN_USERNAME &&
-            password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-            document.cookie = `isAuthenticated=true; path=/; max-age=${60 * 60}`;
-            router.push('/admin/dashboard');
-        } else {
-            setError('Невірні облікові дані');
+        
+        try {
+            const res = await signIn('credentials', {
+                username,
+                password,
+                redirect: false,
+                callbackUrl: '/admin/dashboard'
+            });
+
+            if (res?.error) {
+                setError('Невірні облікові дані');
+                setTimeout(() => setError(''), 3000);
+                return;
+            }
+
+            if (res?.url) {
+                router.push(res.url);
+            }
+        } catch (error) {
+            setError('Щось пішло не так');
             setTimeout(() => setError(''), 3000);
         }
     };
