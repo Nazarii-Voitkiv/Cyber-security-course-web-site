@@ -31,7 +31,7 @@ export default function AdminPage() {
             if (res?.url) {
                 router.push(res.url);
             }
-        } catch (error) {
+        } catch {
             setError('Щось пішло не так');
             setTimeout(() => setError(''), 3000);
         }

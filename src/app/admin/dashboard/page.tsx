@@ -12,13 +12,12 @@ import TestimonialsEdit from '@/app/admin/components/TestimonialsEdit';
 import FaqEdit from '@/app/admin/components/FaqEdit';
 import FooterEdit from '@/app/admin/components/FooterEdit';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useSession, signOut } from 'next-auth/react';
 
 export default function AdminDashboard() {
     const router = useRouter();
-    const { data: session, status } = useSession({
+    const { status } = useSession({
         required: true,
         onUnauthenticated() {
             router.push('/admin');
@@ -57,37 +56,16 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-8">
-                    {/* ============== HERO FORM ============== */}
                     <HeroEdit />
-
-                    {/* ============== INTRO FORM ============== */}
                     <IntroEdit />
-
-                    {/* ============== WHY THIS COURSE FORM ============== */}
                     <WhyThisCourseEdit />
-
-                    {/* ============== BENEFITS FORM ============== */}
                     <BenefitsEdit />
-
-                    {/* ============== FOR WHOM FORM ============== */}
                     <ForWhomEdit />
-
-                    {/* ============== LEARNING PROCESS FORM ============== */}
                     <LearningProcessEdit />
-
-                    {/* ============== PROGRAM FORM ============== */}
                     <ProgramEdit />
-
-                    {/* ============== COMPARE PLANS FORM ============== */}
                     <ComparePlansEdit />
-
-                    {/* ============== TESTIMONIALS FORM ============== */}
                     <TestimonialsEdit />
-
-                    {/* ============== FAQ FORM ============== */}
                     <FaqEdit />
-
-                    {/* ============== FOOTER FORM ============== */}
                     <FooterEdit />
                 </div>
             </div>
