@@ -147,19 +147,15 @@ export default function HeroSection() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                                className="relative pt-6 cursor-pointer"
-                                // Клік по всій картці
+                                className="relative pt-6 cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
                                 onClick={() => {
-                                    // Відправляємо "Lead" з даними курсу
                                     if (typeof window !== 'undefined' && window.fbq) {
                                         window.fbq('track', 'Lead', {
                                             content_name: course.title,
                                             currency: 'UAH',
-                                            // Припускаємо, що price у форматі "499 ₴"
                                             value: parseFloat(course.price.replace(' ₴', ''))
                                         });
                                     }
-                                    // Відкриваємо у новій вкладці
                                     window.open(course.link, '_blank', 'noopener,noreferrer');
                                 }}
                             >
