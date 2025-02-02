@@ -27,6 +27,14 @@ export default function Navbar() {
     }
   };
 
+  const scrollToHero = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <motion.nav
       style={{ opacity, translateY }}
@@ -35,12 +43,17 @@ export default function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
-          <div className="flex items-center space-x-2">
+          <motion.div 
+            className="flex items-center space-x-2 cursor-pointer"
+            onClick={scrollToHero}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <ShieldCheckIcon className="h-8 w-8 text-cyan-400" />
             <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
               Курс з кібербезпеки
             </span>
-          </div>
+          </motion.div>
 
           {/* Кнопка */}
           <motion.button

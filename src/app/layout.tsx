@@ -1,11 +1,8 @@
 import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import FacebookPixel from '@/components/FacebookPixel';
 import Providers from './providers';
-
-const inter = Inter({ subsets: ['latin', 'cyrillic-ext'] });
 
 export const metadata: Metadata = {
   title: 'Cyber Security Course',
@@ -28,7 +25,7 @@ export default function RootLayout({
             sizes="180x180"
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <FacebookPixel/>
         <Providers>
           <Navbar/>

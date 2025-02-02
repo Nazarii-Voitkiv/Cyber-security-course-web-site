@@ -4,24 +4,56 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Titillium Web';
+    src: url('/fonts/titilliumwebrusbydaymarius_rg.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    src: url('/fonts/titilliumwebrusbydaymarius_light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    src: url('/fonts/titilliumwebrusbydaymarius_sm.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Titillium Web';
+    src: url('/fonts/titilliumwebrusbydaymarius_bd.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background-start-rgb: 10, 10, 10;
-    --background-end-rgb: 10, 10, 10;
-    --foreground-rgb: 237, 237, 237;
-  }
+    :root {
+        --background-start-rgb: 10, 10, 10;
+        --background-end-rgb: 10, 10, 10;
+        --foreground-rgb: 237, 237, 237;
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
-  font-family: Arial, Helvetica, sans-serif;
+    color: rgb(var(--foreground-rgb));
+    background: rgb(var(--background-start-rgb));
+    font-family: 'Titillium Web', sans-serif !important;
 }
 
 /* Стилі для кнопок каруселі */
