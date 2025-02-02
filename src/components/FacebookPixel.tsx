@@ -1,6 +1,7 @@
 'use client';
 
 import Script from 'next/script';
+import Image from 'next/image';
 
 declare global {
     interface Window {
@@ -26,12 +27,13 @@ export default function FacebookPixel() {
                 `}
             </Script>
             <noscript>
-                <img 
-                    height="1" 
-                    width="1" 
+                <Image 
+                    height={1} 
+                    width={1} 
                     style={{ display: 'none' }}
                     src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
                     alt=""
+                    priority
                 />
             </noscript>
         </>

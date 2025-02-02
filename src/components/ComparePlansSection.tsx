@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
-import { CheckIcon } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 
 interface ComparePlansData {
