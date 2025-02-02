@@ -24,12 +24,15 @@ const adminSecurityHeaders = {
 const publicSecurityHeaders = {
     'Content-Security-Policy':
         "default-src 'self'; " +
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://connect.facebook.net https://www.facebook.com; " +
         "style-src 'self' 'unsafe-inline'; " +
         "font-src 'self'; " +
         "img-src 'self' data: https: https://www.facebook.com; " +
         "connect-src 'self' https://connect.facebook.net https://www.facebook.com; " +
-        "frame-src 'self' https://www.facebook.com;",
+        "frame-src 'self' https://www.facebook.com; " +
+        "form-action 'self'; " +
+        "media-src 'self'; " +
+        "object-src 'none';",
     'X-DNS-Prefetch-Control': 'on',
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
     'X-Frame-Options': 'SAMEORIGIN',
