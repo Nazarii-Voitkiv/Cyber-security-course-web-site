@@ -1,37 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { signIn } from 'next-auth/react';
 
 export default function AdminPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        console.log('Login attempt:', { username, passwordLength: password.length });
         
         try {
-            const res = await signIn('credentials', {
-                username,
-                password,
-                redirect: false,
-                callbackUrl: '/admin/dashboard'
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
             });
 
-            if (res?.error) {
-                setError('Невірні облікові дані');
+            const data = await res.json();
+            console.log('Login response:', { status: res.status, data });
+
+            if (!res.ok) {
+                setError(data.error || 'Помилка входу');
                 setTimeout(() => setError(''), 3000);
                 return;
             }
 
-            if (res?.url) {
-                router.push(res.url);
+            if (data.token) {
+                console.log('Login successful, redirecting to dashboard...');
+                // Використовуємо window.location.href для надійного перенаправлення
+                window.location.href = '/admin/dashboard';
+            } else {
+                console.error('No token received from server');
+                setError('Помилка автентифікації');
+                setTimeout(() => setError(''), 3000);
             }
-        } catch {
+        } catch (error) {
+            console.error('Login error:', error);
             setError('Щось пішло не так');
             setTimeout(() => setError(''), 3000);
         }
@@ -39,7 +48,6 @@ export default function AdminPage() {
 
     return (
         <section className="relative min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
-            <div className="absolute inset-0 opacity-20 bg-[url('/noise.png')]" />
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10" />
 
             <motion.div

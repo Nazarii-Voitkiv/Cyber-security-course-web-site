@@ -1,63 +1,65 @@
-import { AuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import { signToken, verifyToken } from './jwt';
+import bcrypt from 'bcryptjs';
 
-export const authOptions: AuthOptions = {
-  providers: [
-    CredentialsProvider({
-      id: 'credentials',
-      name: "Credentials",
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
-          return null
-        }
+interface AuthResponse {
+    success: boolean;
+    token?: string;
+    error?: string;
+}
 
-        const adminUsername = process.env.ADMIN_USERNAME
-        const adminPassword = process.env.ADMIN_PASSWORD
+export async function authenticate(username: string, password: string): Promise<AuthResponse> {
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
-        if (
-          credentials.username === adminUsername &&
-          credentials.password === adminPassword
-        ) {
-          return {
-            id: "1",
-            name: adminUsername,
-          }
-        }
+    console.log('Environment variables:', {
+        ADMIN_USERNAME: process.env.ADMIN_USERNAME,
+        ADMIN_PASSWORD_EXISTS: !!process.env.ADMIN_PASSWORD,
+        ADMIN_PASSWORD_LENGTH: process.env.ADMIN_PASSWORD?.length,
+        JWT_SECRET_EXISTS: !!process.env.JWT_SECRET
+    });
 
-        return null
-      }
-    })
-  ],
-  pages: {
-    signIn: "/admin",
-  },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.name = user.name
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id
-        session.user.name = token.name
-      }
-      return session
+    if (!username || !password) {
+        return { success: false, error: 'Відсутні облікові дані' };
     }
-  },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-  debug: process.env.NODE_ENV === 'development',
-  secret: process.env.NEXTAUTH_SECRET,
-  jwt: {
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  }
+
+    if (!adminUsername || !adminPassword) {
+        console.error('Missing admin credentials in environment variables');
+        return { success: false, error: 'Помилка конфігурації сервера' };
+    }
+
+    if (username === adminUsername) {
+        console.log('Username matches');
+        
+        try {
+            const isValidPassword = await bcrypt.compare(password, adminPassword);
+            console.log('Password comparison:', {
+                providedPassword: password,
+                storedHashLength: adminPassword.length,
+                isValid: isValidPassword
+            });
+            
+            if (isValidPassword) {
+                const token = await signToken({
+                    id: '1',
+                    username: adminUsername
+                });
+                return { success: true, token };
+            }
+        } catch (error) {
+            console.error('Error during password verification:', error);
+            return { success: false, error: 'Помилка перевірки паролю' };
+        }
+    }
+
+    return { success: false, error: 'Невірні облікові дані' };
+}
+
+export async function validateToken(token: string | null): Promise<boolean> {
+    console.log('Validating token:', token ? 'Token exists' : 'No token');
+    if (!token) return false;
+    
+    const payload = await verifyToken(token);
+    console.log('Token verification result:', payload ? 'Valid' : 'Invalid');
+    
+    return !!payload;
 }

@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    domains: ['www.facebook.com'],
+    unoptimized: true,
+  },
   async headers() {
     return [
       {
@@ -33,13 +37,13 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value:
               "default-src 'self'; " +
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.facebook.com; " +
               "style-src 'self' 'unsafe-inline'; " +
-              "img-src 'self' data:; " +
+              "img-src 'self' data: https://www.facebook.com; " +
               "font-src 'self'; " +
               "connect-src 'self'; " +
               "media-src 'self'; " +
-              "frame-src 'self';"
+              "frame-src 'self' https://www.facebook.com;"
           }
         ]
       }

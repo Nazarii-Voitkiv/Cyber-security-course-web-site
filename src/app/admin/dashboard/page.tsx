@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import HeroEdit from '@/app/admin/components/HeroEdit';
 import IntroEdit from '@/app/admin/components/IntroEdit';
 import WhyThisCourseEdit from '@/app/admin/components/WhyThisCourseEdit';
@@ -11,33 +12,46 @@ import ComparePlansEdit from '@/app/admin/components/ComparePlansEdit';
 import TestimonialsEdit from '@/app/admin/components/TestimonialsEdit';
 import FaqEdit from '@/app/admin/components/FaqEdit';
 import FooterEdit from '@/app/admin/components/FooterEdit';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { useSession, signOut } from 'next-auth/react';
 
 export default function AdminDashboard() {
-    const router = useRouter();
-    const { status } = useSession({
-        required: true,
-        onUnauthenticated() {
-            router.push('/admin');
-        },
-    });
+    useEffect(() => {
+        // Перевіряємо наявність токена при завантаженні сторінки
+        const checkAuth = async () => {
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
 
-    if (status === 'loading') {
-        return (
-            <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex items-center justify-center">
-                <div className="text-2xl text-cyan-400">Завантаження...</div>
-            </div>
-        );
-    }
+                if (!response.ok) {
+                    window.location.href = '/admin';
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                window.location.href = '/admin';
+            }
+        };
+
+        checkAuth();
+    }, []);
 
     const handleLogout = async () => {
-        await signOut({ 
-            redirect: false,
-            callbackUrl: '/admin'
-        });
-        router.push('/admin');
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                console.log('Logged out successfully');
+                window.location.href = '/admin';
+            } else {
+                console.error('Logout failed');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
     };
 
     return (

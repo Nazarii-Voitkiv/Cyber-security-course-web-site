@@ -19,7 +19,7 @@ function PageViewTracker() {
     useEffect(() => {
         if (typeof window !== 'undefined' && window.fbq) {
             window.fbq('track', 'PageView');
-            console.log('Tracked PageView after route change', pathname);
+
         }
     }, [pathname, searchParams]);
 

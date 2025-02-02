@@ -55,7 +55,6 @@ export default function IntroSection() {
     return (
       <section className="relative py-20 bg-gradient-to-b from-gray-900 to-gray-800">
         {/* Кібер-ефекти */}
-        <div className="absolute inset-0 opacity-20 bg-[url('/noise.png')]" />
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10" />
 
         <div className="container mx-auto px-4 relative">
