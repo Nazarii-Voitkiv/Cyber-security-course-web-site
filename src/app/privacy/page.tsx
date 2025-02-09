@@ -1,0 +1,6 @@
+import PrivacyPolicy from '@/components/PrivacyPolicy';
+// ...existing code if needed...
+export default function PrivacyPage() {
+  return <PrivacyPolicy />;
+}
+// ...existing code if needed...

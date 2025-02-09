@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 interface FooterData {
     contacts: {
         email: string;
-        phone: string;
         workHours: string;
     };
     socialLinks: {
@@ -22,7 +21,6 @@ interface FooterData {
 const defaultData: FooterData = {
     contacts: {
         email: '',
-        phone: '',
         workHours: ''
     },
     socialLinks: [],
@@ -107,18 +105,6 @@ export default function FooterEdit() {
                                     onChange={(e) => setData({
                                         ...data,
                                         contacts: { ...data.contacts, email: e.target.value }
-                                    })}
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-cyan-100">Телефон:</label>
-                                <input
-                                    type="text"
-                                    className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                    value={data.contacts.phone}
-                                    onChange={(e) => setData({
-                                        ...data,
-                                        contacts: { ...data.contacts, phone: e.target.value }
                                     })}
                                 />
                             </div>

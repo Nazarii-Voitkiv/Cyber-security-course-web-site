@@ -2,8 +2,7 @@
   "data": {
     "contacts": {
       "email": "support@cybersecurity.course",
-      "phone": "+380 (99) 123-45-67",
-      "workHours": "9:00 - 21:00"
+      "workHours": "Графік роботи підтримки: 11:00-20:00"
     },
     "socialLinks": [
       {
@@ -19,12 +18,8 @@
       {
         "title": "Політика конфіденційності",
         "url": "/privacy"
-      },
-      {
-        "title": "Умови використання",
-        "url": "/terms"
       }
     ],
-    "copyright": "2025 Курс з кібербезпеки. Всі права захищено."
+    "copyright": "2025 СyberSec Education. Всі права захищено."
   }
 }

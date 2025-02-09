@@ -1,8 +1,8 @@
 import { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/Navbar';
 import FacebookPixel from '@/components/FacebookPixel';
 import Providers from './providers';
+import ConditionalNavbar from '@/components/ConditionalNavbar';
 
 export const metadata: Metadata = {
   title: 'Cyber Security Course',
@@ -28,7 +28,7 @@ export default function RootLayout({
       <body>
         <FacebookPixel/>
         <Providers>
-          <Navbar/>
+          <ConditionalNavbar/>
           {children}
         </Providers>
       </body>

@@ -19,6 +19,7 @@ interface HeroData {
     heroSubtitle: string;
     discountBanner: string;
     courseTypes: CourseType[];
+    leadMagnet?: string; // Added leadMagnet as an optional property
 }
 
 export default function HeroEdit() {
@@ -107,6 +108,15 @@ export default function HeroEdit() {
                             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                             value={data.discountBanner}
                             onChange={(e) => setData({ ...data, discountBanner: e.target.value })}
+                        />
+                    </div>
+
+                    <div>
+                        <label className="block text-cyan-100">Лід-магніт (leadMagnet):</label>
+                        <textarea
+                            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
+                            value={data.leadMagnet || ""} // Removed explicit any cast
+                            onChange={(e) => setData({ ...data, leadMagnet: e.target.value })}
                         />
                     </div>
 

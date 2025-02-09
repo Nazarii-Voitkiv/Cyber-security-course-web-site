@@ -23,6 +23,7 @@ export interface HeroData {
     heroSubtitle: string;
     discountBanner: string;
     courseTypes: CourseType[];
+    leadMagnet: string;
 }
 
 export default function HeroSection() {
@@ -222,6 +223,24 @@ export default function HeroSection() {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+                </motion.div>
+
+                {/* Bottom Lead Magnet */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-16 mb-8 relative group"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all duration-300" />
+                    <div className="relative bg-gray-900/90 border-2 border-cyan-500/50 rounded-lg p-6 backdrop-blur-sm">
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                            БОНУС
+                        </div>
+                        <div className="text-center text-lg md:text-xl font-bold text-white">
+                            <CustomMarkdown>{data.leadMagnet}</CustomMarkdown>
+                        </div>
                     </div>
                 </motion.div>
             </div>

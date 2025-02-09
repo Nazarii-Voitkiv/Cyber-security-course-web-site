@@ -34,8 +34,7 @@ export default function FooterSection() {
             </h3>
             <div className="space-y-2 text-gray-400">
               <p>Email: {footerData.data.contacts.email}</p>
-              <p>Телефон: {footerData.data.contacts.phone}</p>
-              <p>Графік роботи: {footerData.data.contacts.workHours}</p>
+              <p>{footerData.data.contacts.workHours}</p>
             </div>
           </div>
 

@@ -8,6 +8,8 @@ import CustomMarkdown from "@/utils/CustomMarkdown";
 interface ComparePlansData {
     title: string;
     specialOfferBanner: string;
+    leadMagnet: string;
+    introBonus?: string;
     featuresTitle: string;
     plans: {
         title: string;
@@ -42,8 +44,6 @@ export default function ComparePlansSection() {
 
     if (!data || data.plans.length === 0) return null;
 
-    const plan = data.plans[0];
-
     return (
         <section id="compare-plans" className="py-16 relative overflow-hidden">
             {/* Кібер-елементи */}
@@ -51,7 +51,7 @@ export default function ComparePlansSection() {
             <div className="glitch-overlay" />
             
             <div className="container mx-auto px-4">
-                <div className="text-center mb-12">
+                                <div className="text-center mb-12">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -106,80 +106,101 @@ export default function ComparePlansSection() {
 
                 {/* План курсу */}
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="relative cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
-                        onClick={() => {
-                            if (typeof window !== 'undefined' && window.fbq) {
-                                window.fbq('track', 'Lead', {
-                                    content_name: plan.title,
-                                    currency: 'UAH',
-                                    value: parseFloat(plan.price.replace(' ₴', ''))
-                                });
-                            }
-                            window.open(plan.link, '_blank', 'noopener,noreferrer');
-                        }}
-                    >
-                        {plan.recommended && (
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
-                                Рекомендовано
-                            </div>
-                        )}
-
-                        <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border ${plan.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
-                            <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{plan.title}</CustomMarkdown></h3>
-                            <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{plan.description}</CustomMarkdown></p>
-
-                            <div className="mb-6">
-                                <div className="flex items-center justify-center gap-3 mb-2">
-                                    <span className="text-gray-400 line-through text-base md:text-lg">
-                                        <CustomMarkdown>{plan.originalPrice}</CustomMarkdown>
-                                    </span>
-                                    <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
-                                        -<CustomMarkdown>{plan.discount}</CustomMarkdown>
-                                    </span>
+                    {data.plans.map((plan, idx) => (
+                        <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="relative cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
+                            onClick={() => {
+                                if (typeof window !== 'undefined' && window.fbq) {
+                                    window.fbq('track', 'Lead', {
+                                        content_name: plan.title,
+                                        currency: 'UAH',
+                                        value: parseFloat(plan.price.replace(' ₴', ''))
+                                    });
+                                }
+                                window.open(plan.link, '_blank', 'noopener,noreferrer');
+                            }}
+                        >
+                            {plan.recommended && (
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
+                                    Рекомендовано
                                 </div>
-                                <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
-                                    <CustomMarkdown>{plan.price}</CustomMarkdown>
+                            )}
+
+                            <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border ${plan.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
+                                <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{plan.title}</CustomMarkdown></h3>
+                                <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{plan.description}</CustomMarkdown></p>
+
+                                <div className="mb-6">
+                                    <div className="flex items-center justify-center gap-3 mb-2">
+                                        <span className="text-gray-400 line-through text-base md:text-lg">
+                                            <CustomMarkdown>{plan.originalPrice}</CustomMarkdown>
+                                        </span>
+                                        <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
+                                            -<CustomMarkdown>{plan.discount}</CustomMarkdown>
+                                        </span>
+                                    </div>
+                                    <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                                        <CustomMarkdown>{plan.price}</CustomMarkdown>
+                                    </div>
                                 </div>
+
+                                <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
+                                    {plan.features.map((feature, i) => (
+                                        <li key={i} className="flex items-center text-cyan-100">
+                                            <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
+                                            <CustomMarkdown>{feature}</CustomMarkdown>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {/* Кнопка */}
+                                <motion.a
+                                    href={plan.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (typeof window !== 'undefined' && window.fbq) {
+                                            window.fbq('track', 'Lead', {
+                                                content_name: plan.title,
+                                                currency: 'UAH',
+                                                value: parseFloat(plan.price.replace(' ₴', ''))
+                                            });
+                                        }
+                                    }}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="cyber-button w-full py-3 rounded-full text-base font-semibold shadow-lg text-center"
+                                >
+                                    Почати навчання
+                                </motion.a>
                             </div>
-
-                            <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
-                                {plan.features.map((feature, i) => (
-                                    <li key={i} className="flex items-center text-cyan-100">
-                                        <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
-                                        <CustomMarkdown>{feature}</CustomMarkdown>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* Кнопка */}
-                            <motion.a
-                                href={plan.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (typeof window !== 'undefined' && window.fbq) {
-                                        window.fbq('track', 'Lead', {
-                                            content_name: plan.title,
-                                            currency: 'UAH',
-                                            value: parseFloat(plan.price.replace(' ₴', ''))
-                                        });
-                                    }
-                                }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="cyber-button w-full py-3 rounded-full text-base font-semibold shadow-lg text-center"
-                            >
-                                Почати навчання
-                            </motion.a>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    ))}
                 </div>
+
+                {/* Bottom Lead Magnet */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-16 relative group"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all duration-300" />
+                    <div className="relative bg-gray-900/90 border-2 border-cyan-500/50 rounded-lg p-6 backdrop-blur-sm">
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
+                            БОНУС
+                        </div>
+                        <div className="text-center text-lg md:text-xl font-bold text-white">
+                            <CustomMarkdown>{data.leadMagnet}</CustomMarkdown>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </section>
     );
