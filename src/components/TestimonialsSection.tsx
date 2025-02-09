@@ -150,14 +150,41 @@ export default function TestimonialsSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-gradient-to-b from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-lg p-6 h-[600px] mx-auto max-w-lg relative overflow-hidden"
+                    className="bg-gradient-to-b from-cyan-500/10 to-blue-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-lg p-6 flex flex-col h-full md:h-[600px] mx-auto max-w-lg relative overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(4,159,255,0.1),transparent_70%)]" />
                     <Rating rating={testimonial.rating} />
-                    <p className="text-2xl italic text-gray-300 mb-8 leading-relaxed">{testimonial.content}</p>
-                    <div className="absolute bottom-6 left-6 right-6">
+                    <p className="text-xl md:text-2xl italic text-gray-300 mb-8 leading-relaxed">
+                      {testimonial.content}
+                    </p>
+                    
+                    {/* Mobile version: static author info positioned at bottom */}
+                    <div className="block md:hidden mt-auto">
+                      <div className="flex items-center space-x-4">
+                        <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                          <Image
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 48px, 96px"
+                          />
+                        </div>
+                        <div>
+                          <h4 className="text-base md:text-xl font-semibold text-white">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-sm md:text-base text-cyan-400">
+                            {testimonial.position}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Desktop version: absolute positioned author info */}
+                    <div className="hidden md:block absolute bottom-6 left-6 right-6">
                       <div className="flex items-center space-x-6">
-                        <div className="relative w-16 h-16 md:w-24 md:h-24 flex-shrink-0 rounded-full overflow-hidden">
+                        <div className="relative w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden">
                           <Image
                             src={testimonial.image}
                             alt={testimonial.name}
@@ -167,8 +194,12 @@ export default function TestimonialsSection() {
                           />
                         </div>
                         <div>
-                          <h4 className="text-xl md:text-2xl font-semibold text-white mb-1">{testimonial.name}</h4>
-                          <p className="text-base md:text-lg text-cyan-400">{testimonial.position}</p>
+                          <h4 className="text-xl md:text-2xl font-semibold text-white mb-1">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-base md:text-lg text-cyan-400">
+                            {testimonial.position}
+                          </p>
                         </div>
                       </div>
                     </div>
