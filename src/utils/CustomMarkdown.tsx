@@ -5,9 +5,9 @@ import rehypeRaw from 'rehype-raw';
 // Компоненти для перевизначення поведінки
 const customComponents: Components = {
     // Custom paragraph that accepts a "data-color" attribute
-    p: ({ node, children, ...props }) => {
-        // Use a fallback color or read from a custom attribute (if implemented)
-        const color = (props as any)['data-color'] || 'inherit';
+    p: ({ children, ...props }): React.ReactNode => {
+        const dataProps = props as { "data-color"?: string };
+        const color = dataProps["data-color"] || 'inherit';
         return (
             <span className="inline-block" style={{ color }}>
                 {children}
@@ -15,8 +15,9 @@ const customComponents: Components = {
         );
     },
     // Перевизначення для тегу <span>
-    span: ({ node, children, ...props }) => {
-        const color = (props as any)['data-color'];
+    span: ({ children, ...props }): React.ReactNode => {
+        const dataProps = props as { "data-color"?: string };
+        const color = dataProps["data-color"];
         if (color === 'gradient') {
             return (
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">
