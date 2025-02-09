@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 export default function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState({
     hours: 0,
-    minutes: 10,
+    minutes: 20,
     seconds: 0
   });
 

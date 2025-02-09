@@ -62,7 +62,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.95 }}
             className="cyber-button px-6 py-2 rounded-full text-sm font-semibold shadow-lg"
           >
-            Виберіть свій курс
+            Отримати курс
           </motion.button>
         </div>
       </div>

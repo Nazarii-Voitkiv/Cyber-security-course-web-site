@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ShieldCheckIcon,
-  AcademicCapIcon,
-  ChatBubbleBottomCenterTextIcon,
-  DocumentCheckIcon,
-  ClockIcon,
-  UserGroupIcon
+  ShieldCheckIcon,             // Cybersecurity
+  BanknotesIcon,               // Monetizing knowledge
+  LightBulbIcon,               // Clear explanations
+  IdentificationIcon,          // Overcoming fraud fears
+  ClipboardDocumentCheckIcon,  // Tests for checking knowledge
+  CalendarIcon                 // Limited-time learning access
 } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 
@@ -19,27 +19,27 @@ const benefits = [
     bgColor: 'bg-red-500/10'
   },
   {
-    Icon: AcademicCapIcon,
+    Icon: BanknotesIcon,
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/10'
   },
   {
-    Icon: ChatBubbleBottomCenterTextIcon,
+    Icon: LightBulbIcon,
     color: 'text-green-400',
     bgColor: 'bg-green-500/10'
   },
   {
-    Icon: DocumentCheckIcon,
+    Icon: IdentificationIcon,
     color: 'text-purple-400',
     bgColor: 'bg-purple-500/10'
   },
   {
-    Icon: ClockIcon,
+    Icon: ClipboardDocumentCheckIcon,
     color: 'text-yellow-400',
     bgColor: 'bg-yellow-500/10'
   },
   {
-    Icon: UserGroupIcon,
+    Icon: CalendarIcon,
     color: 'text-cyan-400',
     bgColor: 'bg-cyan-500/10'
   }

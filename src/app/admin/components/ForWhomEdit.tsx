@@ -10,6 +10,7 @@ interface Group {
 interface ForWhomData {
     title: string;
     groups: Group[];
+    footer: string; // New editable property
 }
 
 export default function ForWhomEdit() {
@@ -80,6 +81,16 @@ export default function ForWhomEdit() {
                             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                             value={data.title}
                             onChange={(e) => setData({ ...data, title: e.target.value })}
+                        />
+                    </div>
+
+                    {/* New footer editing field */}
+                    <div className="mb-2">
+                        <label className="block text-cyan-100">Текст в кінці секції:</label>
+                        <textarea
+                            className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                            value={data.footer}
+                            onChange={(e) => setData({ ...data, footer: e.target.value })}
                         />
                     </div>
 

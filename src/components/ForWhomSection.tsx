@@ -51,6 +51,7 @@ interface ForWhomData {
         title: string;
         description: string;
     }[];
+    footer?: string;
 }
 
 export default function ForWhomSection() {
@@ -104,7 +105,7 @@ export default function ForWhomSection() {
                                             <Icon className={`h-12 w-12 ${color}`} />
                                         </div>
                                         <h3 className="text-xl font-semibold mb-4"><CustomMarkdown>{group.title}</CustomMarkdown></h3>
-                                        <p className="text-gray-400 flex-grow">
+                                        <p className="text-gray-400 flex-grow whitespace-pre-line">
                                           <CustomMarkdown>{group.description}</CustomMarkdown>
                                         </p>
                                     </div>
@@ -116,6 +117,12 @@ export default function ForWhomSection() {
                             );
                         })}
                     </div>
+                    {/* New footer text */}
+                    {data.footer && (
+                      <p className="mt-8 text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                        {data.footer}
+                      </p>
+                    )}
                 </div>
             </motion.div>
         </section>
