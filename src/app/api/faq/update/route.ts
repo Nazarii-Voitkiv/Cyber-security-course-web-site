@@ -12,7 +12,7 @@ interface FaqData {
 export async function POST(request: NextRequest) {
     try {
         const data: FaqData = await request.json();
-        const filePath = path.join(process.cwd(), 'src/data/faq.json');
+        const filePath = path.join(process.cwd(), 'private-data/faq.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

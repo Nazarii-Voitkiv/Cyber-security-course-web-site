@@ -17,7 +17,7 @@ interface TestimonialsData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'testimonials.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'testimonials.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: TestimonialsData = JSON.parse(fileContent);
 

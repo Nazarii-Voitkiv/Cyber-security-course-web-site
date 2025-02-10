@@ -28,7 +28,7 @@ interface ComparePlansData {
 export async function POST(request: NextRequest) {
     try {
         const data: ComparePlansData = await request.json();
-        const filePath = path.join(process.cwd(), 'src/data/compareplans.json');
+        const filePath = path.join(process.cwd(), 'private-data/compareplans.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

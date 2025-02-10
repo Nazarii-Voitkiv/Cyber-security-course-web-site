@@ -16,7 +16,7 @@ interface TestimonialsData {
 export async function POST(request: NextRequest) {
     try {
         const data: TestimonialsData = await request.json();
-        const filePath = path.join(process.cwd(), 'src/data/testimonials.json');
+        const filePath = path.join(process.cwd(), 'private-data/testimonials.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

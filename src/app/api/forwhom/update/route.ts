@@ -18,7 +18,7 @@ interface ForWhomData {
 export async function POST(request: NextRequest) {
     try {
         const data: ForWhomData = await request.json();
-        const filePath = path.join(process.cwd(), 'src', 'data', 'forWhom.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'forWhom.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

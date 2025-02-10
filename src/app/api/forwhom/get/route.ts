@@ -17,7 +17,7 @@ interface ForWhomData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'forWhom.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'forWhom.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: ForWhomData = JSON.parse(fileContent);
 

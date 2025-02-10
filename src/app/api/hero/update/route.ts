@@ -9,7 +9,7 @@ export async function POST(request: Request) {
         // За потреби можна перевіряти, чи body має потрібні поля
         // (heroTitle, heroSubtitle тощо)
 
-        const filePath = path.join(process.cwd(), 'src', 'data', 'hero.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'hero.json');
         fs.writeFileSync(filePath, JSON.stringify(body, null, 2), 'utf8');
 
         return NextResponse.json({ success: true });

@@ -17,7 +17,7 @@ interface LearningProcessData {
 export async function POST(request: NextRequest) {
     try {
         const data: LearningProcessData = await request.json();
-        const filePath = path.join(process.cwd(), 'src', 'data', 'learningProcess.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'learningProcess.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

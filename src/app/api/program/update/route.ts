@@ -17,7 +17,7 @@ interface ProgramData {
 export async function POST(request: NextRequest) {
     try {
         const data: ProgramData = await request.json();
-        const filePath = path.join(process.cwd(), 'src', 'data', 'program.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'program.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

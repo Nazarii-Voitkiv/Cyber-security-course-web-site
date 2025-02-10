@@ -17,7 +17,7 @@ interface BenefitsData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'benefits.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'benefits.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: BenefitsData = JSON.parse(fileContent);
 

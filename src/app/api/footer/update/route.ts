@@ -22,7 +22,7 @@ interface FooterData {
 export async function POST(request: NextRequest) {
     try {
         const data: FooterData = await request.json();
-        const filePath = path.join(process.cwd(), 'src/data/footer.json');
+        const filePath = path.join(process.cwd(), 'private-data/footer.json');
         
         await fs.writeFile(filePath, JSON.stringify({ data }, null, 2), 'utf8');
         

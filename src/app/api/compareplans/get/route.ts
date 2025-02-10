@@ -27,7 +27,7 @@ interface ComparePlansData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'comparePlans.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'comparePlans.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: ComparePlansData = JSON.parse(fileContent);
 

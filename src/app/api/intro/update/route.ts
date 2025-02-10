@@ -7,7 +7,7 @@ export async function POST(request: Request) {
         const body = await request.json();
 
         // За потреби валідовувати поля
-        const filePath = path.join(process.cwd(), 'src', 'data', 'intro.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'intro.json');
         fs.writeFileSync(filePath, JSON.stringify(body, null, 2), 'utf8');
 
         return NextResponse.json({ success: true });

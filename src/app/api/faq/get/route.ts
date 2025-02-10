@@ -11,7 +11,7 @@ interface FaqData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src/data/faq.json');
+        const filePath = path.join(process.cwd(), 'private-data/faq.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: FaqData = JSON.parse(fileContent);
 

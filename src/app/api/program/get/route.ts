@@ -16,7 +16,7 @@ interface ProgramData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'program.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'program.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: ProgramData = JSON.parse(fileContent);
 

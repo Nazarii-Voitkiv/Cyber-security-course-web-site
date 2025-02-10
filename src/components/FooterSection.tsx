@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import footerData from '@/data/footer.json';
+import { useEffect, useState } from 'react';
 
 const socialIcons = {
   Instagram: (
@@ -16,7 +16,53 @@ const socialIcons = {
   )
 };
 
+interface FooterData {
+  contacts: {
+    email: string;
+    workHours: string;
+  };
+  socialLinks: {
+    name: string;
+    url: string;
+  }[];
+  docs: {
+    title: string;
+    url: string;
+  }[];
+  copyright: string;
+}
+
 export default function FooterSection() {
+  const [footerData, setFooterData] = useState<FooterData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchFooterData = async () => {
+      try {
+        const response = await fetch('/api/footer/get');
+        const result = await response.json();
+        
+        if (result.success) {
+          setFooterData(result.data);
+        } else {
+          setError('Failed to load footer data');
+        }
+      } catch (err) {
+        setError('Failed to load footer data');
+      }
+    };
+
+    fetchFooterData();
+  }, []);
+
+  if (error) {
+    return <div className="text-red-500 text-center py-20">{error}</div>;
+  }
+
+  if (!footerData) {
+    return <div className="text-gray-400 text-center py-20">Loading...</div>;
+  }
+
   return (
     <footer className="py-20 border-t border-gray-800">
       <div className="container mx-auto px-4">
@@ -33,8 +79,8 @@ export default function FooterSection() {
               Контакти
             </h3>
             <div className="space-y-2 text-gray-400">
-              <p>Email: {footerData.data.contacts.email}</p>
-              <p>{footerData.data.contacts.workHours}</p>
+              <p>Email: {footerData.contacts.email}</p>
+              <p>{footerData.contacts.workHours}</p>
             </div>
           </div>
 
@@ -44,7 +90,7 @@ export default function FooterSection() {
               Соціальні мережі
             </h3>
             <div className="flex space-x-4">
-              {footerData.data.socialLinks.map((social) => (
+              {footerData.socialLinks.map((social) => (
                 <motion.a
                   key={social.name}
                   href={social.url}
@@ -66,7 +112,7 @@ export default function FooterSection() {
               Документація
             </h3>
             <div className="space-y-2">
-              {footerData.data.docs.map((doc) => (
+              {footerData.docs.map((doc) => (
                 <motion.a
                   key={doc.title}
                   href={doc.url}
@@ -87,7 +133,7 @@ export default function FooterSection() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center text-gray-500 mt-16"
         >
-          <p>{footerData.data.copyright}</p>
+          <p>{footerData.copyright}</p>
         </motion.div>
       </div>
     </footer>

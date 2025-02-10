@@ -16,7 +16,7 @@ interface LearningProcessData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src', 'data', 'learningProcess.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'learningProcess.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const data: LearningProcessData = JSON.parse(fileContent);
 

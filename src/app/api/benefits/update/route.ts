@@ -18,7 +18,7 @@ interface BenefitsData {
 export async function POST(request: NextRequest) {
     try {
         const data: BenefitsData = await request.json();
-        const filePath = path.join(process.cwd(), 'src', 'data', 'benefits.json');
+        const filePath = path.join(process.cwd(), 'private-data', 'benefits.json');
         
         await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
         

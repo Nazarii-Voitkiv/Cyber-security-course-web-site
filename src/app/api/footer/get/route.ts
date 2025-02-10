@@ -25,7 +25,7 @@ interface FileData {
 
 export async function GET() {
     try {
-        const filePath = path.join(process.cwd(), 'src/data/footer.json');
+        const filePath = path.join(process.cwd(), 'private-data/footer.json');
         const fileContent = await fs.readFile(filePath, 'utf8');
         const fileData: FileData = JSON.parse(fileContent);
 
