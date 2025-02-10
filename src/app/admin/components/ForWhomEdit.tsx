@@ -10,7 +10,7 @@ interface Group {
 interface ForWhomData {
     title: string;
     groups: Group[];
-    footer: string; // New editable property
+    footer: string; 
 }
 
 export default function ForWhomEdit() {
@@ -84,7 +84,6 @@ export default function ForWhomEdit() {
                         />
                     </div>
 
-                    {/* New footer editing field */}
                     <div className="mb-2">
                         <label className="block text-cyan-100">Текст в кінці секції:</label>
                         <textarea

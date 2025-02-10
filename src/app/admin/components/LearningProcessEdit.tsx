@@ -25,7 +25,6 @@ export default function LearningProcessEdit() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
 
-  // 1. Завантажуємо дані
   useEffect(() => {
     fetch('/api/learningprocess/get')
       .then((r) => r.json())
@@ -41,7 +40,6 @@ export default function LearningProcessEdit() {
       });
   }, []);
 
-  // 2. Зберігаємо
   const handleSave = async () => {
     if (!data) return;
     setMessage('');

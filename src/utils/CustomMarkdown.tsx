@@ -2,9 +2,7 @@ import React from 'react';
 import ReactMarkdown, { Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 
-// Компоненти для перевизначення поведінки
 const customComponents: Components = {
-    // Custom paragraph that accepts a "data-color" attribute
     p: ({ children, ...props }): React.ReactNode => {
         const dataProps = props as { "data-color"?: string };
         const color = dataProps["data-color"] || 'inherit';
@@ -14,7 +12,6 @@ const customComponents: Components = {
             </span>
         );
     },
-    // Перевизначення для тегу <span>
     span: ({ children, ...props }): React.ReactNode => {
         const dataProps = props as { "data-color"?: string };
         const color = dataProps["data-color"];
@@ -25,7 +22,6 @@ const customComponents: Components = {
                 </span>
             );
         }
-        // Якщо потрібно інший колір - використовуйте inline стиль
         return (
             <span style={{ color: color || 'inherit' }}>
                 {children}

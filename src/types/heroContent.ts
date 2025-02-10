@@ -9,7 +9,6 @@ export interface CourseType {
     link: string;
 }
 
-// Hero block
 export interface HeroData {
     heroTitle: string;
     heroSubtitle: string;
@@ -17,7 +16,6 @@ export interface HeroData {
     courseTypes: CourseType[];
 }
 
-// Intro block
 interface IntroPoint {
     title: string;
     description: string;

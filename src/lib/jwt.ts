@@ -15,11 +15,9 @@ export interface JWTPayload {
 export const signToken = async (payload: JWTPayload): Promise<string> => {
     const secret = new TextEncoder().encode(JWT_SECRET);
     
-    // Створюємо об'єкт, який відповідає вимогам jose
     const josePayload: jose.JWTPayload = {
         ...payload,
-        // Додаємо додаткові поля, якщо потрібно
-        sub: payload.id, // subject claim
+        sub: payload.id,
     };
 
     const token = await new jose.SignJWT(josePayload)
@@ -34,7 +32,6 @@ export const verifyToken = async (token: string): Promise<JWTPayload | null> => 
         const secret = new TextEncoder().encode(JWT_SECRET);
         const { payload } = await jose.jwtVerify(token, secret);
         
-        // Перевіряємо, чи має payload необхідні поля
         if (typeof payload.id === 'string' && typeof payload.username === 'string') {
             return {
                 id: payload.id,

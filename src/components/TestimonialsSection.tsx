@@ -86,7 +86,6 @@ export default function TestimonialsSection() {
 
   return (
     <section className="py-16 relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-      {/* Кібер-елементи */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(4,159,255,0.1),transparent_50%)]" />
         <div className="absolute w-full h-full bg-[url('/grid.svg')] bg-repeat opacity-20" />
@@ -108,7 +107,6 @@ export default function TestimonialsSection() {
         </motion.h2>
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Кнопки навігації - тільки для десктопу */}
           <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 hidden md:flex justify-between pointer-events-none z-10 px-4">
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -134,14 +132,12 @@ export default function TestimonialsSection() {
             </motion.button>
           </div>
 
-          {/* Текст для свайпу - тільки для мобільних */}
           <div className="md:hidden text-center mb-4">
             <p className="text-cyan-400 text-sm animate-pulse">
               &#8592; Гортайте для перегляду відгуків &#8594;
             </p>
           </div>
 
-          {/* Карусель */}
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {data.testimonials.map((testimonial) => (
@@ -158,7 +154,6 @@ export default function TestimonialsSection() {
                       {testimonial.content}
                     </p>
                     
-                    {/* Mobile version: static author info positioned at bottom */}
                     <div className="block md:hidden mt-auto">
                       <div className="flex items-center space-x-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
@@ -181,7 +176,6 @@ export default function TestimonialsSection() {
                       </div>
                     </div>
 
-                    {/* Desktop version: absolute positioned author info */}
                     <div className="hidden md:block absolute bottom-6 left-6 right-6">
                       <div className="flex items-center space-x-6">
                         <div className="relative w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden">

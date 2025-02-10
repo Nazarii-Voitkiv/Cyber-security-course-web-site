@@ -54,7 +54,6 @@ export default function IntroSection() {
 
     return (
       <section className="relative py-20 bg-gradient-to-b from-gray-900 to-gray-800">
-        {/* Кібер-ефекти */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10" />
 
         <div className="container mx-auto px-4 relative">
@@ -108,7 +107,7 @@ export default function IntroSection() {
                     damping: 20,
                     duration: 0.8
                   }}
-                  viewport={{once: true}} // Додано цей параметр
+                  viewport={{once: true}} 
                   className="mt-8 pt-8 border-t border-gray-700"
               >
                 <p className="text-xl font-semibold text-red-400">

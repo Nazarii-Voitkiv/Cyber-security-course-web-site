@@ -91,7 +91,6 @@ export default function WhyThisCourseSection() {
                                         <p className="text-gray-400 text-center"><CustomMarkdown>{reason.description}</CustomMarkdown></p>
                                     </div>
 
-                                    {/* Subtle glow effect on hover */}
                                     <div className={`absolute -inset-0.5 ${bgColor} opacity-0 group-hover:opacity-20 
                                 rounded-xl blur transition duration-300`} />
                                 </motion.div>

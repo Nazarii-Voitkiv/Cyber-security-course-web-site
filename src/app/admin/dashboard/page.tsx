@@ -16,7 +16,6 @@ import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
     useEffect(() => {
-        // Перевіряємо наявність токена при завантаженні сторінки
         const checkAuth = async () => {
             try {
                 const response = await fetch('/api/auth/verify', {

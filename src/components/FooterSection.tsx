@@ -73,7 +73,6 @@ export default function FooterSection() {
           viewport={{ once: true }}
           className="grid md:grid-cols-3 gap-12 md:gap-8"
         >
-          {/* Контакти */}
           <div>
             <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
               Контакти
@@ -84,7 +83,6 @@ export default function FooterSection() {
             </div>
           </div>
 
-          {/* Соціальні мережі */}
           <div>
             <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
               Соціальні мережі
@@ -106,7 +104,6 @@ export default function FooterSection() {
             </div>
           </div>
 
-          {/* Документація */}
           <div>
             <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-transparent bg-clip-text">
               Документація
@@ -126,7 +123,6 @@ export default function FooterSection() {
           </div>
         </motion.div>
 
-        {/* Копірайт */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

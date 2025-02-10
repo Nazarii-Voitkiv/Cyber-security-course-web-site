@@ -32,7 +32,6 @@ export default function AdminPage() {
 
             if (data.token) {
                 console.log('Login successful, redirecting to dashboard...');
-                // Використовуємо window.location.href для надійного перенаправлення
                 window.location.href = '/admin/dashboard';
             } else {
                 console.error('No token received from server');

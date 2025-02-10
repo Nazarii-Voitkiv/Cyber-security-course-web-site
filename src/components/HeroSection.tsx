@@ -6,7 +6,6 @@ import { ShieldCheckIcon } from '@heroicons/react/24/outline';
 import CountdownTimer from './CountdownTimer';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 
-// Описуємо типи
 export interface CourseType {
     title: string;
     description: string;
@@ -65,11 +64,9 @@ export default function HeroSection() {
 
     return (
         <section id="hero-section" className="relative min-h-screen cyber-background">
-            {/* Кібер-елементи */}
             <div className="matrix-grid" />
             <div className="glitch-overlay" />
 
-            {/* Основний контент */}
             <div className="container mx-auto px-4 py-8 relative">
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -77,7 +74,6 @@ export default function HeroSection() {
                     transition={{ duration: 0.8 }}
                     className="text-center max-w-4xl mx-auto"
                 >
-                    {/* Іконка */}
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -87,7 +83,6 @@ export default function HeroSection() {
                         <ShieldCheckIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto text-cyan-400" />
                     </motion.div>
 
-                    {/* Заголовок */}
                     <h1
                         className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text
                        bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400
@@ -97,12 +92,10 @@ export default function HeroSection() {
                         <CustomMarkdown>{heroTitle}</CustomMarkdown>
                     </h1>
 
-                    {/* Підзаголовок */}
                     <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
                         <CustomMarkdown>{heroSubtitle}</CustomMarkdown>
                     </p>
 
-                    {/* Банер зі знижкою */}
                     <motion.button
                         onClick={() => {
                             const element = document.getElementById('hero-section');
@@ -135,12 +128,10 @@ export default function HeroSection() {
                         <CustomMarkdown>{discountBanner}</CustomMarkdown>
                     </motion.button>
 
-                    {/* Таймер */}
                     <div className="mb-8">
                         <CountdownTimer />
                     </div>
 
-                    {/* Картки курсів */}
                     <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
                         {courseTypes.map((course: CourseType, index: number) => (
                             <motion.div
@@ -169,19 +160,18 @@ export default function HeroSection() {
                                     </div>
                                 )}
                                 <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
-                  ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
+                                    ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
                                     <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{course.title}</CustomMarkdown></h3>
                                     <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{course.description}</CustomMarkdown></p>
 
-                                    {/* Блок з ціною та знижкою */}
                                     <div className="mb-6">
                                         <div className="flex items-center justify-center gap-3 mb-2">
-                      <span className="text-gray-400 line-through text-base md:text-lg">
-                        <CustomMarkdown>{course.originalPrice}</CustomMarkdown>
-                      </span>
-                                            <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
-                        -<CustomMarkdown>{course.discount}</CustomMarkdown>
-                      </span>
+                                            <span className="text-gray-400 line-through text-base md:text-lg">
+                                                <CustomMarkdown>{course.originalPrice}</CustomMarkdown>
+                                            </span>
+                                                                    <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
+                                                -<CustomMarkdown>{course.discount}</CustomMarkdown>
+                                            </span>
                                         </div>
                                         <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
                                             <CustomMarkdown>{course.price}</CustomMarkdown>
@@ -197,14 +187,12 @@ export default function HeroSection() {
                                         ))}
                                     </ul>
 
-                                    {/* Кнопка всередині блоку */}
                                     <motion.a
                                         href={course.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        // onClick: зупиняємо спливання та відправляємо “Lead”
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             if (typeof window !== 'undefined' && window.fbq) {
@@ -214,7 +202,6 @@ export default function HeroSection() {
                                                     value: parseFloat(course.price.replace(' ₴', ''))
                                                 });
                                             }
-                                            // href уже відкриє лінк
                                         }}
                                         className="cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center"
                                     >
@@ -226,7 +213,6 @@ export default function HeroSection() {
                     </div>
                 </motion.div>
 
-                {/* Bottom Lead Magnet */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

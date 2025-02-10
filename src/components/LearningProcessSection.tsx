@@ -43,7 +43,6 @@ export default function LearningProcessSection() {
 
     return (
         <section className="py-16 relative overflow-hidden">
-            {/* Кібер-елементи */}
             <div className="matrix-grid" />
             <div className="glitch-overlay" />
             
@@ -63,7 +62,6 @@ export default function LearningProcessSection() {
                     </p>
                 </motion.div>
 
-                {/* Основні особливості */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                     {data.features.map((feature, index) => (
                         <motion.div
@@ -95,7 +93,6 @@ export default function LearningProcessSection() {
                     ))}
                 </div>
 
-                {/* Процес навчання */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {data.processSteps.map((step, index) => (
                         <motion.div

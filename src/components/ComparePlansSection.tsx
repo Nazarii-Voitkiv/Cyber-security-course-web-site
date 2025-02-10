@@ -46,7 +46,6 @@ export default function ComparePlansSection() {
 
     return (
         <section id="compare-plans" className="py-16 relative overflow-hidden">
-            {/* Кібер-елементи */}
             <div className="matrix-grid" />
             <div className="glitch-overlay" />
             
@@ -92,7 +91,6 @@ export default function ComparePlansSection() {
                         <CustomMarkdown>{data.specialOfferBanner}</CustomMarkdown>
                     </motion.button>
 
-                    {/* Таймер */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -104,7 +102,6 @@ export default function ComparePlansSection() {
                     </motion.div>
                 </div>
 
-                {/* План курсу */}
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
                     {data.plans.map((plan, idx) => (
                         <motion.div
@@ -158,7 +155,6 @@ export default function ComparePlansSection() {
                                     ))}
                                 </ul>
 
-                                {/* Кнопка */}
                                 <motion.a
                                     href={plan.link}
                                     target="_blank"
@@ -184,7 +180,6 @@ export default function ComparePlansSection() {
                     ))}
                 </div>
 
-                {/* Bottom Lead Magnet */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

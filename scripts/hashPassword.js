@@ -1,4 +1,3 @@
-// scripts/hashPassword.js
 const bcrypt = require('bcryptjs');
 
 const password = '123456';

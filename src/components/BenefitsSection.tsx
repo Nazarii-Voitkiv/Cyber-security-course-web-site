@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
-  ShieldCheckIcon,             // Cybersecurity
-  BanknotesIcon,               // Monetizing knowledge
-  LightBulbIcon,               // Clear explanations
-  IdentificationIcon,          // Overcoming fraud fears
-  ClipboardDocumentCheckIcon,  // Tests for checking knowledge
-  CalendarIcon                 // Limited-time learning access
+  ShieldCheckIcon,             
+  BanknotesIcon,               
+  LightBulbIcon,               
+  IdentificationIcon,          
+  ClipboardDocumentCheckIcon,  
+  CalendarIcon                
 } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 
@@ -109,7 +109,6 @@ export default function BenefitsSection() {
                   <p className="text-gray-400 flex-grow"><CustomMarkdown>{benefit.description}</CustomMarkdown></p>
                 </div>
 
-                {/* Subtle glow effect on hover */}
                 <div className={`absolute -inset-0.5 ${bgColor} opacity-0 group-hover:opacity-20 
                               rounded-xl blur transition duration-300`} />
               </motion.div>

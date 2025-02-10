@@ -110,14 +110,12 @@ export default function ForWhomSection() {
                                         </p>
                                     </div>
 
-                                    {/* Світловий ефект при ховері */}
                                     <div className={`absolute -inset-0.5 ${bgColor} opacity-0 group-hover:opacity-20 
                                         rounded-xl blur transition duration-300`} />
                                 </motion.div>
                             );
                         })}
                     </div>
-                    {/* New footer text */}
                     {data.footer && (
                       <p className="mt-20 text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
                         {data.footer}

@@ -12,7 +12,6 @@ export default function Navbar() {
     setWindowHeight(window.innerHeight);
   }, []);
   
-  // Навбар з'являється після прокрутки висоти екрану
   const opacity = useTransform(scrollY, [0, windowHeight * 0.8, windowHeight], [0, 0, 1]);
   const translateY = useTransform(scrollY, [0, windowHeight * 0.8, windowHeight], [-100, -100, 0]);
 
@@ -42,7 +41,6 @@ export default function Navbar() {
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Логотип */}
           <motion.div 
             className="flex items-center h-10 space-x-2 cursor-pointer"
             onClick={scrollToHero}
@@ -55,7 +53,6 @@ export default function Navbar() {
             </span>
           </motion.div>
 
-          {/* Кнопка */}
           <motion.button
             onClick={scrollToPlans}
             whileHover={{ scale: 1.05 }}

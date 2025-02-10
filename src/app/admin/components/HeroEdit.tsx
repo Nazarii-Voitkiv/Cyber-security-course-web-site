@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 
-// Типи для Hero
 interface CourseType {
     title: string;
     description: string;
@@ -19,7 +18,7 @@ interface HeroData {
     heroSubtitle: string;
     discountBanner: string;
     courseTypes: CourseType[];
-    leadMagnet?: string; // Added leadMagnet as an optional property
+    leadMagnet?: string; 
 }
 
 export default function HeroEdit() {
@@ -115,7 +114,7 @@ export default function HeroEdit() {
                         <label className="block text-cyan-100">Лід-магніт (leadMagnet):</label>
                         <textarea
                             className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white h-20"
-                            value={data.leadMagnet || ""} // Removed explicit any cast
+                            value={data.leadMagnet || ""}
                             onChange={(e) => setData({ ...data, leadMagnet: e.target.value })}
                         />
                     </div>

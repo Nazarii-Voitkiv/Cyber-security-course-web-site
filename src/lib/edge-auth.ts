@@ -17,7 +17,6 @@ export async function verifyTokenEdge(token: string): Promise<JWTPayload | null>
 
     try {
         const { payload } = await jose.jwtVerify(token, secret);
-        // Перевіряємо, чи має payload необхідні поля
         if (typeof payload.id === 'string' && typeof payload.username === 'string') {
             return {
                 id: payload.id,

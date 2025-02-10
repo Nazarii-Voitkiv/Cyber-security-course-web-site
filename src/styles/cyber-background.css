@@ -1,4 +1,3 @@
-/* Кібер-фон */
 .cyber-background {
   background-color: #000;
   background-image: 
@@ -8,7 +7,6 @@
   overflow: hidden;
 }
 
-/* Матрична сітка */
 .matrix-grid {
   position: absolute;
   top: 0;
@@ -22,7 +20,6 @@
   pointer-events: none;
 }
 
-/* Анімований глітч-ефект */
 .glitch-overlay {
   position: absolute;
   top: 0;
@@ -62,7 +59,6 @@
   }
 }
 
-/* Неонові елементи */
 .neon-border {
   position: relative;
 }
@@ -95,7 +91,6 @@
   }
 }
 
-/* Неонові елементи з мінімальним світінням */
 .neon-border-minimal {
   position: relative;
 }
@@ -128,7 +123,6 @@
   }
 }
 
-/* Оптимізація для мобільних пристроїв */
 @media (max-width: 768px) {
   .matrix-grid {
     background-size: 15px 15px;
@@ -139,11 +133,10 @@
   }
   
   .neon-border::before {
-    animation: none; /* Вимикаємо складні анімації на мобільних */
+    animation: none;
   }
 }
 
-/* Кібер-картка */
 .cyber-card {
   background: rgba(0, 24, 38, 0.8);
   backdrop-filter: blur(10px);
@@ -157,7 +150,6 @@
   box-shadow: 0 8px 32px 0 rgba(0, 255, 255, 0.2);
 }
 
-/* Кібер-кнопка */
 .cyber-button {
   position: relative;
   background: linear-gradient(45deg, #00f2fe, #4facfe);

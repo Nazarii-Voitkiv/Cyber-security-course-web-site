@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from 'next/server';
 import { validateTokenEdge } from './lib/edge-auth';
 import logger from './lib/logger';
 
-// Security headers for admin routes
 const adminSecurityHeaders = {
     'Content-Security-Policy':
         "default-src 'self'; " +
@@ -20,7 +19,6 @@ const adminSecurityHeaders = {
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), browsing-topics=()'
 };
 
-// Security headers for public routes (with Facebook Pixel)
 const publicSecurityHeaders = {
     'Content-Security-Policy':
         "default-src 'self'; " +
@@ -44,19 +42,16 @@ const publicSecurityHeaders = {
 export async function middleware(req: NextRequest) {
     const response = NextResponse.next();
     
-    // Add appropriate security headers based on route
     if (req.nextUrl.pathname.startsWith('/admin')) {
         Object.entries(adminSecurityHeaders).forEach(([key, value]) => {
             response.headers.set(key, value);
         });
 
-        // Don't check auth for login page and auth verification endpoint
         const publicPaths = ['/admin', '/api/auth/verify', '/api/auth/login'];
         if (publicPaths.includes(req.nextUrl.pathname)) {
             return response;
         }
 
-        // Check auth for all other admin routes
         const cookies = req.cookies;
         console.log('All cookies:', cookies);
         
@@ -79,7 +74,6 @@ export async function middleware(req: NextRequest) {
             return NextResponse.redirect(new URL('/admin', req.url));
         }
 
-        // If we get here, the token is valid
         console.log('Token is valid, allowing access to:', req.nextUrl.pathname);
     } else {
         Object.entries(publicSecurityHeaders).forEach(([key, value]) => {
@@ -87,7 +81,6 @@ export async function middleware(req: NextRequest) {
         });
     }
 
-    // Request logging
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ||
         req.headers.get('x-real-ip') ||
         'unknown';
@@ -102,7 +95,6 @@ export async function middleware(req: NextRequest) {
     return response;
 }
 
-// Configure middleware to run on all routes except static files
 export const config = {
     matcher: [
         '/((?!_next/static|_next/image|favicon.ico).*)'

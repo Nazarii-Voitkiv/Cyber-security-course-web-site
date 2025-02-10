@@ -56,7 +56,6 @@ body {
     font-family: 'Titillium Web', sans-serif !important;
 }
 
-/* Стилі для кнопок каруселі */
 .cyber-button-circle {
   @apply bg-gray-800 hover:bg-gray-700 text-cyan-400 rounded-full shadow-lg 
          border border-cyan-500/30 transition-all duration-200 
@@ -74,7 +73,6 @@ body {
   min-width: 0;
 }
 
-/* Стилі для навбару */
 nav {
   transition: background-color 0.3s ease;
 }
@@ -83,7 +81,6 @@ nav.scrolled {
   @apply bg-gray-900/80 backdrop-blur-md border-b border-cyan-500/20;
 }
 
-/* Анімація появи навбару */
 @keyframes slideDown {
   from {
     transform: translateY(-100%);
@@ -99,7 +96,6 @@ nav.scrolled {
   animation: slideDown 0.3s ease forwards;
 }
 
-/* Анімація градієнта для кнопки знижки */
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -136,5 +132,3 @@ nav.scrolled {
 .discount-button:hover::after {
   opacity: 0.5;
 }
-
-/* Анімація появи навбару */
