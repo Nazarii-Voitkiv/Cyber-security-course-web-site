@@ -47,7 +47,7 @@ export default function FooterSection() {
         } else {
           setError('Failed to load footer data');
         }
-      } catch (err) {
+      } catch {
         setError('Failed to load footer data');
       }
     };

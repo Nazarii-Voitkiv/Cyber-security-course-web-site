@@ -87,7 +87,7 @@ export default function TestimonialsEdit() {
                         <div key={index} className="p-4 bg-gray-700/50 rounded-lg">
                             <div className="grid gap-4">
                                 <div>
-                                    <label className="block text-cyan-100">Ім'я:</label>
+                                    <label className="block text-cyan-100">Ім&apos;я:</label>
                                     <input
                                         type="text"
                                         className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
