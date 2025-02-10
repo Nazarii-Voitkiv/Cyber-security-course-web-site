@@ -44,13 +44,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Логотип */}
           <motion.div 
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center h-10 space-x-2 cursor-pointer"
             onClick={scrollToHero}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <ShieldCheckIcon className="h-8 w-8 text-cyan-400" />
-            <span className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+            <span className="text-lg font-bold flex items-center text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
               Курс з кібербезпеки
             </span>
           </motion.div>
@@ -60,7 +60,7 @@ export default function Navbar() {
             onClick={scrollToPlans}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="cyber-button px-6 py-2 rounded-full text-sm font-semibold shadow-lg"
+            className="cyber-button h-10 px-6 rounded-full text-sm font-semibold shadow-lg flex items-center justify-center"
           >
             Отримати курс
           </motion.button>
