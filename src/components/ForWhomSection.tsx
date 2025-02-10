@@ -119,7 +119,7 @@ export default function ForWhomSection() {
                     </div>
                     {/* New footer text */}
                     {data.footer && (
-                      <p className="mt-8 text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                      <p className="mt-20 text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
                         {data.footer}
                       </p>
                     )}
