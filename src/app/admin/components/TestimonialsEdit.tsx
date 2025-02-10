@@ -86,21 +86,17 @@ export default function TestimonialsEdit() {
                     {data.testimonials.map((testimonial, index) => (
                         <div key={index} className="p-4 bg-gray-700/50 rounded-lg">
                             <div className="grid gap-4">
-                                <div className="mb-4">
-                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={`testimonial-${index}-name`}>
-                                        Name
-                                    </label>
+                                <div>
+                                    <label className="block text-cyan-100">Ім'я:</label>
                                     <input
                                         type="text"
-                                        id={`testimonial-${index}-name`}
+                                        className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                                         value={testimonial.name}
                                         onChange={(e) => {
                                             const updated = [...data.testimonials];
                                             updated[index] = { ...testimonial, name: e.target.value };
                                             setData({ ...data, testimonials: updated });
                                         }}
-                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        placeholder="Enter client&apos;s name"
                                     />
                                 </div>
 
