@@ -70,15 +70,17 @@ export default function ProgramSection() {
                             >
                                 <div className="p-6 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl 
                                           transition-all duration-300 hover:border-cyan-500/50">
-                                    <div className="flex items-center justify-between">
-                                        <div>
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="flex-1 min-w-0">
                                             <h3 className="text-xl font-semibold text-white">
-                                                Модуль {module.id}: <CustomMarkdown>{module.title}</CustomMarkdown>
+                                                <span className="whitespace-normal break-words">
+                                                    Модуль {module.id} - {module.title}
+                                                </span>
                                             </h3>
                                             <p className="text-gray-400 mt-1"><CustomMarkdown>{module.description}</CustomMarkdown></p>
                                         </div>
                                         <ChevronDownIcon 
-                                            className={`h-6 w-6 text-cyan-400 transition-transform duration-300 
+                                            className={`h-6 w-6 shrink-0 text-cyan-400 transition-transform duration-300 
                                                     ${openModule === module.id ? 'rotate-180' : ''}`}
                                         />
                                     </div>
