@@ -181,7 +181,7 @@ export default function HeroSection() {
                                     <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
                                         {course.features.map((feature, i) => (
                                             <li key={i} className="flex items-center text-cyan-100">
-                                                <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-cyan-400 mr-2 md:mr-3" />
+                                                <div className="h-1.5 w-1.5 md:h-2 md:w-2 aspect-square rounded-full bg-cyan-400 mr-2 md:mr-3" />
                                                 <CustomMarkdown>{feature}</CustomMarkdown>
                                             </li>
                                         ))}
