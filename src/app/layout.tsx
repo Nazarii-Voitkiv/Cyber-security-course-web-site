@@ -38,17 +38,9 @@ export const metadata: Metadata = {
         alt: 'Зображення для курсу з кібербезпеки',
       },
     ],
-  },
-  // twitter: {
-  //   card: 'summary_large_image',
-  //   title: 'Cyber Security Course – Курс з кібербезпеки',
-  //   description: 'Отримайте практичні навички з кібербезпеки та захистіть свої дані.',
-  //   creator: '@NewTwitterHandle', // змінено Twitter creator
-  //   images: [`${domain}/og-image.jpg`], // використання домену з енв
-  // },
+  }
 };
 
-// JSON-LD Schema.org для курсу
 const courseSchema = {
   '@context': 'https://schema.org',
   '@type': 'Course',
@@ -72,9 +64,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" sizes="180x180" />
-        {/* Canonical URL for SEO */}
         <link rel="canonical" href={domain} />
-        {/* JSON-LD Schema.org */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>

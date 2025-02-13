@@ -5,7 +5,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
-import Image from 'next/image';
+import OptimizedImage from '@/components/OptimizedImage';
 
 interface Testimonial {
   id: string;
@@ -157,12 +157,11 @@ export default function TestimonialsSection() {
                     <div className="block md:hidden mt-auto">
                       <div className="flex items-center space-x-4">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                          <Image
+                          <OptimizedImage
                             src={testimonial.image}
                             alt={testimonial.name}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 48px, 96px"
+                            width={48}
+                            height={48}
                           />
                         </div>
                         <div>
@@ -179,12 +178,11 @@ export default function TestimonialsSection() {
                     <div className="hidden md:block absolute bottom-6 left-6 right-6">
                       <div className="flex items-center space-x-6">
                         <div className="relative w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden">
-                          <Image
+                          <OptimizedImage
                             src={testimonial.image}
                             alt={testimonial.name}
-                            fill
-                            className="object-cover"
-                            sizes="(max-width: 768px) 64px, 96px"
+                            width={96}
+                            height={96}
                           />
                         </div>
                         <div>
