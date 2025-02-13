@@ -169,16 +169,16 @@ export default function HeroSection() {
                                             <span className="text-gray-400 line-through text-base md:text-lg">
                                                 <CustomMarkdown>{course.originalPrice}</CustomMarkdown>
                                             </span>
-                                                                    <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
+                                            <span className="bg-red-500 text-white px-2 py-1 rounded-md text-xs md:text-sm font-bold shadow-lg shadow-red-500/20">
                                                 -<CustomMarkdown>{course.discount}</CustomMarkdown>
                                             </span>
                                         </div>
-                                        <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
+                                        <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 text-center">
                                             <CustomMarkdown>{course.price}</CustomMarkdown>
                                         </div>
                                     </div>
 
-                                    <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
+                                    <ul className="text-left space-y-2 md:space-y-3 mb-6 md:mb-8 flex-grow text-sm md:text-base">
                                         {course.features.map((feature, i) => (
                                             <li key={i} className="flex items-center text-cyan-100">
                                                 <div className="h-1.5 w-1.5 md:h-2 md:w-2 aspect-square rounded-full bg-cyan-400 mr-2 md:mr-3" />
