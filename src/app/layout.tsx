@@ -71,19 +71,11 @@ export default function RootLayout({
     <html lang="uk">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link
-          rel="apple-touch-icon"
-          href="/apple-touch-icon.png"
-          type="image/png"
-          sizes="180x180"
-        />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" sizes="180x180" />
         {/* Canonical URL for SEO */}
-        <link rel="canonical" href={domain} /> {/* використання домену з енв */}
+        <link rel="canonical" href={domain} />
         {/* JSON-LD Schema.org */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>
         <FacebookPixel />
