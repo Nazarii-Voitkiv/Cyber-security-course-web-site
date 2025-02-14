@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import './globals.css';
-import FacebookPixel from '@/components/FacebookPixel';
 import Providers from './providers';
 import ConditionalNavbar from '@/components/ConditionalNavbar';
 
@@ -68,7 +67,7 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>
-        <FacebookPixel />
+        {/* Facebook Pixel removed */}
         <Providers>
           <ConditionalNavbar />
           {children}

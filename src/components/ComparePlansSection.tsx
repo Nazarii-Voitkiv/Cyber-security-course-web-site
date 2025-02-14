@@ -112,13 +112,6 @@ export default function ComparePlansSection() {
                             transition={{ duration: 0.6 }}
                             className="relative cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
                             onClick={() => {
-                                if (typeof window !== 'undefined' && window.fbq) {
-                                    window.fbq('track', 'Lead', {
-                                        content_name: plan.title,
-                                        currency: 'UAH',
-                                        value: parseFloat(plan.price.replace(' ₴', ''))
-                                    });
-                                }
                                 window.open(plan.link, '_blank', 'noopener,noreferrer');
                             }}
                         >
@@ -161,13 +154,6 @@ export default function ComparePlansSection() {
                                     rel="noopener noreferrer"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        if (typeof window !== 'undefined' && window.fbq) {
-                                            window.fbq('track', 'Lead', {
-                                                content_name: plan.title,
-                                                currency: 'UAH',
-                                                value: parseFloat(plan.price.replace(' ₴', ''))
-                                            });
-                                        }
                                     }}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}

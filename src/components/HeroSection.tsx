@@ -141,13 +141,6 @@ export default function HeroSection() {
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 className="relative pt-6 cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
                                 onClick={() => {
-                                    if (typeof window !== 'undefined' && window.fbq) {
-                                        window.fbq('track', 'Lead', {
-                                            content_name: course.title,
-                                            currency: 'UAH',
-                                            value: parseFloat(course.price.replace(' ₴', ''))
-                                        });
-                                    }
                                     window.open(course.link, '_blank', 'noopener,noreferrer');
                                 }}
                             >
@@ -195,13 +188,6 @@ export default function HeroSection() {
                                         whileTap={{ scale: 0.98 }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            if (typeof window !== 'undefined' && window.fbq) {
-                                                window.fbq('track', 'Lead', {
-                                                    content_name: course.title,
-                                                    currency: 'UAH',
-                                                    value: parseFloat(course.price.replace(' ₴', ''))
-                                                });
-                                            }
                                         }}
                                         className="cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center"
                                     >
