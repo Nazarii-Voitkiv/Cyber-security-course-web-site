@@ -77,7 +77,7 @@ export default function AdminDashboard() {
                     <LearningProcessEdit />
                     <ProgramEdit />
                     <ComparePlansEdit />
-                    {/* <TestimonialsEdit /> */}
+                    <TestimonialsEdit />
                     <FaqEdit />
                     <FooterEdit />
                 </div>
