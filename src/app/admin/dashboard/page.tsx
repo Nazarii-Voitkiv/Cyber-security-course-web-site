@@ -73,8 +73,8 @@ export default function AdminDashboard() {
                     <IntroEdit />
                     <WhyThisCourseEdit /> */}
                     <BenefitsEdit />
-                    {/* <ForWhomEdit />
-                    <LearningProcessEdit />
+                    <ForWhomEdit />
+                    {/* <LearningProcessEdit />
                     <ProgramEdit /> */}
                     <ComparePlansEdit />
                     {/* <TestimonialsEdit /> */}
