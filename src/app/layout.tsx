@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import './globals.css';
 import Providers from './providers';
 import ConditionalNavbar from '@/components/ConditionalNavbar';
+import { Analytics } from "@vercel/analytics/react"
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
