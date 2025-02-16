@@ -71,7 +71,7 @@ export default function AdminDashboard() {
                 <div className="space-y-8">
                     <HeroEdit />
                     <IntroEdit />
-                    {/* <WhyThisCourseEdit /> */}
+                    <WhyThisCourseEdit />
                     <BenefitsEdit />
                     <ForWhomEdit />
                     <LearningProcessEdit />
