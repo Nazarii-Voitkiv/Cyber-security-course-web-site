@@ -69,17 +69,17 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-8">
-                    <HeroEdit />
+                    {/* <HeroEdit />
                     <IntroEdit />
-                    <WhyThisCourseEdit />
+                    <WhyThisCourseEdit /> */}
                     <BenefitsEdit />
-                    <ForWhomEdit />
+                    {/* <ForWhomEdit />
                     <LearningProcessEdit />
-                    <ProgramEdit />
+                    <ProgramEdit /> */}
                     <ComparePlansEdit />
-                    <TestimonialsEdit />
+                    {/* <TestimonialsEdit />
                     <FaqEdit />
-                    <FooterEdit />
+                    <FooterEdit /> */}
                 </div>
             </div>
         </section>

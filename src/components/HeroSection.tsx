@@ -37,13 +37,13 @@ export default function HeroSection() {
                 if (json.success) {
                     setData(json.data);
                 } else {
-                    setError('Не вдалося завантажити Hero-дані');
+                    setError('');
                 }
                 setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
-                setError('Помилка завантаження Hero');
+                setError('');
                 setLoading(false);
             });
     }, []);

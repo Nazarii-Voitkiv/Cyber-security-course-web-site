@@ -45,10 +45,10 @@ export default function FooterSection() {
         if (result.success) {
           setFooterData(result.data);
         } else {
-          setError('Failed to load footer data');
+          setError('');
         }
       } catch {
-        setError('Failed to load footer data');
+        setError('');
       }
     };
 

@@ -28,7 +28,13 @@ interface ComparePlansData {
 }
 
 export default function ComparePlansEdit() {
-    const [data, setData] = useState<ComparePlansData | null>(null);
+    const [data, setData] = useState<ComparePlansData>({
+        title: '',
+        specialOfferBanner: '',
+        featuresTitle: '',
+        plans: [],
+        featuresComparison: [] // Додаємо початкове значення
+    });
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
 
@@ -238,7 +244,7 @@ export default function ComparePlansEdit() {
                         Порівняння особливостей
                     </summary>
                     <div className="mt-4 space-y-4">
-                        {data.featuresComparison.map((feature, idx) => (
+                        {(data.featuresComparison || []).map((feature, idx) => (
                             <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
                                 <div className="mb-2">
                                     <label className="block text-cyan-100">Назва особливості:</label>
