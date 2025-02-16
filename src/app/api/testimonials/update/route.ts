@@ -15,7 +15,7 @@ interface TestimonialsData {
 
 export async function POST(request: NextRequest) {
     try {
-        const data = await request.json();
+        const data: TestimonialsData = await request.json();
         console.log('Received data:', data);
 
         const spreadsheetId = process.env.SPREADSHEET_ID;

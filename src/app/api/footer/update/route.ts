@@ -21,7 +21,7 @@ interface FooterData {
 
 export async function POST(request: NextRequest) {
     try {
-        const data = await request.json();
+        const data: FooterData = await request.json();
         console.log('Received footer data:', data);
 
         const spreadsheetId = process.env.SPREADSHEET_ID;
