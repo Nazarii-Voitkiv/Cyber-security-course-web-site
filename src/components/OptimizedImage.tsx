@@ -32,7 +32,7 @@ export default function OptimizedImage({
         quality={75}
         priority={false}
         onLoadingComplete={() => setLoaded(true)}
-        style={{ objectFit: 'cover', width: '100%', height: '100%' }} // використовуємо cover для заповнення всього квадрату
+        style={{ objectFit: 'cover', width: '100%', height: '100%' }}
       />
     </div>
   );

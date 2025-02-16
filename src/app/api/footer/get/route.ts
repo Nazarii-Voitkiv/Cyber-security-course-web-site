@@ -17,7 +17,6 @@ interface FooterData {
     copyright: string;
 }
 
-// Кешування
 let cachedData: FooterData | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 60 * 1000;
@@ -38,7 +37,7 @@ export async function GET() {
             throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
         }
         const sheets = google.sheets({ version: 'v4' });
-        const range = 'Sheet11!A1:A2'; // у A1 - 'footer', у A2 - JSON
+        const range = 'Sheet11!A1:A2';
         const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
         const rows = response.data.values || [];
 
@@ -51,7 +50,6 @@ export async function GET() {
             }
         }
 
-        // Оновлюємо кеш
         cachedData = footerData;
         cacheTimestamp = now;
 

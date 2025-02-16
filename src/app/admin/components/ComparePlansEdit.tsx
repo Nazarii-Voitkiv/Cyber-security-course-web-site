@@ -16,9 +16,8 @@ interface Plan {
 interface ComparePlansData {
     title: string;
     specialOfferBanner: string;
-    leadMagnet: string; // залишаємо
+    leadMagnet: string; 
     plans: Plan[];
-    // видалено: featuresComparison
 }
 
 export default function ComparePlansEdit() {
@@ -224,8 +223,6 @@ export default function ComparePlansEdit() {
                         ))}
                     </div>
                 </details>
-                
-                {/* Видалено блок "Порівняння особливостей" */}
 
                 <div className="mt-6">
                     <button

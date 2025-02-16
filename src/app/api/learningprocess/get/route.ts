@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
-// Кешування
 let cachedData: Record<string, unknown> | null = null;
 let cacheTimestamp = 0;
 const CACHE_DURATION = 60 * 1000;
@@ -22,7 +21,7 @@ export async function GET() {
       throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
     }
     const sheets = google.sheets({ version: 'v4' });
-    const range = 'Sheet6!A1:Z100'; // adjust range as needed for LearningProcess data
+    const range = 'Sheet6!A1:Z100'; 
     const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
     const rows = response.data.values || [];
     
@@ -54,7 +53,6 @@ export async function GET() {
       }
     }
 
-    // Оновлюємо кеш
     cachedData = learningProcessData;
     cacheTimestamp = now;
     

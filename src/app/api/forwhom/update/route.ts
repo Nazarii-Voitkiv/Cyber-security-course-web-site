@@ -1,4 +1,3 @@
-// POST: app/api/forwhom/update/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { JWT } from 'google-auth-library';

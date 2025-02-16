@@ -45,7 +45,7 @@ const courseSchema = {
   '@type': 'Course',
   name: 'New Cyber Security Course',
   description:
-    'Оновлений комплексний курс з кібербезпеки для всіх, хто прагне навчитися захисту від кібератак та зламів.', // змінено description
+    'Оновлений комплексний курс з кібербезпеки для всіх, хто прагне навчитися захисту від кібератак та зламів.', 
   provider: {
     '@type': 'Organization',
     name: 'Cyber Security Course',

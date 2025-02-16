@@ -1,4 +1,3 @@
-// POST: app/api/benefits/update/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { JWT } from 'google-auth-library';
@@ -18,7 +17,7 @@ interface BenefitsData {
 export async function POST(request: NextRequest) {
     try {
         const data: BenefitsData = await request.json();
-        console.log('Received data:', data); // Логуємо отримані дані
+        console.log('Received data:', data);
 
         const spreadsheetId = process.env.SPREADSHEET_ID;
         const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
@@ -28,7 +27,6 @@ export async function POST(request: NextRequest) {
             throw new Error('Missing required environment variables');
         }
 
-        // Створюємо JWT клієнт з сервісним акаунтом
         const auth = new JWT({
             email: serviceAccountEmail,
             key: privateKey.replace(/\\n/g, '\n'),
@@ -36,8 +34,7 @@ export async function POST(request: NextRequest) {
         });
 
         const sheets = google.sheets({ version: 'v4', auth });
-        
-        // Підготовка даних
+
         const updateValues = [
             ['benefits', 'title'],
             [
@@ -48,7 +45,6 @@ export async function POST(request: NextRequest) {
 
         console.log('Updating with values:', updateValues);
 
-        // Оновлюємо дані
         const updateResult = await sheets.spreadsheets.values.update({
             spreadsheetId,
             range: 'Sheet4!A1:B2',

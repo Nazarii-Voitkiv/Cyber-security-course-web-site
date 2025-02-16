@@ -1,11 +1,9 @@
-// GET: app/api/benefits/get/route.ts
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
-// Кешування
 let cachedData: Record<string, unknown> | null = null;
 let cacheTimestamp = 0;
-const CACHE_DURATION = 60 * 1000; // 60 секунд
+const CACHE_DURATION = 60 * 1000;
 
 export async function GET() {
   try {
@@ -23,7 +21,7 @@ export async function GET() {
       throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
     }
     const sheets = google.sheets({ version: 'v4' });
-    const range = 'Sheet4!A1:Z100'; // adjust range as needed for benefits data
+    const range = 'Sheet4!A1:Z100';
     const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
     const rows = response.data.values || [];
     
@@ -46,7 +44,6 @@ export async function GET() {
       }
     }
 
-    // Оновлюємо кеш
     cachedData = benefitsData;
     cacheTimestamp = now;
     

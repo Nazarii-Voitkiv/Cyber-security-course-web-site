@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
-// Зберігаємо кешовані дані та час останнього оновлення
 let cachedComparePlanData: Record<string, unknown> | null = null;
 let cacheTimestamp = 0;
-const CACHE_DURATION = 60 * 1000; // 60 секунд
+const CACHE_DURATION = 60 * 1000; 
 
 export async function GET() {
   try {
     const now = Date.now();
-    // Якщо кеш є і ще припустимий – повертаємо кешовані дані
     if (cachedComparePlanData && now - cacheTimestamp < CACHE_DURATION) {
       return NextResponse.json(
         { success: true, data: cachedComparePlanData },
@@ -23,7 +21,7 @@ export async function GET() {
       throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
     }
     const sheets = google.sheets({ version: 'v4' });
-    const range = 'Sheet8!A1:Z100'; // adjust range as needed for ComparePlan data
+    const range = 'Sheet8!A1:Z100';
     const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
     const rows = response.data.values || [];
     
@@ -64,7 +62,6 @@ export async function GET() {
       }
     }
     
-    // Оновлюємо кешовані дані
     cachedComparePlanData = comparePlanData;
     cacheTimestamp = Date.now();
     
