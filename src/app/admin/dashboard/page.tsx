@@ -75,7 +75,7 @@ export default function AdminDashboard() {
                     <BenefitsEdit />
                     <ForWhomEdit />
                     <LearningProcessEdit />
-                    {/* <ProgramEdit /> */}
+                    <ProgramEdit />
                     <ComparePlansEdit />
                     {/* <TestimonialsEdit /> */}
                     <FaqEdit />
