@@ -5,7 +5,6 @@ import ConditionalNavbar from '@/components/ConditionalNavbar';
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
-// Метадані
 export const metadata: Metadata = {
   title: 'Cyber Security Course – Курс з кібербезпеки',
   description: 'Комплексний курс з кібербезпеки: навчіться захищати свої дані, пристрої та системи від загроз в інтернеті.',
@@ -67,7 +66,6 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>
-        {/* Facebook Pixel removed */}
         <Providers>
           <ConditionalNavbar />
           {children}

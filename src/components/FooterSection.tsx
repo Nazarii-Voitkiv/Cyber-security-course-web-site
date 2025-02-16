@@ -60,7 +60,7 @@ export default function FooterSection() {
   }
 
   if (!footerData) {
-    return <div className="text-gray-400 text-center py-20">Loading...</div>;
+    return null;
   }
 
   return (
