@@ -16,13 +16,8 @@ interface Plan {
 interface ComparePlansData {
     title: string;
     specialOfferBanner: string;
-    featuresTitle: string;
+    leadMagnet: string;
     plans: Plan[];
-    featuresComparison: {
-        name: string;
-        basic: boolean | string;
-        full: boolean | string;
-    }[];
 }
 
 export async function POST(request: NextRequest) {
@@ -38,7 +33,6 @@ export async function POST(request: NextRequest) {
             throw new Error('Missing required environment variables');
         }
 
-        // Створюємо JWT клієнт з сервісним акаунтом
         const auth = new JWT({
             email: serviceAccountEmail,
             key: privateKey.replace(/\\n/g, '\n'),
@@ -48,13 +42,12 @@ export async function POST(request: NextRequest) {
         const sheets = google.sheets({ version: 'v4', auth });
         
         const updateValues = [
-            ['plans', 'title', 'specialOfferBanner', 'featuresTitle', 'featuresComparison'],
+            ['title', 'specialOfferBanner', 'leadMagnet', 'plans'],
             [
-                JSON.stringify(data.plans || []),
                 data.title || '',
                 data.specialOfferBanner || '',
-                data.featuresTitle || '',
-                JSON.stringify(data.featuresComparison || [])
+                data.leadMagnet || '',
+                JSON.stringify(data.plans || [])
             ]
         ];
 
@@ -62,7 +55,7 @@ export async function POST(request: NextRequest) {
 
         const updateResult = await sheets.spreadsheets.values.update({
             spreadsheetId,
-            range: 'Sheet8!A1:E2',
+            range: 'Sheet8!A1:D2',
             valueInputOption: 'RAW',
             requestBody: {
                 values: updateValues

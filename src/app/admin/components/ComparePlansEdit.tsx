@@ -13,28 +13,16 @@ interface Plan {
     link: string;
 }
 
-interface FeatureComparison {
-    name: string;
-    basic: string | boolean;
-    full: string | boolean;
-}
-
 interface ComparePlansData {
     title: string;
     specialOfferBanner: string;
-    featuresTitle: string;
+    leadMagnet: string; // залишаємо
     plans: Plan[];
-    featuresComparison: FeatureComparison[];
+    // видалено: featuresComparison
 }
 
 export default function ComparePlansEdit() {
-    const [data, setData] = useState<ComparePlansData>({
-        title: '',
-        specialOfferBanner: '',
-        featuresTitle: '',
-        plans: [],
-        featuresComparison: [] // Додаємо початкове значення
-    });
+    const [data, setData] = useState<ComparePlansData | null>(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
 
@@ -63,11 +51,7 @@ export default function ComparePlansEdit() {
                 body: JSON.stringify(data)
             });
             const json = await res.json();
-            if (json.success) {
-                setMessage('ComparePlans збережено успішно!');
-            } else {
-                setMessage('Помилка збереження ComparePlans');
-            }
+            setMessage(json.success ? 'ComparePlans збережено успішно!' : 'Помилка збереження ComparePlans');
         } catch (error) {
             console.error(error);
             setMessage('Помилка при збереженні...');
@@ -108,6 +92,15 @@ export default function ComparePlansEdit() {
                     />
                 </div>
 
+                <div className="mb-2">
+                    <label className="block text-cyan-100">Lead Magnet:</label>
+                    <textarea
+                        className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
+                        value={data.leadMagnet}
+                        onChange={(e) => setData({ ...data, leadMagnet: e.target.value })}
+                    />
+                </div>
+
                 <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
                     <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
                         Плани
@@ -128,7 +121,6 @@ export default function ComparePlansEdit() {
                                         }}
                                     />
                                 </div>
-
                                 <div className="mb-2">
                                     <label className="block text-cyan-100">Опис:</label>
                                     <textarea
@@ -141,7 +133,6 @@ export default function ComparePlansEdit() {
                                         }}
                                     />
                                 </div>
-
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="mb-2">
                                         <label className="block text-cyan-100">Оригінальна ціна:</label>
@@ -156,7 +147,6 @@ export default function ComparePlansEdit() {
                                             }}
                                         />
                                     </div>
-
                                     <div className="mb-2">
                                         <label className="block text-cyan-100">Ціна зі знижкою:</label>
                                         <input
@@ -171,7 +161,6 @@ export default function ComparePlansEdit() {
                                         />
                                     </div>
                                 </div>
-
                                 <div className="mb-2">
                                     <label className="block text-cyan-100">Знижка:</label>
                                     <input
@@ -185,7 +174,6 @@ export default function ComparePlansEdit() {
                                         }}
                                     />
                                 </div>
-
                                 <div className="mb-2">
                                     <label className="flex items-center text-cyan-100">
                                         <input
@@ -201,7 +189,6 @@ export default function ComparePlansEdit() {
                                         Рекомендований план
                                     </label>
                                 </div>
-
                                 <div className="mb-2">
                                     <label className="block text-cyan-100">Посилання:</label>
                                     <input
@@ -215,7 +202,6 @@ export default function ComparePlansEdit() {
                                         }}
                                     />
                                 </div>
-
                                 <div className="mb-2">
                                     <label className="block text-cyan-100">Особливості:</label>
                                     {plan.features.map((feature, featureIdx) => (
@@ -225,11 +211,11 @@ export default function ComparePlansEdit() {
                                             className="w-full p-2 mb-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
                                             value={feature}
                                             onChange={(e) => {
-                                                const updated = [...data.plans];
-                                                const updatedFeatures = [...updated[idx].features];
+                                                const updatedPlans = [...data.plans];
+                                                const updatedFeatures = [...updatedPlans[idx].features];
                                                 updatedFeatures[featureIdx] = e.target.value;
-                                                updated[idx] = { ...updated[idx], features: updatedFeatures };
-                                                setData({ ...data, plans: updated });
+                                                updatedPlans[idx] = { ...updatedPlans[idx], features: updatedFeatures };
+                                                setData({ ...data, plans: updatedPlans });
                                             }}
                                         />
                                     ))}
@@ -238,85 +224,8 @@ export default function ComparePlansEdit() {
                         ))}
                     </div>
                 </details>
-
-                <details className="bg-gray-700/20 p-4 border border-gray-600 rounded-lg">
-                    <summary className="cursor-pointer text-cyan-100 font-semibold mb-2">
-                        Порівняння особливостей
-                    </summary>
-                    <div className="mt-4 space-y-4">
-                        {(data.featuresComparison || []).map((feature, idx) => (
-                            <div key={idx} className="p-4 bg-gray-800 border border-gray-600 rounded-lg">
-                                <div className="mb-2">
-                                    <label className="block text-cyan-100">Назва особливості:</label>
-                                    <input
-                                        type="text"
-                                        className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                        value={feature.name}
-                                        onChange={(e) => {
-                                            const updated = [...data.featuresComparison];
-                                            updated[idx] = { ...updated[idx], name: e.target.value };
-                                            setData({ ...data, featuresComparison: updated });
-                                        }}
-                                    />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="mb-2">
-                                        <label className="block text-cyan-100">Базовий план:</label>
-                                        {typeof feature.basic === 'boolean' ? (
-                                            <input
-                                                type="checkbox"
-                                                checked={feature.basic}
-                                                onChange={(e) => {
-                                                    const updated = [...data.featuresComparison];
-                                                    updated[idx] = { ...updated[idx], basic: e.target.checked };
-                                                    setData({ ...data, featuresComparison: updated });
-                                                }}
-                                            />
-                                        ) : (
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={feature.basic}
-                                                onChange={(e) => {
-                                                    const updated = [...data.featuresComparison];
-                                                    updated[idx] = { ...updated[idx], basic: e.target.value };
-                                                    setData({ ...data, featuresComparison: updated });
-                                                }}
-                                            />
-                                        )}
-                                    </div>
-
-                                    <div className="mb-2">
-                                        <label className="block text-cyan-100">Повний план:</label>
-                                        {typeof feature.full === 'boolean' ? (
-                                            <input
-                                                type="checkbox"
-                                                checked={feature.full}
-                                                onChange={(e) => {
-                                                    const updated = [...data.featuresComparison];
-                                                    updated[idx] = { ...updated[idx], full: e.target.checked };
-                                                    setData({ ...data, featuresComparison: updated });
-                                                }}
-                                            />
-                                        ) : (
-                                            <input
-                                                type="text"
-                                                className="w-full p-2 bg-gray-700 border border-gray-600 rounded-lg text-white"
-                                                value={feature.full}
-                                                onChange={(e) => {
-                                                    const updated = [...data.featuresComparison];
-                                                    updated[idx] = { ...updated[idx], full: e.target.value };
-                                                    setData({ ...data, featuresComparison: updated });
-                                                }}
-                                            />
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </details>
+                
+                {/* Видалено блок "Порівняння особливостей" */}
 
                 <div className="mt-6">
                     <button
