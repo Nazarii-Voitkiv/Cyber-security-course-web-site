@@ -79,7 +79,7 @@ export default function AdminDashboard() {
                     <ComparePlansEdit />
                     {/* <TestimonialsEdit /> */}
                     <FaqEdit />
-                    {/* <FooterEdit /> */}
+                    <FooterEdit />
                 </div>
             </div>
         </section>
