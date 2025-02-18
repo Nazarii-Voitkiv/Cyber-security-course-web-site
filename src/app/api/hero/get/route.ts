@@ -14,7 +14,6 @@ export async function GET() {
                 { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=30' } }
             );
         }
-
         const apiKey = process.env.GOOGLE_API_KEY;
         const spreadsheetId = process.env.SPREADSHEET_ID;
         if (!apiKey || !spreadsheetId) {
@@ -43,7 +42,6 @@ export async function GET() {
                 }
             }
         }
-
         cachedData = heroData;
         cacheTimestamp = now;
         

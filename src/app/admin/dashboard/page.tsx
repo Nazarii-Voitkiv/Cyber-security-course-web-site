@@ -1,17 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import HeroEdit from '@/app/admin/components/HeroEdit';
-import IntroEdit from '@/app/admin/components/IntroEdit';
-import WhyThisCourseEdit from '@/app/admin/components/WhyThisCourseEdit';
-import BenefitsEdit from '@/app/admin/components/BenefitsEdit';
-import ForWhomEdit from '@/app/admin/components/ForWhomEdit';
-import LearningProcessEdit from '@/app/admin/components/LearningProcessEdit';
-import ProgramEdit from '@/app/admin/components/ProgramEdit';
-import ComparePlansEdit from '@/app/admin/components/ComparePlansEdit';
-import TestimonialsEdit from '@/app/admin/components/TestimonialsEdit';
-import FaqEdit from '@/app/admin/components/FaqEdit';
-import FooterEdit from '@/app/admin/components/FooterEdit';
+
 import { motion } from 'framer-motion';
 
 export default function AdminDashboard() {
@@ -69,17 +59,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div className="space-y-8">
-                    <HeroEdit />
-                    <IntroEdit />
-                    <WhyThisCourseEdit />
-                    <BenefitsEdit />
-                    <ForWhomEdit />
-                    <LearningProcessEdit />
-                    <ProgramEdit />
-                    <ComparePlansEdit />
-                    <TestimonialsEdit />
-                    <FaqEdit />
-                    <FooterEdit />
+                    
                 </div>
             </div>
         </section>

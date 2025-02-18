@@ -28,17 +28,21 @@ export async function POST(request: Request) {
         }
 
         console.log('Authentication successful, setting cookie');
-        const cookieValue = `token=${result.token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`;
-        console.log('Setting cookie:', cookieValue);
+        const isProduction = process.env.NODE_ENV === 'production';
+        const cookieOptions = [
+            `token=${result.token}`,
+            'Path=/',
+            'HttpOnly',
+            'SameSite=Strict',
+            isProduction ? 'Secure' : ''
+        ].filter(Boolean).join('; ');
+
+        console.log('Setting cookie:', cookieOptions);
         
-        return NextResponse.json({
-            token: result.token
-        }, {
-            status: 200,
-            headers: {
-                'Set-Cookie': cookieValue
-            }
-        });
+        return NextResponse.json(
+            { token: result.token },
+            { status: 200, headers: { 'Set-Cookie': cookieOptions } }
+        );
     } catch (error) {
         console.error('Server error:', error);
         return NextResponse.json(

@@ -55,11 +55,15 @@ export async function authenticate(username: string, password: string): Promise<
 }
 
 export async function validateToken(token: string | null): Promise<boolean> {
-    console.log('Validating token:', token ? 'Token exists' : 'No token');
-    if (!token) return false;
+    console.log('Validating token:', token ? 'Token exists' : 'No token provided');
+    if (!token || token.trim() === '') return false;
     
-    const payload = await verifyToken(token);
-    console.log('Token verification result:', payload ? 'Valid' : 'Invalid');
-    
-    return !!payload;
+    try {
+        const payload = await verifyToken(token);
+        console.log('Token verification result:', payload ? 'Valid' : 'Invalid');
+        return !!payload;
+    } catch (err) {
+        console.error('Error during token validation:', err);
+        return false;
+    }
 }
