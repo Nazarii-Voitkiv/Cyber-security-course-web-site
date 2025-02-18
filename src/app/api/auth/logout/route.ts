@@ -8,6 +8,7 @@ export async function POST() {
     'HttpOnly',
     'SameSite=Strict',
     isProduction ? 'Secure' : '',
+    isProduction && process.env.COOKIE_DOMAIN ? `Domain=${process.env.COOKIE_DOMAIN}` : '',
     'Max-Age=0',
     'Expires=Thu, 01 Jan 1970 00:00:00 GMT'
   ].filter(Boolean).join('; ');

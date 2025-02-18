@@ -34,7 +34,8 @@ export async function POST(request: Request) {
             'Path=/',
             'HttpOnly',
             'SameSite=Strict',
-            isProduction ? 'Secure' : ''
+            isProduction ? 'Secure' : '',
+            isProduction && process.env.COOKIE_DOMAIN ? `Domain=${process.env.COOKIE_DOMAIN}` : ''
         ].filter(Boolean).join('; ');
 
         console.log('Setting cookie:', cookieOptions);
