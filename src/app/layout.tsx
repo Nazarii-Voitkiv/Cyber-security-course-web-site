@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 import './globals.css';
 import Providers from './providers';
 import ConditionalNavbar from '@/components/ConditionalNavbar';
-import { Analytics } from "@vercel/analytics/react";
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
+// Метадані
 export const metadata: Metadata = {
   title: 'Cyber Security Course – Курс з кібербезпеки',
   description: 'Комплексний курс з кібербезпеки: навчіться захищати свої дані, пристрої та системи від загроз в інтернеті.',
@@ -45,7 +45,7 @@ const courseSchema = {
   '@type': 'Course',
   name: 'New Cyber Security Course',
   description:
-    'Оновлений комплексний курс з кібербезпеки для всіх, хто прагне навчитися захисту від кібератак та зламів.', 
+    'Оновлений комплексний курс з кібербезпеки для всіх, хто прагне навчитися захисту від кібератак та зламів.', // змінено description
   provider: {
     '@type': 'Organization',
     name: 'Cyber Security Course',
@@ -61,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* змінено на svg */}
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" sizes="180x180" />
         <link rel="canonical" href={domain} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
@@ -71,7 +71,6 @@ export default function RootLayout({
           <ConditionalNavbar />
           {children}
         </Providers>
-        <Analytics />
       </body>
     </html>
   );
