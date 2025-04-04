@@ -1,62 +1,35 @@
 import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 interface FooterData {
     contacts: {
         email: string;
+        phone: string;
         workHours: string;
     };
-    socialLinks: Array<{
+    socialLinks: {
         name: string;
         url: string;
-    }>;
-    docs: Array<{
+    }[];
+    docs: {
         title: string;
         url: string;
-    }>;
+    }[];
     copyright: string;
 }
 
-let cachedData: FooterData | null = null;
-let cacheTimestamp = 0;
-const CACHE_DURATION = 60 * 1000;
+interface FileData {
+    data: FooterData;
+}
 
 export async function GET() {
     try {
-        const now = Date.now();
-        if (cachedData && now - cacheTimestamp < CACHE_DURATION) {
-            return NextResponse.json(
-                { success: true, data: cachedData },
-                { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=30' } }
-            );
-        }
+        const filePath = path.join(process.cwd(), 'private-data/footer.json');
+        const fileContent = await fs.readFile(filePath, 'utf8');
+        const fileData: FileData = JSON.parse(fileContent);
 
-        const apiKey = process.env.GOOGLE_API_KEY;
-        const spreadsheetId = process.env.SPREADSHEET_ID;
-        if (!apiKey || !spreadsheetId) {
-            throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
-        }
-        const sheets = google.sheets({ version: 'v4' });
-        const range = 'Sheet11!A1:A2';
-        const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
-        const rows = response.data.values || [];
-
-        let footerData: FooterData | null = null;
-        if (rows.length >= 2 && rows[0][0] === 'footer') {
-            try {
-                footerData = JSON.parse(rows[1][0]);
-            } catch (err) {
-                console.error('Error parsing footer JSON:', err);
-            }
-        }
-
-        cachedData = footerData;
-        cacheTimestamp = now;
-
-        return NextResponse.json(
-            { success: true, data: footerData },
-            { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=30' } }
-        );
+        return NextResponse.json({ success: true, data: fileData.data });
     } catch (error) {
         console.error('Error reading footer data:', error);
         return NextResponse.json(

@@ -29,13 +29,13 @@ export default function IntroSection() {
                 if (json.success) {
                     setIntro(json.data);
                 } else {
-                    setError('');
+                    setError('Не вдалося завантажити Intro');
                 }
                 setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
-                setError('');
+                setError('Помилка завантаження Intro');
                 setLoading(false);
             });
     }, []);

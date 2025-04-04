@@ -45,10 +45,10 @@ export default function FooterSection() {
         if (result.success) {
           setFooterData(result.data);
         } else {
-          setError('');
+          setError('Failed to load footer data');
         }
       } catch {
-        setError('');
+        setError('Failed to load footer data');
       }
     };
 
@@ -60,7 +60,7 @@ export default function FooterSection() {
   }
 
   if (!footerData) {
-    return null;
+    return <div className="text-gray-400 text-center py-20">Loading...</div>;
   }
 
   return (

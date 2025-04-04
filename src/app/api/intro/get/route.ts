@@ -1,60 +1,16 @@
 import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
-
-let cachedData: Record<string, unknown> | null = null;
-let cacheTimestamp = 0;
-const CACHE_DURATION = 60 * 1000;
+import fs from 'fs';
+import path from 'path';
 
 export async function GET() {
-  try {
-    const now = Date.now();
-    if (cachedData && now - cacheTimestamp < CACHE_DURATION) {
-      return NextResponse.json(
-        { success: true, data: cachedData },
-        { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=30' } }
-      );
-    }
+    try {
+        const filePath = path.join(process.cwd(), 'private-data', 'intro.json');
+        const fileData = fs.readFileSync(filePath, 'utf8');
+        const introData = JSON.parse(fileData);
 
-    const apiKey = process.env.GOOGLE_API_KEY;
-    const spreadsheetId = process.env.SPREADSHEET_ID;
-    if (!apiKey || !spreadsheetId) {
-      throw new Error('Missing GOOGLE_API_KEY or SPREADSHEET_ID.');
+        return NextResponse.json({ success: true, data: introData });
+    } catch (error: unknown) {
+        console.error('GET /api/intro/get error:', error);
+        return NextResponse.json({ success: false, error: 'An unknown error occurred' }, { status: 500 });
     }
-    const sheets = google.sheets({ version: 'v4' });
-    const range = 'Sheet2!A1:Z100'; 
-    const response = await sheets.spreadsheets.values.get({ spreadsheetId, range, key: apiKey });
-    const rows = response.data.values || [];
-    
-    let introData: Record<string, unknown> = {};
-    if (rows.length > 1) {
-      const headers = rows[0];
-      const values = rows[1];
-      introData = headers.reduce((acc: Record<string, unknown>, header: string, index: number) => {
-        acc[header] = values[index];
-        return acc;
-      }, {});
-
-      ['paragraphs', 'points'].forEach(field => {
-        if (introData[field] && typeof introData[field] === 'string') {
-          try {
-            introData[field] = JSON.parse(introData[field] as string);
-          } catch (err) {
-            console.error(`Error parsing ${field}:`, err);
-            introData[field] = [];
-          }
-        }
-      });
-    }
-
-    cachedData = introData;
-    cacheTimestamp = now;
-    
-    return NextResponse.json(
-      { success: true, data: introData },
-      { headers: { 'Cache-Control': 's-maxage=60, stale-while-revalidate=30' } }
-    );
-  } catch (error) {
-    console.error('GET /api/intro/get error:', error);
-    return NextResponse.json({ success: false, error: 'An unknown error occurred' }, { status: 500 });
-  }
 }

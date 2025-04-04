@@ -28,22 +28,17 @@ export async function POST(request: Request) {
         }
 
         console.log('Authentication successful, setting cookie');
-        const isProduction = process.env.NODE_ENV === 'production';
-        const cookieOptions = [
-            `token=${result.token}`,
-            'Path=/',
-            'HttpOnly',
-            'SameSite=Strict',
-            isProduction ? 'Secure' : '',
-            isProduction && process.env.COOKIE_DOMAIN ? `Domain=${process.env.COOKIE_DOMAIN}` : ''
-        ].filter(Boolean).join('; ');
-
-        console.log('Setting cookie:', cookieOptions);
+        const cookieValue = `token=${result.token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=86400`;
+        console.log('Setting cookie:', cookieValue);
         
-        return NextResponse.json(
-            { token: result.token },
-            { status: 200, headers: { 'Set-Cookie': cookieOptions } }
-        );
+        return NextResponse.json({
+            token: result.token
+        }, {
+            status: 200,
+            headers: {
+                'Set-Cookie': cookieValue
+            }
+        });
     } catch (error) {
         console.error('Server error:', error);
         return NextResponse.json(

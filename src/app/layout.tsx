@@ -2,13 +2,14 @@ import { Metadata } from 'next';
 import './globals.css';
 import Providers from './providers';
 import ConditionalNavbar from '@/components/ConditionalNavbar';
+import { Analytics } from "@vercel/analytics/react"
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
 // Метадані
 export const metadata: Metadata = {
-  title: 'Cyber Security Course – Курс з кібербезпеки',
-  description: 'Комплексний курс з кібербезпеки: навчіться захищати свої дані, пристрої та системи від загроз в інтернеті.',
+  title: 'Онлайн-школа SkillForge', // змінено title
+  description: 'Навчись захищати себе, свої кошти та свої дані в інтернеті', // змінено description
   keywords: [
     'кібербезпека',
     'cyber security',
@@ -23,10 +24,10 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: 'Cyber Security Course – Курс з кібербезпеки',
-    description: 'Отримайте практичні навички з кібербезпеки та захистіть свої дані.',
+    title: 'Онлайн-школа SkillForge', // змінено openGraph.title
+    description: 'Онлайн-курс з кібербезпеки та цифрової гігієни', // змінено openGraph.description
     url: domain, 
-    siteName: 'Cyber Security Course',
+    siteName: 'SkillForge',
     locale: 'uk_UA',
     type: 'website',
     images: [
@@ -43,12 +44,12 @@ export const metadata: Metadata = {
 const courseSchema = {
   '@context': 'https://schema.org',
   '@type': 'Course',
-  name: 'New Cyber Security Course',
+  name: 'SkillForge',
   description:
-    'Оновлений комплексний курс з кібербезпеки для всіх, хто прагне навчитися захисту від кібератак та зламів.', // змінено description
+    'Онлайн-курс з кібербезпеки та цифрової гігієни.', // змінено description
   provider: {
     '@type': 'Organization',
-    name: 'Cyber Security Course',
+    name: 'SkillForge',
     sameAs: domain, 
   },
 };
@@ -61,16 +62,18 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> {/* змінено на svg */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" type="image/png" sizes="180x180" />
         <link rel="canonical" href={domain} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>
+        {/* Facebook Pixel removed */}
         <Providers>
           <ConditionalNavbar />
           {children}
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
