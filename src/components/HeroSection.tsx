@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon } from '@heroicons/react/24/outline';
 import CountdownTimer from './CountdownTimer';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
 export interface CourseType {
     title: string;
@@ -18,49 +18,35 @@ export interface CourseType {
 }
 
 export interface HeroData {
-    heroTitle: string;
-    heroSubtitle: string;
+    title: string;
+    subtitle: string;
     discountBanner: string;
     courseTypes: CourseType[];
     leadMagnet: string;
 }
 
 export default function HeroSection() {
-    const [data, setData] = useState<HeroData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        fetch('/api/hero/get')
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.success) {
-                    setData(json.data);
-                } else {
-                    setError('Не вдалося завантажити Hero-дані');
-                }
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error(err);
-                setError('Помилка завантаження Hero');
-                setLoading(false);
-            });
-    }, []);
+    const { pageData, loading, error } = usePageData();
+    const data = pageData.hero;
 
     if (loading) {
-        return null;
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+                <div className="text-cyan-400 text-xl">Завантаження...</div>
+            </div>
+        );
     }
 
-    if (error) {
-        return <div className="text-center py-10 text-red-400">{error}</div>;
+    if (error || !data) {
+        return (
+            <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-gray-900">
+                <div className="text-red-400 text-xl">Помилка завантаження даних</div>
+                {error && <div className="text-red-300">{error}</div>}
+            </div>
+        );
     }
 
-    if (!data) {
-        return null;
-    }
-
-    const { heroTitle, heroSubtitle, discountBanner, courseTypes } = data;
+    const { title, subtitle, discountBanner, courseTypes, leadMagnet } = data;
 
     return (
         <section id="hero-section" className="relative min-h-screen cyber-background">
@@ -83,47 +69,26 @@ export default function HeroSection() {
                         <ShieldCheckIcon className="h-16 w-16 md:h-20 md:w-20 mx-auto text-cyan-400" />
                     </motion.div>
 
-                    <h1
-                        className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text
-                       bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400
-                       animate-gradient text-[2.5rem] sm:text-[3rem] md:text-[5rem] lg:text-[72px]
-                       leading-snug sm:leading-tight max-w-3xl mx-auto"
-                    >
-                        <CustomMarkdown>{heroTitle}</CustomMarkdown>
+                    <h1 className="font-bold mb-6 md:mb-8 lg:mb-10 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 animate-gradient text-[2.5rem] sm:text-[3rem] md:text-[5rem] lg:text-[72px] leading-snug sm:leading-tight max-w-3xl mx-auto">
+                        <CustomMarkdown>{title}</CustomMarkdown>
                     </h1>
 
                     <p className="text-lg md:text-xl text-cyan-100 mb-8 md:mb-12 max-w-2xl mx-auto">
-                        <CustomMarkdown>{heroSubtitle}</CustomMarkdown>
+                        <CustomMarkdown>{subtitle}</CustomMarkdown>
                     </p>
 
                     <motion.button
-                        onClick={() => {
-                            const element = document.getElementById('hero-section');
-                            element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }}
+                        onClick={() => document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' })}
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         whileHover={{
                             scale: 1.05,
                             rotate: [0, -1, 1, -1, 0],
-                            transition: {
-                                rotate: {
-                                    repeat: Infinity,
-                                    duration: 0.5
-                                }
-                            }
+                            transition: { rotate: { repeat: Infinity, duration: 0.5 } }
                         }}
                         whileTap={{ scale: 0.95 }}
-                        transition={{
-                            delay: 0.4,
-                            type: "spring",
-                            stiffness: 300,
-                            damping: 15
-                        }}
-                        className="relative discount-button bg-gradient-to-r from-red-500 via-pink-500 to-red-500
-                       text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold
-                       mb-6 md:mb-8 inline-block shadow-lg shadow-red-500/20 cursor-pointer
-                       hover:shadow-xl hover:shadow-red-500/30 transition-shadow duration-300"
+                        transition={{ delay: 0.4, type: "spring", stiffness: 300, damping: 15 }}
+                        className="relative discount-button bg-gradient-to-r from-red-500 via-pink-500 to-red-500 text-white py-2 md:py-3 px-4 md:px-6 rounded-full text-base md:text-xl font-bold mb-6 md:mb-8 inline-block shadow-lg shadow-red-500/20 cursor-pointer hover:shadow-xl hover:shadow-red-500/30 transition-shadow duration-300"
                     >
                         <CustomMarkdown>{discountBanner}</CustomMarkdown>
                     </motion.button>
@@ -133,29 +98,28 @@ export default function HeroSection() {
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
-                        {courseTypes.map((course: CourseType, index: number) => (
+                        {courseTypes.map((course, index) => (
                             <motion.div
                                 key={course.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 className="relative pt-6 cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
-                                onClick={() => {
-                                    window.open(course.link, '_blank', 'noopener,noreferrer');
-                                }}
+                                onClick={() => window.open(course.link, '_blank')}
                             >
                                 {course.recommended && (
-                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500
-                                 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap
-                                 shadow-lg z-10"
-                                    >
+                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-gradient-to-r from-cyan-400 to-blue-500 text-black px-4 py-1 rounded-full text-sm font-semibold whitespace-nowrap shadow-lg z-10">
                                         Рекомендовано
                                     </div>
                                 )}
-                                <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border
-                                    ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
-                                    <h3 className="text-xl md:text-2xl font-bold mb-2"><CustomMarkdown>{course.title}</CustomMarkdown></h3>
-                                    <p className="text-gray-400 mb-4 text-sm md:text-base"><CustomMarkdown>{course.description}</CustomMarkdown></p>
+                                
+                                <div className={`cyber-card p-6 md:p-8 rounded-xl h-full flex flex-col neon-border ${course.recommended ? 'border-cyan-500/30' : 'border-gray-700/30'}`}>
+                                    <h3 className="text-xl md:text-2xl font-bold mb-2">
+                                        <CustomMarkdown>{course.title}</CustomMarkdown>
+                                    </h3>
+                                    <p className="text-gray-400 mb-4 text-sm md:text-base">
+                                        <CustomMarkdown>{course.description}</CustomMarkdown>
+                                    </p>
 
                                     <div className="mb-6">
                                         <div className="flex items-center justify-center gap-3 mb-2">
@@ -186,9 +150,7 @@ export default function HeroSection() {
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                        }}
+                                        onClick={(e) => e.stopPropagation()}
                                         className="cyber-button w-full py-3 md:py-4 rounded-full text-base md:text-lg font-semibold shadow-lg text-center"
                                     >
                                         Почати навчання
@@ -211,7 +173,7 @@ export default function HeroSection() {
                             ПОДАРУНОК
                         </div>
                         <div className="text-center text-lg md:text-xl text-white">
-                            <CustomMarkdown>{data.leadMagnet}</CustomMarkdown>
+                            <CustomMarkdown>{leadMagnet}</CustomMarkdown>
                         </div>
                     </div>
                 </motion.div>

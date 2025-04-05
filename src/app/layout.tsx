@@ -3,6 +3,7 @@ import './globals.css';
 import Providers from './providers';
 import ConditionalNavbar from '@/components/ConditionalNavbar';
 import { Analytics } from "@vercel/analytics/react"
+import { PageDataProvider } from '@/contexts/PageDataContext';
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
@@ -68,12 +69,13 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }} />
       </head>
       <body>
-        {/* Facebook Pixel removed */}
-        <Providers>
-          <ConditionalNavbar />
-          {children}
-        </Providers>
-        <Analytics />
+        <PageDataProvider>
+          <Providers>
+            <ConditionalNavbar />
+            {children}
+          </Providers>
+          <Analytics />
+        </PageDataProvider>
       </body>
     </html>
   );
