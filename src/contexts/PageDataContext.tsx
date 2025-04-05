@@ -55,14 +55,6 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
       if (data.success) {
         setPageData(data.sections);
       } else {
-        const debugRes = await fetch('/api/debug-data');
-        const debugData = await debugRes.json();
-        
-        if (debugRes.ok && debugData.success && debugData.sections) {
-          setPageData(debugData.sections);
-          return;
-        }
-        
         setError(data.error || 'Failed to load page data');
       }
     } catch (err: any) {

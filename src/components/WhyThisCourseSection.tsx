@@ -1,11 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheckIcon, LightBulbIcon, BanknotesIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
-const reasons = [
+interface Reason {
+    title: string;
+    description: string;
+}
+
+interface WhyThisCourseData {
+    title: string;
+    reasons: Reason[];
+}
+
+const reasonIcons = [
     {
         Icon: LightBulbIcon,
         color: 'text-cyan-400',
@@ -28,33 +38,17 @@ const reasons = [
     }
 ];
 
-interface Reason {
-    title: string;
-    description: string;
-}
-
-interface WhyThisCourseData {
-    title: string;
-    reasons: Reason[];
-}
-
 export default function WhyThisCourseSection() {
-    const [data, setData] = useState<WhyThisCourseData | null>(null);
+    const { pageData, loading, error } = usePageData();
+    const data = pageData.whyThisCourse as WhyThisCourseData;
 
-    useEffect(() => {
-        fetch('/api/whycourse/get')
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) {
-                    setData(data.data);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    if (loading) {
+        return <div className="py-20 flex justify-center"><div className="text-cyan-400">Завантаження...</div></div>;
+    }
 
-    if (!data) return null;
+    if (error || !data) {
+        return <div className="py-20 text-center"><div className="text-red-400">Помилка завантаження даних</div></div>;
+    }
 
     return (
         <section className="py-20 bg-gray-800/50">
@@ -72,10 +66,10 @@ export default function WhyThisCourseSection() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                         {data.reasons.map((reason, index) => {
-                            const { Icon, color, bgColor } = reasons[index];
+                            const { Icon, color, bgColor } = reasonIcons[index];
                             return (
                                 <motion.div
-                                    key={reason.title}
+                                    key={index}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}

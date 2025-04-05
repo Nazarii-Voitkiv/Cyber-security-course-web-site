@@ -1,36 +1,21 @@
 import { NextResponse } from 'next/server';
-import { get } from '@vercel/edge-config';
+import { getAllSections } from '@/utils/supabase';
 
-const REQUIRED_SECTIONS = [
-  'hero', 'intro', 'whyThisCourse', 'benefits', 'forWhom',
-  'learningProcess', 'program', 'comparePlans', 'testimonials',
-  'faq', 'footer'
-];
-
-const cache = { data: null, timestamp: 0 };
-const CACHE_TTL = 60000; // 1 minute
+// Кешування даних для зменшення запитів до Supabase
+let cache = { data: null, timestamp: 0 };
+const CACHE_TTL = 60000; // 1 хвилина
 
 export async function GET() {
   try {
     const now = Date.now();
     
+    // Використовуємо кеш, якщо дані свіжі
     if (cache.data && (now - cache.timestamp) < CACHE_TTL) {
       return NextResponse.json(cache.data);
     }
     
-    const sections = {};
-    const promises = REQUIRED_SECTIONS.map(async (sectionName) => {
-      try {
-        const sectionData = await get(sectionName);
-        if (sectionData) {
-          sections[sectionName] = sectionData;
-        }
-      } catch (err) {
-        console.log(`Section "${sectionName}" not found`);
-      }
-    });
-    
-    await Promise.all(promises);
+    // Отримуємо всі секції з Supabase
+    const sections = await getAllSections();
     
     const response = {
       success: true,
@@ -38,11 +23,13 @@ export async function GET() {
       timestamp: new Date().toISOString()
     };
     
+    // Оновлюємо кеш
     cache.data = response;
     cache.timestamp = now;
     
     return NextResponse.json(response);
   } catch (error) {
+    console.error('Error fetching page data:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Failed to load page data' },
       { status: 500 }
