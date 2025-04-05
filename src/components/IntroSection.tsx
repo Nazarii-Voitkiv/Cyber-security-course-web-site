@@ -4,39 +4,42 @@ import { motion } from 'framer-motion';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 import { usePageData } from '@/contexts/PageDataContext';
 
-interface IntroPoint {
-    title: string;
-    description: string;
-}
-
 interface IntroData {
     mainTitle: string;
     mainSubtitle: string;
     paragraphs: string[];
-    points: IntroPoint[];
+    points: Array<{
+        title: string;
+        description: string;
+    }>;
     conclusion: string;
 }
 
 export default function IntroSection() {
-    const { pageData, loading, error } = usePageData();
-    const intro = pageData.intro;
+    const { pageData } = usePageData();
+    const introData = pageData.intro as unknown;
 
-    if (loading) {
+    if (!introData) return null;
+
+    const isIntroData = (data: unknown): data is IntroData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
         return (
-            <div className="py-20 flex justify-center bg-gradient-to-b from-gray-900 to-gray-800">
-                <div className="text-cyan-400 text-xl">Завантаження...</div>
-            </div>
+            typeof obj.mainTitle === 'string' &&
+            typeof obj.mainSubtitle === 'string' &&
+            Array.isArray(obj.paragraphs) &&
+            Array.isArray(obj.points) &&
+            typeof obj.conclusion === 'string'
         );
+    };
+
+    if (!isIntroData(introData)) {
+        console.error("Intro data structure is invalid");
+        return null;
     }
 
-    if (error || !intro) {
-        return (
-            <div className="py-20 text-center bg-gradient-to-b from-gray-900 to-gray-800">
-                <div className="text-red-400 text-xl">Помилка завантаження даних</div>
-                {error && <div className="text-red-300">{error}</div>}
-            </div>
-        );
-    }
+    const intro: IntroData = introData;
 
     return (
         <section className="relative py-20 bg-gradient-to-b from-gray-900 to-gray-800">

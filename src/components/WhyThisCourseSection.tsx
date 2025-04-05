@@ -39,16 +39,35 @@ const reasonIcons = [
 ];
 
 export default function WhyThisCourseSection() {
-    const { pageData, loading, error } = usePageData();
-    const data = pageData.whyThisCourse as WhyThisCourseData;
+    const { pageData } = usePageData();
+    const whyThisCourseData = pageData.whyThisCourse as unknown;
 
-    if (loading) {
-        return <div className="py-20 flex justify-center"><div className="text-cyan-400">Завантаження...</div></div>;
+    if (!whyThisCourseData) return null;
+
+    const isWhyThisCourseData = (data: unknown): data is WhyThisCourseData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
+        return (
+            typeof obj.title === 'string' &&
+            Array.isArray(obj.reasons) &&
+            obj.reasons.every(item => {
+                if (typeof item !== 'object' || item === null) return false;
+                const reason = item as Record<string, unknown>;
+                return (
+                    typeof reason.title === 'string' &&
+                    typeof reason.description === 'string'
+                );
+            })
+        );
+    };
+
+    if (!isWhyThisCourseData(whyThisCourseData)) {
+        console.error("WhyThisCourse data structure is invalid");
+        return null;
     }
 
-    if (error || !data) {
-        return <div className="py-20 text-center"><div className="text-red-400">Помилка завантаження даних</div></div>;
-    }
+    const data: WhyThisCourseData = whyThisCourseData;
 
     return (
         <section className="py-20 bg-gray-800/50">

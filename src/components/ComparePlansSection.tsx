@@ -1,16 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import CountdownTimer from './CountdownTimer';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
 interface ComparePlansData {
     title: string;
     specialOfferBanner: string;
     leadMagnet: string;
     introBonus?: string;
-    featuresTitle: string;
+    featuresTitle?: string;
     plans: {
         title: string;
         description: string;
@@ -29,20 +29,33 @@ interface ComparePlansData {
 }
 
 export default function ComparePlansSection() {
-    const [data, setData] = useState<ComparePlansData | null>(null);
+    const { pageData } = usePageData();
+    const comparePlansData = pageData.comparePlans as unknown;
 
-    useEffect(() => {
-        fetch('/api/compareplans/get')
-            .then(res => res.json())
-            .then(json => {
-                if (json.success) {
-                    setData(json.data);
-                }
-            })
-            .catch(err => console.error('Error loading compare plans data:', err));
-    }, []);
+    if (!comparePlansData) return null;
 
-    if (!data || data.plans.length === 0) return null;
+    const isComparePlansData = (data: unknown): data is ComparePlansData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
+        
+        return (
+            typeof obj.title === 'string' &&
+            typeof obj.specialOfferBanner === 'string' &&
+            typeof obj.leadMagnet === 'string' &&
+            Array.isArray(obj.plans) &&
+            Array.isArray(obj.featuresComparison)
+        );
+    };
+
+    if (!isComparePlansData(comparePlansData)) {
+        console.error("ComparePlans data structure is invalid");
+        return null;
+    }
+
+    const data: ComparePlansData = comparePlansData;
+    
+    if (!data.plans || data.plans.length === 0) return null;
 
     return (
         <section id="compare-plans" className="py-16 relative overflow-hidden">
@@ -50,7 +63,7 @@ export default function ComparePlansSection() {
             <div className="glitch-overlay" />
             
             <div className="container mx-auto px-4">
-                                <div className="text-center mb-12">
+                <div className="text-center mb-12">
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}

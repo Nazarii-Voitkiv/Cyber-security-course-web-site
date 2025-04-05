@@ -1,32 +1,49 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import { usePageData } from '@/contexts/PageDataContext';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
 
 interface FaqData {
-  faqs: {
-    question: string;
-    answer: string;
-  }[];
+  faqs: FaqItem[];
 }
 
 export default function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [data, setData] = useState<FaqData | null>(null);
+  const { pageData } = usePageData();
+  const faqData = pageData.faq as unknown;
 
-  useEffect(() => {
-    fetch('/api/faq/get')
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          setData(json.data);
-        }
+  if (!faqData) return null;
+
+  const isFaqData = (data: unknown): data is FaqData => {
+    if (typeof data !== 'object' || data === null) return false;
+    
+    const obj = data as Record<string, unknown>;
+    return (
+      Array.isArray(obj.faqs) &&
+      obj.faqs.every(item => {
+        if (typeof item !== 'object' || item === null) return false;
+        const faq = item as Record<string, unknown>;
+        return (
+          typeof faq.question === 'string' &&
+          typeof faq.answer === 'string'
+        );
       })
-      .catch(err => console.error('Error loading FAQ data:', err));
-  }, []);
+    );
+  };
 
-  if (!data) return null;
+  if (!isFaqData(faqData)) {
+    console.error("FAQ data structure is invalid");
+    return null;
+  }
+
+  const data: FaqData = faqData;
 
   return (
     <section className="py-20">

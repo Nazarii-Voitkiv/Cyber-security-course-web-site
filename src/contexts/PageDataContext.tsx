@@ -5,16 +5,16 @@ import { HeroData } from '@/components/HeroSection';
 
 export interface PageData {
   hero?: HeroData;
-  intro?: any;
-  whyThisCourse?: any;
-  benefits?: any;
-  forWhom?: any;
-  learningProcess?: any;
-  program?: any;
-  comparePlans?: any;
-  testimonials?: any;
-  faq?: any;
-  footer?: any;
+  intro?: Record<string, unknown>;
+  whyThisCourse?: Record<string, unknown>;
+  benefits?: Record<string, unknown>;
+  forWhom?: Record<string, unknown>;
+  learningProcess?: Record<string, unknown>;
+  program?: Record<string, unknown>;
+  comparePlans?: Record<string, unknown>;
+  testimonials?: Record<string, unknown>;
+  faq?: Record<string, unknown>;
+  footer?: Record<string, unknown>;
 }
 
 interface PageDataContextType {
@@ -57,8 +57,9 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
       } else {
         setError(data.error || 'Failed to load page data');
       }
-    } catch (err: any) {
-      setError(err.message || 'Error loading page data');
+    } catch (err: unknown) {
+      const error = err as Error;
+      setError(error.message || 'Error loading page data');
     } finally {
       setLoading(false);
     }

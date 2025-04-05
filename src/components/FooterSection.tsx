@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { usePageData } from '@/contexts/PageDataContext';
 
 const socialIcons = {
   Instagram: (
@@ -33,35 +33,29 @@ interface FooterData {
 }
 
 export default function FooterSection() {
-  const [footerData, setFooterData] = useState<FooterData | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const { pageData } = usePageData();
+  const footerData = pageData.footer as unknown;
 
-  useEffect(() => {
-    const fetchFooterData = async () => {
-      try {
-        const response = await fetch('/api/footer/get');
-        const result = await response.json();
-        
-        if (result.success) {
-          setFooterData(result.data);
-        } else {
-          setError('Failed to load footer data');
-        }
-      } catch {
-        setError('Failed to load footer data');
-      }
-    };
+  if (!footerData) return null;
 
-    fetchFooterData();
-  }, []);
+  const isFooterData = (data: unknown): data is FooterData => {
+    if (typeof data !== 'object' || data === null) return false;
+    
+    const obj = data as Record<string, unknown>;
+    return (
+      typeof obj.copyright === 'string' &&
+      typeof obj.contacts === 'object' && obj.contacts !== null &&
+      Array.isArray(obj.socialLinks) &&
+      Array.isArray(obj.docs)
+    );
+  };
 
-  if (error) {
-    return <div className="text-red-500 text-center py-20">{error}</div>;
+  if (!isFooterData(footerData)) {
+    console.error("Footer data structure is invalid");
+    return null;
   }
 
-  if (!footerData) {
-    return <div className="text-gray-400 text-center py-20">Loading...</div>;
-  }
+  const data: FooterData = footerData;
 
   return (
     <footer className="py-20 border-t border-gray-800">
@@ -78,8 +72,8 @@ export default function FooterSection() {
               Контакти
             </h3>
             <div className="space-y-2 text-gray-400">
-              <p>Email: {footerData.contacts.email}</p>
-              <p>{footerData.contacts.workHours}</p>
+              <p>Email: {data.contacts.email}</p>
+              <p>{data.contacts.workHours}</p>
             </div>
           </div>
 
@@ -88,7 +82,7 @@ export default function FooterSection() {
               Соціальні мережі
             </h3>
             <div className="flex space-x-4">
-              {footerData.socialLinks.map((social) => (
+              {data.socialLinks.map((social) => (
                 <motion.a
                   key={social.name}
                   href={social.url}
@@ -109,7 +103,7 @@ export default function FooterSection() {
               Документація
             </h3>
             <div className="space-y-2">
-              {footerData.docs.map((doc) => (
+              {data.docs.map((doc) => (
                 <motion.a
                   key={doc.title}
                   href={doc.url}
@@ -129,7 +123,7 @@ export default function FooterSection() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center text-gray-500 mt-16"
         >
-          <p>{footerData.copyright}</p>
+          <p>{data.copyright}</p>
         </motion.div>
       </div>
     </footer>

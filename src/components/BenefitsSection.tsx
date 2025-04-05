@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   ShieldCheckIcon,             
@@ -11,8 +10,19 @@ import {
   CalendarIcon                
 } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
-const benefits = [
+interface BenefitItem {
+  title: string;
+  description: string;
+}
+
+interface BenefitsData {
+  title: string;
+  benefits: BenefitItem[];
+}
+
+const benefitIcons = [
   {
     Icon: ShieldCheckIcon,
     color: 'text-red-400',
@@ -45,31 +55,36 @@ const benefits = [
   }
 ];
 
-interface BenefitsData {
-  title: string;
-  benefits: {
-    title: string;
-    description: string;
-  }[];
-}
-
 export default function BenefitsSection() {
-  const [data, setData] = useState<BenefitsData | null>(null);
+  const { pageData } = usePageData();
+  const benefitsData = pageData.benefits as unknown;
 
-  useEffect(() => {
-    fetch('/api/benefits/get')
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.success) {
-          setData(data.data);
-        }
+  if (!benefitsData) return null;
+
+  const isBenefitsData = (data: unknown): data is BenefitsData => {
+    if (typeof data !== 'object' || data === null) return false;
+    
+    const obj = data as Record<string, unknown>;
+    return (
+      typeof obj.title === 'string' && 
+      Array.isArray(obj.benefits) && 
+      obj.benefits.every(item => {
+        if (typeof item !== 'object' || item === null) return false;
+        const benefitItem = item as Record<string, unknown>;
+        return (
+          typeof benefitItem.title === 'string' && 
+          typeof benefitItem.description === 'string'
+        );
       })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    );
+  };
 
-  if (!data) return null;
+  if (!isBenefitsData(benefitsData)) {
+    console.error("Benefits data structure is invalid");
+    return null;
+  }
+
+  const data: BenefitsData = benefitsData;
 
   return (
     <section className="py-20">
@@ -88,10 +103,10 @@ export default function BenefitsSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {data.benefits.map((benefit, index) => {
-            const { Icon, color, bgColor } = benefits[index];
+            const { Icon, color, bgColor } = benefitIcons[index % benefitIcons.length];
             return (
               <motion.div
-                key={benefit.title}
+                key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}

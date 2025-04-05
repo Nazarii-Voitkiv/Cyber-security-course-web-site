@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { validateTokenEdge } from './lib/edge-auth';
 import logger from './lib/logger';
 
 const adminSecurityHeaders = {
@@ -60,17 +59,6 @@ export async function middleware(req: NextRequest) {
         
         if (!token) {
             console.log('No token found, redirecting to login');
-            return NextResponse.redirect(new URL('/admin', req.url));
-        }
-
-        const isValidToken = await validateTokenEdge(token);
-        console.log('Token validation result:', isValidToken);
-
-        if (!isValidToken) {
-            console.log('Invalid token, redirecting to login');
-            if (req.nextUrl.pathname.startsWith('/api/')) {
-                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-            }
             return NextResponse.redirect(new URL('/admin', req.url));
         }
 

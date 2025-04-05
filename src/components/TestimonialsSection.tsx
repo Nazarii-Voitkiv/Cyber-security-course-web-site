@@ -6,9 +6,10 @@ import { motion } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { StarIcon } from '@heroicons/react/24/solid';
 import OptimizedImage from '@/components/OptimizedImage';
+import { usePageData } from '@/contexts/PageDataContext';
 
 interface Testimonial {
-  id: string;
+  id: number | string;
   rating: number;
   content: string;
   name: string;
@@ -46,7 +47,8 @@ export default function TestimonialsSection() {
     skipSnaps: false,
   });
 
-  const [data, setData] = useState<TestimonialsData | null>(null);
+  const { pageData } = usePageData();
+  const testimonialsData = pageData.testimonials as unknown;
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(true);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(true);
 
@@ -65,24 +67,43 @@ export default function TestimonialsSection() {
   }, [emblaApi]);
 
   useEffect(() => {
-    fetch('/api/testimonials/get')
-      .then(res => res.json())
-      .then(json => {
-        if (json.success) {
-          setData(json.data);
-        }
-      })
-      .catch(err => console.error('Error loading testimonials data:', err));
-  }, []);
-
-  useEffect(() => {
     if (!emblaApi) return;
     onSelect();
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
 
-  if (!data) return null;
+  if (!testimonialsData) return null;
+
+  const isTestimonialsData = (data: unknown): data is TestimonialsData => {
+    if (typeof data !== 'object' || data === null) return false;
+    
+    const obj = data as Record<string, unknown>;
+    return (
+      Array.isArray(obj.testimonials) &&
+      obj.testimonials.every(item => {
+        if (typeof item !== 'object' || item === null) return false;
+        const testimonial = item as Record<string, unknown>;
+        return (
+          (typeof testimonial.id === 'number' || typeof testimonial.id === 'string') &&
+          typeof testimonial.rating === 'number' &&
+          typeof testimonial.content === 'string' &&
+          typeof testimonial.name === 'string' &&
+          typeof testimonial.position === 'string' &&
+          typeof testimonial.image === 'string'
+        );
+      })
+    );
+  };
+
+  if (!isTestimonialsData(testimonialsData)) {
+    console.error("Testimonials data structure is invalid");
+    return null;
+  }
+
+  const data: TestimonialsData = testimonialsData;
+  
+  if (!data.testimonials || data.testimonials.length === 0) return null;
 
   return (
     <section className="py-16 relative overflow-hidden bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">

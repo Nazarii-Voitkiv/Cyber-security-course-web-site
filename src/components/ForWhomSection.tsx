@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
     UserIcon,
@@ -11,8 +10,20 @@ import {
     AcademicCapIcon
 } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
-const icons = [
+interface GroupItem {
+    title: string;
+    description: string;
+}
+
+interface ForWhomData {
+    title: string;
+    groups: GroupItem[];
+    footer?: string;
+}
+
+const groupIcons = [
     {
         Icon: UserIcon,
         color: 'text-cyan-400',
@@ -45,32 +56,36 @@ const icons = [
     }
 ];
 
-interface ForWhomData {
-    title: string;
-    groups: {
-        title: string;
-        description: string;
-    }[];
-    footer?: string;
-}
-
 export default function ForWhomSection() {
-    const [data, setData] = useState<ForWhomData | null>(null);
+    const { pageData } = usePageData();
+    const forWhomData = pageData.forWhom as unknown;
 
-    useEffect(() => {
-        fetch('/api/forwhom/get')
-            .then((r) => r.json())
-            .then((data) => {
-                if (data.success) {
-                    setData(data.data);
-                }
+    if (!forWhomData) return null;
+
+    const isForWhomData = (data: unknown): data is ForWhomData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
+        return (
+            typeof obj.title === 'string' &&
+            Array.isArray(obj.groups) &&
+            obj.groups.every(item => {
+                if (typeof item !== 'object' || item === null) return false;
+                const group = item as Record<string, unknown>;
+                return (
+                    typeof group.title === 'string' &&
+                    typeof group.description === 'string'
+                );
             })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+        );
+    };
 
-    if (!data) return null;
+    if (!isForWhomData(forWhomData)) {
+        console.error("ForWhom data structure is invalid");
+        return null;
+    }
+
+    const data: ForWhomData = forWhomData;
 
     return (
         <section className="py-20 bg-gray-800/50">
@@ -88,10 +103,10 @@ export default function ForWhomSection() {
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {data.groups.map((group, index) => {
-                            const { Icon, color, bgColor } = icons[index];
+                            const { Icon, color, bgColor } = groupIcons[index % groupIcons.length];
                             return (
                                 <motion.div
-                                    key={group.title}
+                                    key={index}
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -118,7 +133,7 @@ export default function ForWhomSection() {
                     </div>
                     {data.footer && (
                       <p className="mt-20 text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-                        {data.footer}
+                        <CustomMarkdown>{data.footer}</CustomMarkdown>
                       </p>
                     )}
                 </div>

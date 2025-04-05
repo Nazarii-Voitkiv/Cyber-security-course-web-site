@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RocketLaunchIcon, ClockIcon, DevicePhoneMobileIcon, AcademicCapIcon } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
 interface FeatureItem {
     title: string;
@@ -24,22 +24,29 @@ interface LearningProcessData {
 }
 
 export default function LearningProcessSection() {
-    const [data, setData] = useState<LearningProcessData | null>(null);
+    const { pageData } = usePageData();
+    const learningProcessData = pageData.learningProcess as unknown;
 
-    useEffect(() => {
-        fetch('/api/learningprocess/get')
-            .then((r) => r.json())
-            .then((json) => {
-                if (json.success) {
-                    setData(json.data);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    if (!learningProcessData) return null;
 
-    if (!data) return null;
+    const isLearningProcessData = (data: unknown): data is LearningProcessData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
+        return (
+            typeof obj.title === 'string' &&
+            typeof obj.subtitle === 'string' &&
+            Array.isArray(obj.features) &&
+            Array.isArray(obj.processSteps)
+        );
+    };
+
+    if (!isLearningProcessData(learningProcessData)) {
+        console.error("LearningProcess data structure is invalid");
+        return null;
+    }
+
+    const data: LearningProcessData = learningProcessData;
 
     return (
         <section className="py-16 relative overflow-hidden">
@@ -65,7 +72,7 @@ export default function LearningProcessSection() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                     {data.features.map((feature, index) => (
                         <motion.div
-                            key={feature.title}
+                            key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -96,7 +103,7 @@ export default function LearningProcessSection() {
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {data.processSteps.map((step, index) => (
                         <motion.div
-                            key={step.number}
+                            key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}

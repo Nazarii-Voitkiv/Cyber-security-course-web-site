@@ -12,7 +12,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Оновлюємо дані секції через Supabase
     await updateSectionData(section, data);
     
     return NextResponse.json({
@@ -20,10 +19,16 @@ export async function POST(request: NextRequest) {
       message: `Section "${section}" updated successfully`,
       timestamp: new Date().toISOString()
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error updating section:', error);
+    
+    let errorMessage = 'Failed to update section';
+    if (error && typeof error === 'object' && 'message' in error) {
+      errorMessage = error.message as string || errorMessage;
+    }
+    
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to update section' },
+      { success: false, error: errorMessage },
       { status: 500 }
     );
   }

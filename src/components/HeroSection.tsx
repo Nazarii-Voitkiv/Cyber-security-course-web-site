@@ -26,26 +26,30 @@ export interface HeroData {
 }
 
 export default function HeroSection() {
-    const { pageData, loading, error } = usePageData();
-    const data = pageData.hero;
+    const { pageData } = usePageData();
+    const heroData = pageData.hero as unknown;
 
-    if (loading) {
+    if (!heroData) return null;
+
+    const isHeroData = (data: unknown): data is HeroData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-900">
-                <div className="text-cyan-400 text-xl">Завантаження...</div>
-            </div>
+            typeof obj.title === 'string' &&
+            typeof obj.subtitle === 'string' &&
+            typeof obj.discountBanner === 'string' &&
+            typeof obj.leadMagnet === 'string' &&
+            Array.isArray(obj.courseTypes)
         );
+    };
+
+    if (!isHeroData(heroData)) {
+        console.error("Hero data structure is invalid");
+        return null;
     }
 
-    if (error || !data) {
-        return (
-            <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-gray-900">
-                <div className="text-red-400 text-xl">Помилка завантаження даних</div>
-                {error && <div className="text-red-300">{error}</div>}
-            </div>
-        );
-    }
-
+    const data: HeroData = heroData;
     const { title, subtitle, discountBanner, courseTypes, leadMagnet } = data;
 
     return (

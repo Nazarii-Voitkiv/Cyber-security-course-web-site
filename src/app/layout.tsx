@@ -7,10 +7,9 @@ import { PageDataProvider } from '@/contexts/PageDataContext';
 
 const domain = process.env.NEXT_PUBLIC_DOMAIN || 'https://cyber-security-course-web-site.vercel.app';
 
-// Метадані
 export const metadata: Metadata = {
-  title: 'Онлайн-школа SkillForge', // змінено title
-  description: 'Навчись захищати себе, свої кошти та свої дані в інтернеті', // змінено description
+  title: 'Онлайн-школа SkillForge',
+  description: 'Навчись захищати себе, свої кошти та свої дані в інтернеті',
   keywords: [
     'кібербезпека',
     'cyber security',
@@ -25,8 +24,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: 'Онлайн-школа SkillForge', // змінено openGraph.title
-    description: 'Онлайн-курс з кібербезпеки та цифрової гігієни', // змінено openGraph.description
+    title: 'Онлайн-школа SkillForge',
+    description: 'Онлайн-курс з кібербезпеки та цифрової гігієни',
     url: domain, 
     siteName: 'SkillForge',
     locale: 'uk_UA',
@@ -47,7 +46,7 @@ const courseSchema = {
   '@type': 'Course',
   name: 'SkillForge',
   description:
-    'Онлайн-курс з кібербезпеки та цифрової гігієни.', // змінено description
+    'Онлайн-курс з кібербезпеки та цифрової гігієни.',
   provider: {
     '@type': 'Organization',
     name: 'SkillForge',

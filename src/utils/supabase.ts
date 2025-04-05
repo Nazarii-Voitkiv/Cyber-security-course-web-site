@@ -1,17 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Перевірка наявності змінних середовища
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables');
 }
 
-// Створення клієнта Supabase
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Функція для отримання даних секції
 export async function getSectionData(sectionName: string) {
   const { data, error } = await supabase
     .from('sections')
@@ -27,9 +24,7 @@ export async function getSectionData(sectionName: string) {
   return data?.data;
 }
 
-// Функція для оновлення даних секції
-export async function updateSectionData(sectionName: string, sectionData: any) {
-  // Перевіряємо чи існує запис
+export async function updateSectionData(sectionName: string, sectionData: Record<string, unknown>) {
   const { data: existingData } = await supabase
     .from('sections')
     .select('id')
@@ -37,7 +32,6 @@ export async function updateSectionData(sectionName: string, sectionData: any) {
     .single();
 
   if (existingData) {
-    // Оновлюємо існуючий запис
     const { data, error } = await supabase
       .from('sections')
       .update({ data: sectionData, updated_at: new Date() })
@@ -46,7 +40,6 @@ export async function updateSectionData(sectionName: string, sectionData: any) {
     if (error) throw error;
     return data;
   } else {
-    // Створюємо новий запис
     const { data, error } = await supabase
       .from('sections')
       .insert([{ name: sectionName, data: sectionData }]);
@@ -56,8 +49,7 @@ export async function updateSectionData(sectionName: string, sectionData: any) {
   }
 }
 
-// Функція для отримання всіх секцій
-export async function getAllSections() {
+export async function getAllSections(): Promise<Record<string, unknown>> {
   const { data, error } = await supabase
     .from('sections')
     .select('name, data');
@@ -67,8 +59,7 @@ export async function getAllSections() {
     return {};
   }
 
-  // Перетворення у формат { sectionName: sectionData }
-  return data.reduce((acc, section) => {
+  return data.reduce<Record<string, unknown>>((acc, section) => {
     acc[section.name] = section.data;
     return acc;
   }, {});

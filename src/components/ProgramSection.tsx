@@ -1,9 +1,10 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
+import { usePageData } from '@/contexts/PageDataContext';
 
 interface Module {
     id: number;
@@ -19,23 +20,29 @@ interface ProgramData {
 }
 
 export default function ProgramSection() {
-    const [data, setData] = useState<ProgramData | null>(null);
+    const { pageData } = usePageData();
+    const programData = pageData.program as unknown;
     const [openModule, setOpenModule] = useState<number | null>(null);
 
-    useEffect(() => {
-        fetch('/api/program/get')
-            .then((r) => r.json())
-            .then((json) => {
-                if (json.success) {
-                    setData(json.data);
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
+    if (!programData) return null;
 
-    if (!data) return null;
+    const isProgramData = (data: unknown): data is ProgramData => {
+        if (typeof data !== 'object' || data === null) return false;
+        
+        const obj = data as Record<string, unknown>;
+        return (
+            typeof obj.title === 'string' &&
+            typeof obj.subtitle === 'string' &&
+            Array.isArray(obj.modules)
+        );
+    };
+
+    if (!isProgramData(programData)) {
+        console.error("Program data structure is invalid");
+        return null;
+    }
+
+    const data: ProgramData = programData;
 
     return (
         <section className="py-20 bg-gray-800/50">
