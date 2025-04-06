@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
 interface PageDataContextType {
   pageData: Record<string, unknown>;
@@ -31,7 +31,7 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [currentVersion, setCurrentVersion] = useState<string | null>(null);
   
-  const fetchData = async (forceRefresh = false) => {
+  const fetchData = useCallback(async (forceRefresh = false) => {
     try {
       setLoading(true);
       setError(null);
@@ -71,9 +71,9 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
   
-  const refreshData = async () => fetchData(true);
+  const refreshData = useCallback(async () => fetchData(true), [fetchData]);
   
   const loadFromCache = (): CacheData | null => {
     try {
@@ -91,7 +91,7 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
     }
   };
   
-  const checkForUpdates = async () => {
+  const checkForUpdates = useCallback(async () => {
     if (!currentVersion) return;
     
     try {
@@ -106,7 +106,7 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       console.error('Помилка перевірки версії:', error);
     }
-  };
+  }, [currentVersion, refreshData]);
   
   useEffect(() => {
     const cachedData = loadFromCache();
@@ -124,7 +124,7 @@ export function PageDataProvider({ children }: { children: ReactNode }) {
     return () => {
       clearInterval(updateCheckInterval);
     };
-  }, []);
+  }, [fetchData, checkForUpdates]);
   
   return (
     <PageDataContext.Provider value={{ pageData, loading, error, refreshData }}>

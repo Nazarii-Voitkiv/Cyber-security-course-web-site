@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AdminPageDataProvider } from '@/contexts/AdminPageDataContext';
 import HeroEdit from '@/app/admin/components/HeroEdit';
@@ -16,6 +16,9 @@ import FaqEdit from '@/app/admin/components/FaqEdit';
 import FooterEdit from '@/app/admin/components/FooterEdit';
 
 export default function AdminDashboard() {
+    const [message, setMessage] = useState('');
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    
     useEffect(() => {
         const checkAuth = async () => {
             try {
@@ -92,6 +95,20 @@ export default function AdminDashboard() {
                                 Примусово скинути кеш
                             </button>
                         </div>
+                        
+                        {message && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className={`mt-4 p-3 rounded ${
+                                    status === 'success' ? 'bg-green-900/40 text-green-400 border border-green-500/40' : 
+                                    status === 'error' ? 'bg-red-900/40 text-red-400 border border-red-500/40' : 
+                                    'bg-gray-700/40 text-gray-300'
+                                }`}
+                            >
+                                {message}
+                            </motion.div>
+                        )}
                     </div>
 
                     <div className="space-y-8">
