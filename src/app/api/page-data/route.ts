@@ -1,30 +1,67 @@
 import { NextResponse } from 'next/server';
-import { getAllSections } from '@/utils/supabase';
+import { createClient } from '@supabase/supabase-js';
+import { unstable_cache } from 'next/cache';
+
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  throw new Error('Відсутні дані для підключення до Supabase');
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const fetchSections = unstable_cache(
+  async () => {
+    const { data, error } = await supabase
+      .from('sections')
+      .select('name, data');
+
+    if (error) throw error;
+
+    const sections: Record<string, unknown> = {};
+    data?.forEach(section => {
+      sections[section.name] = section.data;
+    });
+    
+    return { 
+      sections,
+      version: Date.now().toString()
+    };
+  },
+  ['site-sections'],
+  { revalidate: 86400, tags: ['site-content'] }
+);
+
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const sections = await getAllSections();
-    
-    const headers = new Headers();
-    headers.append('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
-    headers.append('Pragma', 'no-cache');
-    headers.append('Expires', '0');
-    
-    return NextResponse.json({
-      success: true,
-      sections,
-      timestamp: new Date().toISOString()
-    }, { headers });
-  } catch (error: unknown) {
-    console.error('Error fetching page data:', error);
-    
-    let errorMessage = 'Failed to load page data';
-    if (error && typeof error === 'object' && 'message' in error) {
-      errorMessage = error.message as string || errorMessage;
-    }
+    const data = await fetchSections();
     
     return NextResponse.json(
-      { success: false, error: errorMessage },
+      {
+        success: true,
+        sections: data.sections,
+        version: data.version,
+        timestamp: new Date().toISOString(),
+      },
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+        },
+      }
+    );
+  } catch (error: unknown) {
+    console.error('Помилка отримання даних:', error);
+    
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Невідома помилка',
+      },
       { status: 500 }
     );
   }

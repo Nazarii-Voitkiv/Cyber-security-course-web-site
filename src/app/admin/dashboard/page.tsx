@@ -69,6 +69,31 @@ export default function AdminDashboard() {
                         </motion.button>
                     </div>
 
+                    <div className="mb-8 p-4 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 rounded-lg border border-blue-800/30">
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <h3 className="text-cyan-400 font-medium">Статус кешу</h3>
+                                <p className="text-sm text-gray-300">Всі зміни автоматично скидають кеш сайту</p>
+                            </div>
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        const response = await fetch('/api/revalidate-cache', { method: 'POST' });
+                                        if (response.ok) {
+                                            setMessage('Кеш успішно скинуто');
+                                            setStatus('success');
+                                        }
+                                    } catch (error) {
+                                        console.error('Failed to invalidate cache:', error);
+                                    }
+                                }}
+                                className="bg-cyan-700/50 hover:bg-cyan-700/80 text-cyan-100 py-2 px-4 rounded-lg font-medium text-sm"
+                            >
+                                Примусово скинути кеш
+                            </button>
+                        </div>
+                    </div>
+
                     <div className="space-y-8">
                         <HeroEdit />
                         <IntroEdit />

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['www.facebook.com'],
+    domains: ['localhost', 'example.com', 'your-storage-domain.com'],
     unoptimized: true,
   },
   async headers() {
@@ -50,7 +50,11 @@ const nextConfig = {
     ];
   },
   reactStrictMode: true,
-  poweredByHeader: false
+  poweredByHeader: false,
+  experimental: {
+    isrMemoryCacheSize: 0,
+    serverActions: true
+  },
 };
 
 module.exports = nextConfig;
