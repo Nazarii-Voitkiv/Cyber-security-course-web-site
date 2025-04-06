@@ -24,31 +24,6 @@ export async function getSectionData(sectionName: string) {
   return data?.data;
 }
 
-export async function updateSectionData(sectionName: string, sectionData: Record<string, unknown>) {
-  const { data: existingData } = await supabase
-    .from('sections')
-    .select('id')
-    .eq('name', sectionName)
-    .single();
-
-  if (existingData) {
-    const { data, error } = await supabase
-      .from('sections')
-      .update({ data: sectionData, updated_at: new Date() })
-      .eq('name', sectionName);
-
-    if (error) throw error;
-    return data;
-  } else {
-    const { data, error } = await supabase
-      .from('sections')
-      .insert([{ name: sectionName, data: sectionData }]);
-
-    if (error) throw error;
-    return data;
-  }
-}
-
 export async function getAllSections(): Promise<Record<string, unknown>> {
   const { data, error } = await supabase
     .from('sections')

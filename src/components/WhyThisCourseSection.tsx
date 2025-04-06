@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ShieldCheckIcon, LightBulbIcon, BanknotesIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { ShieldCheckIcon, LightBulbIcon, BanknotesIcon, ExclamationTriangleIcon, CodeBracketIcon, CloudIcon } from '@heroicons/react/24/outline';
 import CustomMarkdown from "@/utils/CustomMarkdown";
 import { usePageData } from '@/contexts/PageDataContext';
 
@@ -15,28 +15,42 @@ interface WhyThisCourseData {
     reasons: Reason[];
 }
 
-const reasonIcons = [
-    {
-        Icon: LightBulbIcon,
-        color: 'text-cyan-400',
-        bgColor: 'bg-cyan-500/10'
-    },
-    {
-        Icon: ShieldCheckIcon,
-        color: 'text-cyan-400',
-        bgColor: 'bg-cyan-500/10'
-    },
-    {
-        Icon: BanknotesIcon,
-        color: 'text-cyan-400',
-        bgColor: 'bg-cyan-500/10'
-    },
-    {
-        Icon: ExclamationTriangleIcon,
-        color: 'text-cyan-400',
-        bgColor: 'bg-cyan-500/10'
-    }
-];
+const getIconByIndex = (index: number) => {
+    const icons = [
+        {
+            Icon: LightBulbIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        },
+        {
+            Icon: ShieldCheckIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        },
+        {
+            Icon: BanknotesIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        },
+        {
+            Icon: ExclamationTriangleIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        },
+        {
+            Icon: CodeBracketIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        },
+        {
+            Icon: CloudIcon,
+            color: 'text-cyan-400',
+            bgColor: 'bg-cyan-500/10'
+        }
+    ];
+    
+    return icons[index % icons.length];
+};
 
 export default function WhyThisCourseSection() {
     const { pageData } = usePageData();
@@ -68,6 +82,14 @@ export default function WhyThisCourseSection() {
     }
 
     const data: WhyThisCourseData = whyThisCourseData;
+    
+    const getGridCols = (count: number) => {
+        if (count === 1) return 'md:grid-cols-1';
+        if (count === 2) return 'md:grid-cols-2';
+        if (count === 3) return 'md:grid-cols-3';
+        if (count === 4) return 'md:grid-cols-2 lg:grid-cols-2';
+        return 'md:grid-cols-2 lg:grid-cols-3';
+    };
 
     return (
         <section className="py-20 bg-gray-800/50">
@@ -83,9 +105,9 @@ export default function WhyThisCourseSection() {
                         <CustomMarkdown>{data.title}</CustomMarkdown>
                     </h2>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className={`grid ${getGridCols(data.reasons.length)} gap-8`}>
                         {data.reasons.map((reason, index) => {
-                            const { Icon, color, bgColor } = reasonIcons[index];
+                            const { Icon, color, bgColor } = getIconByIndex(index);
                             return (
                                 <motion.div
                                     key={index}
@@ -96,7 +118,7 @@ export default function WhyThisCourseSection() {
                                     className="relative group h-full"
                                 >
                                     <div className="p-8 rounded-xl bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm border border-gray-700 shadow-xl
-                              transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col items-center">
+                                  transition-transform duration-300 group-hover:scale-[1.02] h-full flex flex-col items-center">
                                         <div className="mb-4">
                                             <Icon className={`h-12 w-12 ${color} transition-transform duration-300 group-hover:scale-110`} />
                                         </div>

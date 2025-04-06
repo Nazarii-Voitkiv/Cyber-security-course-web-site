@@ -51,6 +51,15 @@ export default function HeroSection() {
 
     const data: HeroData = heroData;
     const { title, subtitle, discountBanner, courseTypes, leadMagnet } = data;
+    
+    const getGridCols = (count: number) => {
+        if (count === 1) return 'md:grid-cols-1 max-w-xl';
+        if (count === 2) return 'md:grid-cols-2 max-w-6xl';
+        if (count === 3) return 'md:grid-cols-3 max-w-7xl';
+        return 'md:grid-cols-2 lg:grid-cols-3 max-w-7xl';
+    };
+
+    const gridClasses = getGridCols(courseTypes.length);
 
     return (
         <section id="hero-section" className="relative min-h-screen cyber-background">
@@ -101,14 +110,14 @@ export default function HeroSection() {
                         <CountdownTimer />
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8">
+                    <div className={`grid ${gridClasses} gap-4 md:gap-6 lg:gap-8 mx-auto ${courseTypes.length === 1 ? "justify-center" : ""}`}>
                         {courseTypes.map((course, index) => (
                             <motion.div
                                 key={course.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                                className="relative pt-6 cursor-pointer md:col-span-2 md:max-w-xl md:mx-auto w-full"
+                                className="relative pt-6 cursor-pointer w-full"
                                 onClick={() => window.open(course.link, '_blank')}
                             >
                                 {course.recommended && (
@@ -169,7 +178,7 @@ export default function HeroSection() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-16 mb-8 relative group"
+                    className={`mt-16 mb-8 relative group ${courseTypes.length > 2 ? "max-w-3xl mx-auto" : ""}`}
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-lg blur-xl group-hover:blur-2xl transition-all duration-300" />
                     <div className="relative bg-gray-900/90 border-2 border-cyan-500/50 rounded-lg p-6 backdrop-blur-sm">

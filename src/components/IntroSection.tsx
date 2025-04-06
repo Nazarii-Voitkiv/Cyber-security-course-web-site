@@ -69,12 +69,24 @@ export default function IntroSection() {
                     className="max-w-5xl mx-auto space-y-8"
                 >
                     <div className="p-6 bg-gray-800/50 rounded-xl border border-gray-700 backdrop-blur-sm">
-                        <p className="text-lg text-cyan-100 mb-6"><CustomMarkdown>{intro.paragraphs[0]}</CustomMarkdown></p>
-                        <p className="text-gray-400 mb-8"><CustomMarkdown>{intro.paragraphs[1]}</CustomMarkdown></p>
+                        <div className="space-y-6 mb-8">
+                            {intro.paragraphs.map((paragraph, idx) => (
+                                <p key={idx} className={`${idx === 0 ? "text-lg text-cyan-100" : "text-gray-400"}`}>
+                                    <CustomMarkdown>{paragraph}</CustomMarkdown>
+                                </p>
+                            ))}
+                        </div>
 
-                        <ul className="space-y-6">
+                        <div className="space-y-6 mb-8">
                             {intro.points.map((point, idx) => (
-                                <li key={idx} className="flex items-start">
+                                <motion.div 
+                                    key={idx} 
+                                    className="flex items-start"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    viewport={{ once: true }}
+                                >
                                     <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full mt-2 mr-4 flex-shrink-0" />
                                     <div>
                                         <h3 className="text-lg font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 text-transparent bg-clip-text mb-2">
@@ -82,16 +94,16 @@ export default function IntroSection() {
                                         </h3>
                                         <p className="text-gray-400"><CustomMarkdown>{point.description}</CustomMarkdown></p>
                                     </div>
-                                </li>
+                                </motion.div>
                             ))}
-                        </ul>
+                        </div>
 
                         <motion.div
-                            initial={{opacity: 0, x: -100}}
+                            initial={{opacity: 0, x: -50}}
                             whileInView={{opacity: 1, x: 0}}
                             transition={{type: "spring", stiffness: 100, damping: 20}}
                             viewport={{once: true}} 
-                            className="mt-8 pt-8 border-t border-gray-700"
+                            className={`${intro.points.length > 0 ? "pt-8 border-t border-gray-700" : ""}`}
                         >
                             <p className="text-xl font-semibold text-red-400">
                                 <CustomMarkdown>{intro.conclusion}</CustomMarkdown>

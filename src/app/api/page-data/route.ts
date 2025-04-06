@@ -1,45 +1,23 @@
 import { NextResponse } from 'next/server';
 import { getAllSections } from '@/utils/supabase';
 
-// Define the response type for proper typing
-interface PageDataResponse {
-  success: boolean;
-  sections: Record<string, unknown>;
-  timestamp: string;
-}
-
-// Кешування даних для зменшення запитів до Supabase
-const cache: { data: PageDataResponse | null; timestamp: number } = { 
-  data: null, 
-  timestamp: 0 
-};
-
-const CACHE_TTL = 60000; // 1 хвилина
-
 export async function GET() {
   try {
-    const now = Date.now();
-    
-    if (cache.data && (now - cache.timestamp) < CACHE_TTL) {
-      return NextResponse.json(cache.data);
-    }
-    
     const sections = await getAllSections();
     
-    const response: PageDataResponse = {
+    const headers = new Headers();
+    headers.append('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+    headers.append('Pragma', 'no-cache');
+    headers.append('Expires', '0');
+    
+    return NextResponse.json({
       success: true,
       sections,
       timestamp: new Date().toISOString()
-    };
-    
-    cache.data = response;
-    cache.timestamp = now;
-    
-    return NextResponse.json(response);
+    }, { headers });
   } catch (error: unknown) {
     console.error('Error fetching page data:', error);
     
-    // Safe error message extraction
     let errorMessage = 'Failed to load page data';
     if (error && typeof error === 'object' && 'message' in error) {
       errorMessage = error.message as string || errorMessage;
