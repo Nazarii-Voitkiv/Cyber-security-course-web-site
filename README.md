@@ -124,16 +124,3 @@ The project is integrated with Facebook Pixel for conversion tracking and analyt
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## License
-
-This project is proprietary software. All rights reserved.
-- Unauthorized copying of any files from this project, via any medium, is strictly prohibited
-- The content and code are confidential and can only be used with explicit permission from the project owner
-- Written by [Your Company Name] for [Client Name], 2025
-
-## Contact
-
-Your Name - [@your-twitter](https://twitter.com/your-twitter) - email@example.com
-
-Project Link: [https://github.com/your-username/cyber-security-course-web-site](https://github.com/your-username/cyber-security-course-web-site)
